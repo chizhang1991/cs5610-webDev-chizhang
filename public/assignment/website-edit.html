@@ -2,9 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Website Edit</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="css/style.css" rel="stylesheet"/>
 </head>
 <body>
 
+<nav class="navbar navbar-fixed-top cl-blue-navbar">
+    <div class="row container-fluid">
+        <div class="col-sm-4 hidden-xs">
+            <div class="navbar-text pull-left cl-text-white" style="margin-left: 0px;">
+                <a href="website-list.html" class="cl-text-white">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <div class="navbar-header">
+                <a class="cl-text-white navbar-brand" href="#">
+                    Websites
+                </a>
+            </div>
+            <div class="navbar-text pull-right" style="margin-right: 30px;">
+                <a href="#" class="cl-text-white">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="navbar-text pull-left" style="margin-left: 0px;">
+                <a href="website-list.html" class="cl-text-white">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <div class="navbar-text pull-right" style="margin-right: 0px;">
+                <a href="website-list.html" class="cl-text-white">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            </div>
+            <div class="navbar-header">
+                <a class="cl-text-white navbar-brand" href="#">
+                    Edit Website
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="row container-fluid">
+    <div class="col-sm-4 hidden-xs"
+         style="overflow-y: scroll;top: 0px;bottom: 0px;position: absolute;left: 0px;margin-top: 50px;padding-top: 15px;margin-bottom: 50px;">
+        <ul class="list-group">
+            <li class="list-group-item">
+                Blogging App
+                <a href="#">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+            <li class="list-group-item">
+                Address Book App
+                <a href="#">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+            <li class="list-group-item">
+                Script Testing App
+                <a href="#">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+            <li class="list-group-item">
+                Blogger
+                <a href="#">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-sm-8 pull-right">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Website Name</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name">
+            </div>
+
+            <div class="form-group">
+                <label for="exampleTextarea">Website Description</label>
+                <textarea class="form-control" id="exampleTextarea" rows="5" placeholder="Description"></textarea>
+            </div>
+        </form>
+        <a class="btn btn-danger btn-block" href="website-list.html">Delete</a>
+    </div>
+</div>
+
+<nav class="navbar navbar-fixed-bottom cl-blue-navbar">
+    <div class="container-fuild">
+        <a href="profile.html" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>
 </body>
 </html>

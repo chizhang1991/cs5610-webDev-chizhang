@@ -35,6 +35,10 @@ a:hover{
     color: #000000;
 }
 
+.cl-text-blue{
+    color: #337ab7
+}
+
 .cl-text-bold{
     font-weight: bold;
 }
@@ -90,4 +94,8 @@ a:hover{
 }
 .cl-zero-right-padding{
     padding-right: 0px;
+}
+
+.borderless .list-group-item {
+    border: none;
 }
