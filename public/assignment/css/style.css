@@ -1,9 +1,6 @@
 body {
     padding-top: 70px;
     padding-bottom: 70px;
-    /*overflow-x: hidden;*/
-    /*margin-top: 60px;*/
-    /*margin-bottom: 60px;*/
 }
 
 input.form-control {
@@ -41,6 +38,14 @@ a:hover{
 
 .cl-text-bold{
     font-weight: bold;
+}
+
+.cl-text-large{
+    font-size :30px;
+}
+
+.cl-text-medium{
+    font-size: 24px;
 }
 
 .cl-icon-padding {
@@ -94,6 +99,10 @@ a:hover{
 }
 .cl-zero-right-padding{
     padding-right: 0px;
+}
+
+.cl-zero-top-padding{
+    padding-top: 0px;
 }
 
 .borderless .list-group-item {
