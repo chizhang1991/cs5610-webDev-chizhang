@@ -123,6 +123,7 @@ a:hover{
 
 .col4-style-blue {
     overflow-y: scroll;
+    /*overflow-y: visible;*/
     top: 0px;
     bottom: 0px;
     position: absolute;
@@ -130,5 +131,5 @@ a:hover{
     margin-top: 50px;
     padding-top: 15px;
     margin-bottom: 50px;
-    border:1px solid #cecece;
+    /*border:1px solid #cecece;*/
 }
