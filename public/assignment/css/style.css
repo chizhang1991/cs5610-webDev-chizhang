@@ -131,5 +131,5 @@ a:hover{
     margin-top: 50px;
     padding-top: 15px;
     margin-bottom: 50px;
-    /*border:1px solid #cecece;*/
+    border-right:1px solid #cecece;
 }
