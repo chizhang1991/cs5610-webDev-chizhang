@@ -35,7 +35,10 @@
                 </a>
             </div>
             <div class="navbar-text pull-right margin-right">
-                <a href="website-list.view.client.html" class="cl-text-white">
+                <!--<a href="website-list.view.client.html" class="cl-text-white">-->
+                    <!--<span class="glyphicon glyphicon-ok"></span>-->
+                <!--</a>-->
+                <a ng-click="model.updateWebsite(website)">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>
@@ -89,7 +92,9 @@
                 <textarea class="form-control" id="exampleTextarea" rows="5" placeholder="Description"></textarea>
             </div>
         </form>
-        <a class="btn btn-danger btn-block" href="website-list.view.client.html">Delete</a>
+        <!--<a class="btn btn-danger btn-block" href="website-list.view.client.html">Delete</a>-->
+
+        <a ng-click="model.deleteWebsite()">Delete</a>
     </div>
 </div>
 

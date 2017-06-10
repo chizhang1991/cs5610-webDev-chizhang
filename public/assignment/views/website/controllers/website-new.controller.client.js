@@ -1,3 +1,10 @@
-/**
- * Created by chizhang on 6/7/17.
- */
+(function() {
+    angular
+        .module("WebAppMaker")
+        .controller("NewWebsiteController", NewWebsiteController)
+
+
+    function NewWebsiteController() {
+
+    }
+})();
