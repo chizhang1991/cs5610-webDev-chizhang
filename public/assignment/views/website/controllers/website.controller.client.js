@@ -1,17 +1,39 @@
+// (function() {
+//     angular
+//         .module("WebAppMaker")
+//         .controller("WebsiteListController", WebsiteListController)
+//         .controller("NewWebsiteController", NewWebsiteController)
+//         .controller("EditWebsiteController", EditWebsiteController)
+//
+//     function WebsiteListController() {
+//
+//     }
+//     function NewWebsiteController() {
+//
+//     }
+//     function EditWebsiteController() {
+//
+//     }
+// })();
 (function() {
     angular
         .module("WebAppMaker")
         .controller("WebsiteListController", WebsiteListController)
         .controller("NewWebsiteController", NewWebsiteController)
-        .controller("EditWebsiteController", EditWebsiteController)
+        .controller("EditWebsiteController", EditWebsiteController);
 
-    function WebsiteListController() {
-
+    function WebsiteListController($routeParams, WebsiteService) {
+        var vm = this;
+        vm.uid = $routeParams.uid;
+        vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
     }
-    function NewWebsiteController() {
 
+    function NewWebsiteController($routeParams, WebsiteService) {
+        var vm = this;
     }
-    function EditWebsiteController() {
 
+    function EditWebsiteController($routeParams, WebsiteService) {
+        var vm = this;
     }
+
 })();
