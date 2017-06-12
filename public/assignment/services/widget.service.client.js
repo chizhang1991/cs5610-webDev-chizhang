@@ -15,28 +15,73 @@
                     "url": "https://youtu.be/AM2Ivdi9c4E" },
                 { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
             ];
-        var api = {
+        var service = {
             "createWidget" : createWidget,
             "findWidgetsByPageId" : findWidgetsByPageId,
             "findWidgetById" : findWidgetById,
             "updateWidget" : updateWidget,
             "deleteWidget" : deleteWidget
         };
-        return api;
+        return service;
+
+        function getNextId() {
+            function getMaxId(maxId, currentId) {
+                var current = parseInt(currentId._id);
+                if (maxId > current) {
+                    return maxId;
+                } else {
+                    return current + 1;
+                }
+            }
+            return widgets.reduce(getMaxId, 0).toString();
+        }
+
         function createWidget(pageId, widget) {
-
+            var newWidgetId = getNextId();
+            var newWidget = {
+                _id: newWidgetId,
+                widgetType: widget.widgetType,
+                pageId: pageId,
+                size: widget.size,
+                text: widget.text
+            }
+            widgets.push(newWidget);
         }
+
         function findWidgetsByPageId(pageId) {
-            
+            result = [];
+            for (w in widgets) {
+                var widget = widgets[w];
+                if (parseInt(widget.pageId) === parseInt(pageId)) {
+                    result.push(widget);
+                }
+            }
+            return result;
         }
-        function findWidgetById(widgetId) {
-            
-        }
-        function updateWidget(widgetId, widget) {
-            
-        }
-        function deleteWidget(widgetId) {
 
+        function findWidgetById(widgetId) {
+            result = [];
+            for (w in widgets) {
+                var widget = widgets[w];
+                if (parseInt(widget._id) === parseInt(widgetId)) {
+                    result.push(widget);
+                }
+            }
+            return result;
+        }
+
+        function updateWidget(widgetId, widget) {
+            var oldWidget = findWidgetById(widgetId);
+            var index = widgets.indexOf(oldWidget);
+            widgets[index].widgetType = widget.widgetType;
+            widgets[index].size = widget.size;
+            widgets[index].text = widget.text;
+        }
+
+        function deleteWidget(widgetId) {
+            var oldPage = findWidgetById(widgetId);
+            var index = widgets.indexOf(oldPage);
+            widgets.splice(index, 1);
         }
     }
 })();

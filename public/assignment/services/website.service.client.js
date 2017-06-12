@@ -32,7 +32,6 @@
                     return current + 1;
                 }
             }
-
             return websites.reduce(getMaxId, 0).toString();
         }
 
