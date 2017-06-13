@@ -44,6 +44,7 @@
                 email: user.email
             };
             users.push(newUser);
+
         }
 
         function findUserById(userId) {

@@ -19,7 +19,7 @@
         }
     }
 
-    function RegisterController() {
+    function RegisterController(UserService, $location) {
         var vm = this;
         vm.register = register;
 

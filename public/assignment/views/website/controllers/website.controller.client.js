@@ -11,12 +11,13 @@
         vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
     }
 
-    function NewWebsiteController($routeParams, WebsiteService) {
+    function NewWebsiteController($routeParams, WebsiteService, $location) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
 
         vm.newWebsite = newWebsite;
+
         function newWebsite(websiteName, websiteDesc) {
             if (websiteName === undefined || websiteName === null) {
                 vm.error("Website name cannot be empty.");
@@ -25,10 +26,13 @@
             var website = {
                 name: websiteName,
                 desc: websiteDesc
-            }
-            WebsiteService.createWebsite(uid, website);
+            };
+            var websiteId = WebsiteService.createWebsite(vm.uid, website);
+            website = WebsiteService.findWebsiteById(websiteId);
+            $location.url("/user/" + vm.uid + "/website");
         }
     }
+
 
     // function ProfileController($routeParams, $location, $timeout, UserService) {
     //     var vm = this;
@@ -59,14 +63,16 @@
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.websites = WebsiteService.findWebsitesByUser(uid);
+        vm.websiteId = $routeParams.wid;
 
         vm.updateWebsite = updateWebsite;
-        vm.deleteWebsite = deleteWebsite
+        vm.deleteWebsite = deleteWebsite;
 
         function updateWebsite() {
             var update_website = {
                 _id: $routeParams.uid,
             }
+            WebsiteService.updateWebsite()
         }
         function deleteWebsite() {
 

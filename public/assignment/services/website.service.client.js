@@ -44,6 +44,7 @@
                 developerId: userId
             };
             websites.push(newWebsite);
+            return newWebsiteId;
         }
 
         function findWebsitesByUser(userId) {
