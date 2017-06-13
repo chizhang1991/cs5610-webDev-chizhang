@@ -5,9 +5,9 @@
     function PageService() {
         var pages =
             [
-                { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
-                { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
-                { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
+                { _id: "321", name: "Post 1", websiteId: "456", description: "Lorem" },
+                { _id: "432", name: "Post 2", websiteId: "456", description: "Lorem" },
+                { _id: "543", name: "Post 3", websiteId: "456", description: "Lorem" }
             ];
         var service = {
             "createPage" : createPage,
@@ -38,11 +38,11 @@
                 websiteId: websiteId,
                 description: page.description
             };
-            websites.push(newPage);
+            pages.push(newPage);
         }
 
         function findPageByWebsiteId(websiteId) {
-            result = [];
+            var result = [];
             for (p in pages) {
                 var page = pages[p];
                 if (parseInt(page.websiteId) === parseInt(websiteId)) {
@@ -53,21 +53,19 @@
         }
 
         function findPageById(pageId) {
-            result = [];
             for (p in pages) {
                 var page = pages[p];
                 if (parseInt(page._id) === parseInt(pageId)) {
-                    result.push(page);
+                    return page;
                 }
             }
-            return result;
+            return null;
         }
 
         function updatePage(pageId, page) {
             var oldPage = findPageById(pageId);
             var index = pages.indexOf(oldPage);
             pages[index].name = page.name;
-            // pages[index].websiteId = page.websiteId;
             pages[index].description = page.description;
         }
 

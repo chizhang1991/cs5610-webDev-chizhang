@@ -5,11 +5,11 @@
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
-        <a class="navbar-brand cl-text-bold" href="#">
+        <a class="navbar-brand cl-text-bold">
             New Page
         </a>
         <div class="navbar-text pull-right margin-right">
-            <a ng-click="model.createPage()" class="cl-text-black">
+            <a ng-click="model.createPage(model.pageName, model.pageTitle)" class="cl-text-black">
                 <span class="glyphicon glyphicon-ok"></span>
             </a>
         </div>
@@ -36,32 +36,10 @@
 
 </div>
 
-<div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
-<form>
-    <div class="form-group">
-        <label for="websiteName">Name</label>
-        <input type="text"
-               class="form-control"
-               id="websiteName"
-               placeholder="Name"
-               ng-model="model.websiteName"
-               required>
-    </div>
-
-    <div class="form-group">
-        <label for="websiteDesc">Description</label>
-        <textarea class="form-control"
-                  id="websiteDesc"
-                  rows="5"
-                  placeholder="Description" ng-model="model.websiteDesc">
-                </textarea>
-    </div>
-</form>
-
 <nav class="navbar navbar-fixed-bottom navbar-default">
     <div class="container-fuild">
         <div class="navbar-text pull-right cl-icon-padding">
-            <a href="../../user/templates/profile.view.client.html" class="cl-text-blue">
+            <a href="#!/user/{{model.uid}}" class="cl-text-blue">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
         </div>

@@ -70,7 +70,6 @@
             $timeout(function () {
                 vm.updated = null;
             }, 3000);
-            // console.log("updated");
         }
 
         function deleteWebsite(websiteId) {
