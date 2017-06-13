@@ -11,7 +11,7 @@
         vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
     }
 
-    function NewWebsiteController($routeParams, WebsiteService, $location) {
+    function NewWebsiteController($routeParams, $timeout,WebsiteService, $location) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.newWebsite = newWebsite;
@@ -23,7 +23,13 @@
 
         function newWebsite(websiteName, websiteDesc) {
             if (websiteName === undefined || websiteName === null) {
-                vm.error("Website name cannot be empty.");
+
+                vm.error = "Website name cannot be empty.";
+
+                $timeout(function () {
+                    vm.error = null;
+                }, 3000);
+
                 return;
             }
             var website = {
