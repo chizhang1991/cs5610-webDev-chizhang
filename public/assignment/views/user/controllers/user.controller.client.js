@@ -60,7 +60,7 @@
         vm.email = vm.user.email;
         vm.updateUser = updateUser;
 
-        function updateUser() {
+        function updateUser(email, fName, lName) {
             var update_user = {
                 _id: $routeParams.uid,
                 firstName: vm.firstName,

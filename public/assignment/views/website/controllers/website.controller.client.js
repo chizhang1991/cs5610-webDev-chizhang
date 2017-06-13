@@ -14,9 +14,12 @@
     function NewWebsiteController($routeParams, WebsiteService, $location) {
         var vm = this;
         vm.uid = $routeParams.uid;
-        vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
-
         vm.newWebsite = newWebsite;
+
+        function init() {
+            vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
+        }
+        init();
 
         function newWebsite(websiteName, websiteDesc) {
             if (websiteName === undefined || websiteName === null) {
@@ -33,49 +36,40 @@
         }
     }
 
-
-    // function ProfileController($routeParams, $location, $timeout, UserService) {
-    //     var vm = this;
-    //     vm.user = UserService.findUserById($routeParams.uid);
-    //     vm.username = vm.user.username;
-    //     vm.firstName = vm.user.firstName;
-    //     vm.lastName = vm.user.lastName;
-    //     vm.email = vm.user.email;
-    //     vm.updateUser = updateUser;
-    //
-    //     function updateUser() {
-    //         var update_user = {
-    //             _id: $routeParams.uid,
-    //             firstName: vm.firstName,
-    //             lastName: vm.lastName,
-    //             email: vm.email
-    //         };
-    //         UserService.updateUser($routeParams.uid, update_user);
-    //         vm.updated = "Profile changes saved!";
-    //
-    //         $timeout(function () {
-    //             vm.updated = null;
-    //         }, 3000);
-    //     }
-    // }
-
-    function EditWebsiteController($routeParams, WebsiteService) {
+    function EditWebsiteController($routeParams, $location, $timeout, WebsiteService) {
         var vm = this;
         vm.uid = $routeParams.uid;
-        vm.websites = WebsiteService.findWebsitesByUser(uid);
         vm.websiteId = $routeParams.wid;
 
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
 
+        function init() {
+            vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
+            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+        }
+        init();
+
         function updateWebsite() {
             var update_website = {
-                _id: $routeParams.uid,
-            }
-            WebsiteService.updateWebsite()
-        }
-        function deleteWebsite() {
+                _id: $routeParams.wid,
+                name: vm.website.name,
+                developerId: vm.uid,
+                desc: vm.website.desc
+            };
+            WebsiteService.updateWebsite(vm.websiteId, update_website);
 
+            vm.updated = "Website changes saved!";
+
+            $timeout(function () {
+                vm.updated = null;
+            }, 3000);
+            // console.log("updated");
+        }
+
+        function deleteWebsite(websiteId) {
+            WebsiteService.deleteWebsite(websiteId);
+            $location.url("/user/" + vm.uid + "/website");
         }
     }
 

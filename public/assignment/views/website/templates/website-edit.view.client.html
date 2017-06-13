@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="navbar-text pull-right margin-right">
-                <a href="#" class="cl-text-white">
+                <a href="#!/user/{{model.uid}}/website/new" class="cl-text-white">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </div>
@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="navbar-text pull-right margin-right">
-                <a class="cl-text-white" ng-click="model.updateWebsite(website)">
+                <a class="cl-text-white" ng-click="model.updateWebsite()">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>
@@ -51,31 +51,30 @@
         </ul>
     </div>
     <div class="col-xs-12 col-sm-8 pull-right">
+        <div ng-show="model.updated" class="alert alert-success" role="alert">{{model.updated}}</div>
         <form>
             <div class="form-group">
                 <label for="websiteName">Website Name</label>
-                <input type="text"
+                <input ng-model="model.website.name"
+                       type="text"
                        class="form-control"
                        id="websiteName"
-                       placeholder="Name"
-                       ng-model="websiteName">
+                       placeholder="Name">
             </div>
 
             <div class="form-group">
                 <label for="websiteDesc">Website Description</label>
-                <textarea class="form-control"
+                <textarea ng-model="model.website.desc"
+                          class="form-control"
                           id="websiteDesc"
                           rows="5"
-                          placeholder="Description"
-                          ng-model="websiteDesc">
-
+                          placeholder="Description">
                 </textarea>
             </div>
         </form>
-        <!--<a class="btn btn-danger btn-block" href="website-list.view.client.html">Delete</a>-->
 
         <a class="btn btn-danger btn-block"
-           ng-click="model.deleteWebsite()">Delete</a>
+           ng-click="model.deleteWebsite(model.websiteId)">Delete</a>
     </div>
 </div>
 
