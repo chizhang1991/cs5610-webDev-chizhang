@@ -39,14 +39,14 @@
     function EditWebsiteController($routeParams, $location, $timeout, WebsiteService) {
         var vm = this;
         vm.uid = $routeParams.uid;
-        vm.websiteId = $routeParams.wid;
+        vm.wid = $routeParams.wid;
 
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
 
         function init() {
             vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
-            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+            vm.website = WebsiteService.findWebsiteById(vm.wid);
         }
         init();
 
@@ -57,7 +57,7 @@
                 developerId: vm.uid,
                 desc: vm.website.desc
             };
-            WebsiteService.updateWebsite(vm.websiteId, update_website);
+            WebsiteService.updateWebsite(vm.wid, update_website);
 
             vm.updated = "Website changes saved!";
 

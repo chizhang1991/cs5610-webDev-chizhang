@@ -7,18 +7,15 @@
 
     function PageListController($routeParams, PageService) {
         var vm = this;
-        // vm.uid = $routeParams.uid;
-        vm.websiteId = $routeParams['wid'];
-        vm.pages = PageService.findPageByWebsiteId(websiteId);
+        vm.uid = $routeParams.uid;
+        vm.wid = $routeParams.wid;
+        vm.pages = PageService.findPageByWebsiteId(vm.wid);
     }
-    // function WebsiteListController($routeParams, WebsiteService) {
-    //     var vm = this;
-    //     vm.uid = $routeParams.uid;
-    //     vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
-    // }
 
-    function NewPageController() {
-
+    function NewPageController($routeParams, PageService) {
+        var vm = this;
+        vm.uid = $routeParams.uid;
+        vm.wid = $routeParams.wid;
     }
     function EditPageController() {
 
