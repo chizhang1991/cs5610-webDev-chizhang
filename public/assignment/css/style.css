@@ -95,6 +95,9 @@ a:hover{
     top: 0px;
     right: 0px;
     z-index: 10;
+    /*background-color: white;*/
+}
+.cl-background-white{
     background-color: white;
 }
 .cl-zero-right-padding{
@@ -119,6 +122,17 @@ a:hover{
 
 .margin-right {
     margin-right: 30px;
+}
+
+.margin-bottom {
+    margin-bottom: 30px;
+}
+
+.widget-toolbar {
+    background-color: rgba(255,255,255,0.8);
+    position: absolute;
+    right: 20px;
+    color: darkslategray;
 }
 
 .col4-style-blue {
