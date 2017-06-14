@@ -34,7 +34,7 @@
 
     }
 
-    function EditWidgetController($routeParams, WidgetService) {
+    function EditWidgetController($routeParams, $location, WidgetService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
@@ -43,5 +43,26 @@
 
         vm.widget = WidgetService.findWidgetById(vm.wgid);
 
+        vm.updateWidget = updateWidget;
+        vm.deleteWidget = deleteWidget;
+        
+        function updateWidget() {
+            var update_widget = {
+                _id: vm.wgid,
+                widgetType: vm.widget.widgetType,
+                pageId: vm.widget.pageId,
+                size: vm.widget.size,
+                text: vm.widget.text,
+                width: vm.widget.width,
+                url: vm.widget.url
+            };
+            WidgetService.updateWidget(vm.wgid, update_widget);
+            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+        }
+
+        function deleteWidget(widgetId) {
+            WidgetService.deleteWidget(widgetId);
+            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+        }
     }
 })();
