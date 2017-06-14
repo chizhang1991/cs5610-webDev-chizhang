@@ -13,9 +13,19 @@
         vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
 
         vm.trustThisContent = trustThisContent;
+        vm.getYoutubeEmbedUrl = getYoutubeEmbedUrl;
+
         function trustThisContent(html) {
             // diligence to scrub unsafe content
-            $sce.trustAsHtml(html);
+            return $sce.trustAsHtml(html);
+        }
+
+        function getYoutubeEmbedUrl(youtubeLink) {
+            var embedUrl = "https://www.youtube.com/embed/";
+            var youtubeLinkParts = youtubeLink.split('/');
+            var id = youtubeLinkParts[youtubeLinkParts.length - 1];
+            embedUrl += id;
+            return $sce.trustAsResourceUrl(embedUrl);
         }
     }
 
