@@ -60,14 +60,13 @@
         }
 
         function findWidgetById(widgetId) {
-            result = [];
             for (w in widgets) {
                 var widget = widgets[w];
                 if (parseInt(widget._id) === parseInt(widgetId)) {
-                    result.push(widget);
+                    return widget;
                 }
             }
-            return result;
+            return null;
         }
 
         function updateWidget(widgetId, widget) {
