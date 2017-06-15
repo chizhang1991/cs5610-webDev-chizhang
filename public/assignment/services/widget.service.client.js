@@ -43,7 +43,9 @@
                 widgetType: widget.widgetType,
                 pageId: pageId,
                 size: widget.size,
-                text: widget.text
+                text: widget.text,
+                width: widget.width,
+                url: widget.url
             }
             widgets.push(newWidget);
         }
