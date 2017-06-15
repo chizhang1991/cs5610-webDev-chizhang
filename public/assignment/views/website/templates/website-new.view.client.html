@@ -7,12 +7,12 @@
                 </a>
             </div>
             <div class="navbar-header">
-                <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+                <a class="cl-text-white navbar-brand cl-text-bold">
                     Websites
                 </a>
             </div>
             <div class="navbar-text pull-right margin-right">
-                <a href="#" class="cl-text-white">
+                <a href="#!/user/{{model.uid}}/website/new" class="cl-text-white">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </div>
@@ -29,7 +29,7 @@
                 </a>
             </div>
             <div class="navbar-header">
-                <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+                <a class="cl-text-white navbar-brand cl-text-bold">
                     New Website
                 </a>
             </div>
@@ -54,6 +54,7 @@
 
     <div class="col-xs-12 col-sm-8 pull-right">
         <div ng-show="model.error" class="alert alert-danger" role="alert">{{model.error}}</div>
+        <!--<div ng-show="model.updated" class="alert alert-success" role="alert">{{model.updated}}</div>-->
         <form>
             <div class="form-group">
                 <label for="websiteName">Name</label>

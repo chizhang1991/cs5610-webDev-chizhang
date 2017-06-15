@@ -38,6 +38,10 @@
             };
             var websiteId = WebsiteService.createWebsite(vm.uid, website);
             website = WebsiteService.findWebsiteById(websiteId);
+            // vm.updated = "New Website created.";
+            // $timeout(function () {
+            //     vm.error = null;
+            // }, 3000);
             $location.url("/user/" + vm.uid + "/website");
         }
     }
