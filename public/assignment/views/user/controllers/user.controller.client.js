@@ -51,7 +51,7 @@
         }
     }
 
-    function ProfileController($routeParams, $location, $timeout, UserService) {
+    function ProfileController($routeParams, $timeout, UserService) {
         var vm = this;
         vm.user = UserService.findUserById($routeParams.uid);
         vm.username = vm.user.username;
@@ -60,7 +60,7 @@
         vm.email = vm.user.email;
         vm.updateUser = updateUser;
 
-        function updateUser(email, fName, lName) {
+        function updateUser() {
             var update_user = {
                 _id: $routeParams.uid,
                 firstName: vm.firstName,
