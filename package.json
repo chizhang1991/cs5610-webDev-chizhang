@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/chizhang1991/cs5610-webDev-chizhang#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "body-parser": "^1.15.0"
   }
 }
