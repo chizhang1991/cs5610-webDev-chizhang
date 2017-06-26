@@ -135,8 +135,7 @@
             // var cred = {
             //     username: username
             // }
-            var url = '/api/user';
-            return $http.post(url, {username:username, password:password});
+            return $http.post('/api/user', {username:username, password:password});
         }
 
 

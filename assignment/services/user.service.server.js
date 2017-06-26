@@ -64,7 +64,7 @@ module.exports = function(app){
     }
 
     function findUserByCredentials (req, res) {
-        /*var username = req.query.username;
+        var username = req.query.username;
          var pswd = req.query.password;
          console.log("username: " + username);
          console.log("pswd: " + pswd);
@@ -75,8 +75,8 @@ module.exports = function(app){
          return;
          }
          }
-         //res.status(404).send("not found!");*/
-        res.send(users[0]).sendStatus(200);
+         res.status(404).send("not found!");
+        // res.send(users[0]).sendStatus(200);
     }
 
     function findUserById(req, res) {
@@ -86,7 +86,7 @@ module.exports = function(app){
             var user = users[u];
             if(user._id === uid){
                 res.status(200).send(user);
-                return;
+                return user;
             }
         }
         res.status(404).send("not found!");

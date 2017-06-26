@@ -1,4 +1,4 @@
 (function () {
     angular
-        .module("WebAppMaker", ["ngRoute", "jgaSortable", "imgUpload"]);
+        .module("WebAppMaker", ["ngRoute"]);
 })();
