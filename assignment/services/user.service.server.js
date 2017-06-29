@@ -66,8 +66,8 @@ module.exports = function(app){
     function findUserByCredentials (req, res) {
         var username = req.query.username;
          var pswd = req.query.password;
-         console.log("username: " + username);
-         console.log("pswd: " + pswd);
+         // console.log("username: " + username);
+         // console.log("pswd: " + pswd);
          for (u in users){
          var user = users[u];
          if(user.username === username && user.password === pswd){
