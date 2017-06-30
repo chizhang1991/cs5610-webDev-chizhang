@@ -36,6 +36,16 @@ module.exports = function(app){
             }
             res.sendStatus(404);
             return;
+        } else if (username) {
+            for (var u in users) {
+                var user = users[u];
+                if (user.username === username) {
+                    res.send(user);
+                    return;
+                }
+            }
+            res.sendStatus(404);
+            return;
         } else {
             res.send(users);
         }
@@ -81,6 +91,7 @@ module.exports = function(app){
     }
 
     function findUserByUsername (req, res) {
+
         var username = req.query.username;
 
         for (u in users){
@@ -94,13 +105,13 @@ module.exports = function(app){
     }
 
     function findUserByCredentials (req, res) {
-        console.log("in server side find by credentials");
+        // console.log("in server side find by credentials");
 
         var username = req.query.username;
         var pswd = req.query.password;
 
-        console.log("username: " + username);
-        console.log("pswd: " + pswd);
+        // console.log("username: " + username);
+        // console.log("pswd: " + pswd);
 
         for (u in users){
             var user = users[u];

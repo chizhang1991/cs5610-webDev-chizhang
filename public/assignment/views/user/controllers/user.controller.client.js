@@ -44,8 +44,16 @@
                 vm.error = "Password does not match.";
                 return;
             }
-            var user = UserService.findUserByUsername(username);
-            if (user === null) {
+            // var user = UserService.findUserByUsername(username);
+            UserService
+                .findUserByUsername(username)
+                .then(didFind, notFind);
+            
+            function didFind() {
+                vm.error = "Username already exists.";
+            }
+
+            function notFind() {
                 user = {
                     username: username,
                     password: password,
@@ -53,13 +61,32 @@
                     lastName: "",
                     email: ""
                 };
-                UserService.createUser(user);
-                user = UserService.findUserByUsername(username);
-                $location.url("/user/" + user._id);
+                // user = UserService.createUser(user);
+                // user = UserService.findUserByUsername(username);
+                UserService
+                    .createUser(user)
+                    .then(
+                        function (user) {
+                            $location.url("/user/" + user._id);
+                        });
+                // $location.url("/user/" + user._id);
             }
-            else {
-                vm.error = "Username already exists.";
-            }
+
+            // if (user === null) {
+            //     user = {
+            //         username: username,
+            //         password: password,
+            //         firstName: "",
+            //         lastName: "",
+            //         email: ""
+            //     };
+            //     UserService.createUser(user);
+            //     user = UserService.findUserByUsername(username);
+            //     $location.url("/user/" + user._id);
+            // }
+            // else {
+            //     vm.error = "Username already exists.";
+            // }
         }
     }
 

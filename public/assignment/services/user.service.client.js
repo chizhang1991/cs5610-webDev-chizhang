@@ -94,7 +94,11 @@
             // };
             // users.push(newUser);
             var url = "/api/user";
-            return $http.post(url, user);
+            // return $http.post(url, user);
+            return $http.post(url, user)
+                .then(function (response) {
+                    return response.data;
+                });
 
         }
 
@@ -126,6 +130,12 @@
             //     }
             // }
             // return null;
+            var url = "/api/user?username=" + username;
+            // return $http.post('/api/user', {username:username, password:password});
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
 
         }
 
@@ -143,9 +153,9 @@
             // var cred = {
             //     username: username
             // }
-            console.log("in client side find by credential");
-            console.log(username);
-            console.log(password);
+            // console.log("in client side find by credential");
+            // console.log(username);
+            // console.log(password);
             var url = "/api/user?username=" + username + "&password=" + password;
             // return $http.post('/api/user', {username:username, password:password});
             return $http.get(url)
