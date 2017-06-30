@@ -149,11 +149,11 @@ module.exports = function(app){
     function updateUser(req,res) {
         var uid = req.params.uid;
         var new_user = req.body;
-
+        // console.log(new_user);
         for (var u in users){
-            var user = users[u];
-            if(String(user._id) === String(uid)) {
-                user = new_user;
+            // var user = users[u];
+            if(String(users[u]._id) === String(uid)) {
+                users[u] = new_user;
                 // user.firstName = new_user.firstName;
                 // user.lastName = new_user.lastName;
                 // user.email = new_user.email;
