@@ -102,12 +102,20 @@
             // for (u in users){
             //     var user = users[u];
             //     if(parseInt(user._id) === parseInt(userId)){
+            //         console.log("find user" + user);
             //         return user;
             //     }
             // }
             // return null;
             var url = "/api/user/" + userId;
-            return $http.get(url);
+
+            console.log("url is " + url);
+
+            return $http.get(url)
+                .then(function (response) {
+                    var user = response.data;
+                    return user;
+                });
         }
 
         function findUserByUsername(username) {
@@ -135,7 +143,15 @@
             // var cred = {
             //     username: username
             // }
-            return $http.post('/api/user', {username:username, password:password});
+            console.log("in client side find by credential");
+            console.log(username);
+            console.log(password);
+            var url = "/api/user?username=" + username + "&password=" + password;
+            // return $http.post('/api/user', {username:username, password:password});
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
 

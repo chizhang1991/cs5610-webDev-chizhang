@@ -10,12 +10,24 @@
         vm.login = login;
 
         function login(username, password) {
-            var user = UserService.findUserByCredentials(username, password);
-            if (user === null) {
-                vm.error = "Username does not exist.";
-            } else {
-                $location.url("/user/" + user._id);
+            // var user = UserService.findUserByCredentials(username, password);
+            UserService
+                .findUserByCredentials(username, password)
+                .then(login);
+            
+            function login(user) {
+                if (user === null) {
+                    vm.error = "Username does not exist.";
+                } else {
+                    $location.url("/user/" + user._id);
+                }
             }
+
+            // if (user === null) {
+            //     vm.error = "Username does not exist.";
+            // } else {
+            //     $location.url("/user/" + user._id);
+            // }
         }
     }
 
@@ -53,26 +65,56 @@
 
     function ProfileController($routeParams, $timeout, UserService) {
         var vm = this;
-        vm.user = UserService.findUserById($routeParams.uid);
-        vm.username = vm.user.username;
-        vm.firstName = vm.user.firstName;
-        vm.lastName = vm.user.lastName;
-        vm.email = vm.user.email;
+        vm.uid = $routeParams.uid;
+
+        UserService.findUserById(vm.uid)
+            .then(renderUser, userError);
+
+        function renderUser(user) {
+            // console.log(response);
+            vm.user = user;
+            console.log(vm.user);
+        }
+        console.log(vm.user);
+        
+        function userError(error) {
+            model.error = "User not found";
+        }
+
+        // // vm.user = UserService.findUserById(vm.uid);
+        // vm.username = vm.user.username;
+        // vm.firstName = vm.user.firstName;
+        // vm.lastName = vm.user.lastName;
+        // vm.email = vm.user.email;
+        // // console.log(vm.username);
+        //
         vm.updateUser = updateUser;
-
         function updateUser() {
-            var update_user = {
-                _id: $routeParams.uid,
-                firstName: vm.firstName,
-                lastName: vm.lastName,
-                email: vm.email
-            };
-            UserService.updateUser($routeParams.uid, update_user);
+            var updata_user = {
+                _id: vm.uid,
+                firstName: vm.user.firstName,
+                lastName: vm.user.lastName,
+                email: vm.user.email
+            }
+            UserService.updateUser(vm.uid, updata_user);
             vm.updated = "Profile changes saved!";
-
             $timeout(function () {
                 vm.updated = null;
             }, 3000);
         }
+        // function updateUser() {
+        //     var update_user = {
+        //         _id: $routeParams.uid,
+        //         firstName: vm.firstName,
+        //         lastName: vm.lastName,
+        //         email: vm.email
+        //     };
+        //     UserService.updateUser($routeParams.uid, update_user);
+        //     vm.updated = "Profile changes saved!";
+        //
+        //     $timeout(function () {
+        //         vm.updated = null;
+        //     }, 3000);
+        // }
     }
 })();

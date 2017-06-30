@@ -1,19 +1,49 @@
+var app = require("../../express");
+
 module.exports = function(app){
 
     var users = [
-        {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
-        {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
-        {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-        {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
+        {_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder", email: "alice@gmail.com"},
+        {_id: "100", username: "a", password: "a", firstName: "a", lastName: "a", email: "a@gmail.com"},
+        {_id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley", email: "bob@regge.com"},
+        {_id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia", email: "charles@bing.com"},
+        {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi", email: "jose@neu.com"}
     ];
 
-    app.get('/api/user', function (req, res) {
+    app.get('/give/me/all/users', function (req, res) {
+        res.send(users);
 
-        console.log("get uri");
-        console.log("test: " + req.query.username);
-        res.sendStatus(200);
     });
 
+    app.get('/api/user?', findAllUsers);
+    // app.get('/api/user?username=username&password=password', function (req, res) {
+    //     console.log("credential test");
+    //     console.log(req.query.username);
+    //     console.log(req.query.password);
+    //     res.sendStatus(200);
+    // });
+
+    function findAllUsers(req, res) {
+        var username = req.query.username;
+        var password = req.query.password;
+        if (username && password) {
+            for (var u in users) {
+                var user = users[u];
+                if (user.username === username && user.password === password) {
+                    res.send(user);
+                    return;
+                }
+            }
+            res.sendStatus(404);
+            return;
+        } else {
+            res.send(users);
+        }
+        // console.log("get uri");
+        // console.log("test: " + req.query.username);
+        // res.sendStatus(200);
+        // res.send(users);
+    }
 
     // POST Calls.
     app.post('/api/user', createUsers);
@@ -64,32 +94,41 @@ module.exports = function(app){
     }
 
     function findUserByCredentials (req, res) {
+        console.log("in server side find by credentials");
+
         var username = req.query.username;
-         var pswd = req.query.password;
-         // console.log("username: " + username);
-         // console.log("pswd: " + pswd);
-         for (u in users){
-         var user = users[u];
-         if(user.username === username && user.password === pswd){
-         res.status(200).send(user);
-         return;
-         }
-         }
-         res.status(404).send("not found!");
+        var pswd = req.query.password;
+
+        console.log("username: " + username);
+        console.log("pswd: " + pswd);
+
+        for (u in users){
+            var user = users[u];
+            if(user.username === username && user.password === pswd){
+                res.status(200).send(user);
+                return;
+            }
+        }
+        res.status(404).send("not found!");
+
+        // console.log(users[0]);
         // res.send(users[0]).sendStatus(200);
     }
 
     function findUserById(req, res) {
+
         var uid = req.params.uid;
+
+        // console.log(uid);
 
         for (u in users){
             var user = users[u];
             if(user._id === uid){
                 res.status(200).send(user);
-                return user;
+                return;
             }
         }
-        res.status(404).send("not found!");
+        res.status(404).send("Than user was not found!");
     }
 
     function updateUser(req,res) {
