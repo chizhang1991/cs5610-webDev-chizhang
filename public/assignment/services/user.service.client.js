@@ -113,7 +113,7 @@
             // return null;
             var url = "/api/user/" + userId;
 
-            console.log("url is " + url);
+            // console.log("url is " + url);
 
             return $http.get(url)
                 .then(function (response) {

@@ -36,7 +36,8 @@
         vm.register = register;
 
         function register(username, password, vpassword) {
-            if (username === undefined || username === null || username === "" || password === undefined || password === "") {
+            if (username === undefined || username === null || username === ""
+                || password === undefined || password === "") {
                 vm.error = "Username and Passwords cannot be empty.";
                 return;
             }
@@ -47,30 +48,57 @@
             // var user = UserService.findUserByUsername(username);
             UserService
                 .findUserByUsername(username)
-                .then(didFind, notFind);
+                .then(
+                    function () {
+                        vm.error = "Username already exists.";
+                    },
+                    function () {
+                        var user = {
+                            username: username,
+                            password: password,
+                            firstName: "",
+                            lastName: "",
+                            email: ""
+                        };
+                        // user = UserService.createUser(user);
+                        // user = UserService.findUserByUsername(username);
+                        // return the promise
+                        return UserService
+                            .createUser(user)
+                            // .then(
+                            //     function (user) {
+                            //         $location.url("/user/" + user._id);
+                            //     });
+                        // $location.url("/user/" + user._id);
+                    })
+                .then(
+                    function (user) {
+                        $location.url("/user/" + user._id);
+                    });;
             
-            function didFind() {
-                vm.error = "Username already exists.";
-            }
+            // function didFind() {
+            //     vm.error = "Username already exists.";
+            // }
 
-            function notFind() {
-                user = {
-                    username: username,
-                    password: password,
-                    firstName: "",
-                    lastName: "",
-                    email: ""
-                };
-                // user = UserService.createUser(user);
-                // user = UserService.findUserByUsername(username);
-                UserService
-                    .createUser(user)
-                    .then(
-                        function (user) {
-                            $location.url("/user/" + user._id);
-                        });
-                // $location.url("/user/" + user._id);
-            }
+            // function notFind() {
+            //     user = {
+            //         username: username,
+            //         password: password,
+            //         firstName: "",
+            //         lastName: "",
+            //         email: ""
+            //     };
+            //     // user = UserService.createUser(user);
+            //     // user = UserService.findUserByUsername(username);
+            //     // return the promise
+            //     return UserService
+            //         .createUser(user)
+            //         .then(
+            //             function (user) {
+            //                 $location.url("/user/" + user._id);
+            //             });
+            //     // $location.url("/user/" + user._id);
+            // }
 
             // if (user === null) {
             //     user = {
@@ -102,7 +130,7 @@
             vm.user = user;
             console.log(vm.user);
         }
-        console.log(vm.user);
+        // console.log(vm.user);
         
         function userError(error) {
             model.error = "User not found";

@@ -71,7 +71,13 @@ module.exports = function(app){
 
     /*API implementation*/
     function createUsers(req, res) {
+        // can start serverside create users
+        console.log("server side create user");
+
         var user = req.body;
+
+        // print this user normal, without userid
+        console.log(user);
 
         var newUser = {
             _id: new Date().getTime(),
@@ -83,11 +89,18 @@ module.exports = function(app){
         };
         users.push(newUser);
 
-        if(newUser){
-            res.status(200).send(newUser);
-        } else {
-            res.sendStatus(500);
-        }
+        // print users normal, give new user a user id
+        console.log(users);
+
+        res.send(newUser);
+
+        // if(newUser){
+        //     console.log("send new user");
+        //     res.status(200).send(newUser);
+        // } else {
+        //     console.log("send 500");
+        //     res.sendStatus(500);
+        // }
     }
 
     function findUserByUsername (req, res) {
@@ -134,12 +147,13 @@ module.exports = function(app){
 
         for (u in users){
             var user = users[u];
-            if(user._id === uid){
+            // console.log(user);
+            if(String(user._id) === String(uid)) {
                 res.status(200).send(user);
                 return;
             }
         }
-        res.status(404).send("Than user was not found!");
+        res.status(404).send("That user was not found!");
     }
 
     function updateUser(req,res) {
