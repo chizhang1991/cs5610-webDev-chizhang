@@ -112,9 +112,7 @@
             // }
             // return null;
             var url = "/api/user/" + userId;
-
             // console.log("url is " + url);
-
             return $http.get(url)
                 .then(function (response) {
                     var user = response.data;
@@ -171,7 +169,13 @@
             // users[index].firstName = user.firstName;
             // users[index].lastName = user.lastName;
             // users[index].email = user.email;
+
             var url = "/api/user/" + userId;
+            return $http.put(url, user)
+                .then(function (response) {
+                    var user = response.data;
+                    return user;
+                });
             return $http.put(url, user);
         }
 

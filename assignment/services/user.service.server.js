@@ -10,18 +10,12 @@ module.exports = function(app){
         {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi", email: "jose@neu.com"}
     ];
 
-    app.get('/give/me/all/users', function (req, res) {
-        res.send(users);
-
-    });
+    // app.get('/give/me/all/users', function (req, res) {
+    //     res.send(users);
+    //
+    // });
 
     app.get('/api/user?', findAllUsers);
-    // app.get('/api/user?username=username&password=password', function (req, res) {
-    //     console.log("credential test");
-    //     console.log(req.query.username);
-    //     console.log(req.query.password);
-    //     res.sendStatus(200);
-    // });
 
     function findAllUsers(req, res) {
         var username = req.query.username;
@@ -49,10 +43,6 @@ module.exports = function(app){
         } else {
             res.send(users);
         }
-        // console.log("get uri");
-        // console.log("test: " + req.query.username);
-        // res.sendStatus(200);
-        // res.send(users);
     }
 
     // POST Calls.
@@ -77,7 +67,7 @@ module.exports = function(app){
         var user = req.body;
 
         // print this user normal, without userid
-        console.log(user);
+        // console.log(user);
 
         var newUser = {
             _id: new Date().getTime(),
@@ -90,7 +80,7 @@ module.exports = function(app){
         users.push(newUser);
 
         // print users normal, give new user a user id
-        console.log(users);
+        // console.log(users);
 
         res.send(newUser);
 
@@ -157,16 +147,18 @@ module.exports = function(app){
     }
 
     function updateUser(req,res) {
-        var uid = req.params.id;
+        var uid = req.params.uid;
         var new_user = req.body;
 
-        for (u in users){
+        for (var u in users){
             var user = users[u];
-            if(user._id === uid){
-                user.firstName = new_user.firstName;
-                user.lastName = new_user.lastName;
-                user.email = new_user.email;
-                res.status(200).send(user);
+            if(String(user._id) === String(uid)) {
+                user = new_user;
+                // user.firstName = new_user.firstName;
+                // user.lastName = new_user.lastName;
+                // user.email = new_user.email;
+                // res.status(200).send(user);
+                res.sendStatus(200);
                 return;
             }
         }
