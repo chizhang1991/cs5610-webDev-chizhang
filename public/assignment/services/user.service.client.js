@@ -184,7 +184,11 @@
             // var index = users.indexOf(oldUser);
             // users.splice(index);
             var url = "/api/user/" + userId;
-            return $http.delete(url);
+            // console.log(url);
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
     }
 })();

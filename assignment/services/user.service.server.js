@@ -62,7 +62,7 @@ module.exports = function(app){
     /*API implementation*/
     function createUsers(req, res) {
         // can start serverside create users
-        console.log("server side create user");
+        // console.log("server side create user");
 
         var user = req.body;
 
@@ -104,7 +104,7 @@ module.exports = function(app){
                 return;
             }
         }
-        res.status(404).send("not found!");
+        res.status(404).send("Not found that user with this username!");
     }
 
     function findUserByCredentials (req, res) {
@@ -123,7 +123,7 @@ module.exports = function(app){
                 return;
             }
         }
-        res.status(404).send("not found!");
+        res.status(404).send("Not found that user by credentials!");
 
         // console.log(users[0]);
         // res.send(users[0]).sendStatus(200);
@@ -143,7 +143,7 @@ module.exports = function(app){
                 return;
             }
         }
-        res.status(404).send("That user was not found!");
+        res.status(404).send("That user was not found by ID!");
     }
 
     function updateUser(req,res) {
@@ -162,20 +162,23 @@ module.exports = function(app){
                 return;
             }
         }
-        res.status(404).send("not found!");
+        res.status(404).send("Not found the user you want to update!");
     }
 
     function deleteUser(req,res) {
-        var uid = req.params.id;
+        var uid = req.params.uid;
+        var user = req.body;
+
+        // console.log(user);
+        // console.log(uid);
 
         for (u in users){
-            var user = users[u];
-            if(user._id === uid){
+            if(String(users[u]._id) === String(uid)){
                 users.splice(u,1);
                 res.sendStatus(200);
                 return;
             }
         }
-        res.status(404).send("not found!");
+        res.status(404).send("Not found the user to delete!");
     }
 };

@@ -119,14 +119,28 @@
         }
     }
 
-    function ProfileController($routeParams, $timeout, UserService) {
+    function ProfileController($routeParams, $timeout, $location, UserService) {
         var vm = this;
         vm.uid = $routeParams.uid;
 
         vm.updateUser = updateUser;
+        vm.deleteUser = deleteUser;
 
         UserService.findUserById(vm.uid)
             .then(renderUser, userError);
+
+        function deleteUser(user) {
+            UserService
+                .deleteUser(user._id)
+                .then(function () {
+                    $location.url('/login');
+                }, function () {
+                    vm.error = "Unable to remove this user.";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                });
+        }
 
         function updateUser(user) {
             UserService
