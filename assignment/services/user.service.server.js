@@ -1,5 +1,3 @@
-// var app = require("../../express");
-
 module.exports = function(app){
 
     var users = [
@@ -10,13 +8,24 @@ module.exports = function(app){
         {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi", email: "jose@neu.com"}
     ];
 
-    // app.get('/give/me/all/users', function (req, res) {
-    //     res.send(users);
-    //
-    // });
-
+    // get all users
     app.get('/api/user?', findAllUsers);
 
+    // POST Calls.
+    app.post('/api/user', createUsers);
+
+    // GET Calls.
+    app.get('/api/user?username=username', findUserByUsername);
+    app.get('/api/user?username=username&password=password', findUserByCredentials);
+    app.get('/api/user/:uid', findUserById);
+
+    // PUT Calls.
+    app.put('/api/user/:uid', updateUser);
+
+    // DELETE Calls.
+    app.delete('/api/user/:uid', deleteUser);
+
+    /*API implementation*/
     function findAllUsers(req, res) {
         var username = req.query.username;
         var password = req.query.password;
@@ -45,29 +54,9 @@ module.exports = function(app){
         }
     }
 
-    // POST Calls.
-    app.post('/api/user', createUsers);
 
-    // GET Calls.
-    app.get('/api/user?username=username', findUserByUsername);
-    app.get('/api/user?username=username&password=password', findUserByCredentials);
-    app.get('/api/user/:uid', findUserById);
-
-    // PUT Calls.
-    app.put('/api/user/:uid', updateUser);
-
-    // DELETE Calls.
-    app.delete('/api/user/:uid', deleteUser);
-
-    /*API implementation*/
     function createUsers(req, res) {
-        // can start serverside create users
-        // console.log("server side create user");
-
         var user = req.body;
-
-        // print this user normal, without userid
-        // console.log(user);
 
         var newUser = {
             _id: new Date().getTime(),
@@ -79,18 +68,8 @@ module.exports = function(app){
         };
         users.push(newUser);
 
-        // print users normal, give new user a user id
-        // console.log(users);
-
         res.send(newUser);
 
-        // if(newUser){
-        //     console.log("send new user");
-        //     res.status(200).send(newUser);
-        // } else {
-        //     console.log("send 500");
-        //     res.sendStatus(500);
-        // }
     }
 
     function findUserByUsername (req, res) {
@@ -108,13 +87,9 @@ module.exports = function(app){
     }
 
     function findUserByCredentials (req, res) {
-        // console.log("in server side find by credentials");
 
         var username = req.query.username;
         var pswd = req.query.password;
-
-        // console.log("username: " + username);
-        // console.log("pswd: " + pswd);
 
         for (u in users){
             var user = users[u];
@@ -125,19 +100,14 @@ module.exports = function(app){
         }
         res.status(404).send("Not found that user by credentials!");
 
-        // console.log(users[0]);
-        // res.send(users[0]).sendStatus(200);
     }
 
     function findUserById(req, res) {
 
         var uid = req.params.uid;
 
-        // console.log(uid);
-
         for (u in users){
             var user = users[u];
-            // console.log(user);
             if(String(user._id) === String(uid)) {
                 res.status(200).send(user);
                 return;
@@ -149,15 +119,9 @@ module.exports = function(app){
     function updateUser(req,res) {
         var uid = req.params.uid;
         var new_user = req.body;
-        // console.log(new_user);
         for (var u in users){
-            // var user = users[u];
             if(String(users[u]._id) === String(uid)) {
                 users[u] = new_user;
-                // user.firstName = new_user.firstName;
-                // user.lastName = new_user.lastName;
-                // user.email = new_user.email;
-                // res.status(200).send(user);
                 res.sendStatus(200);
                 return;
             }
@@ -168,9 +132,6 @@ module.exports = function(app){
     function deleteUser(req,res) {
         var uid = req.params.uid;
         var user = req.body;
-
-        // console.log(user);
-        // console.log(uid);
 
         for (u in users){
             if(String(users[u]._id) === String(uid)){
