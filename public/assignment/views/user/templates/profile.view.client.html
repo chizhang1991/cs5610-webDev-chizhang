@@ -40,8 +40,16 @@
                id="lName" required>
     </form>
 
-    <a href="#!/user/{{model.user._id}}/website" class="btn btn-primary btn-block">Websites</a>
-    <a href="#!/login" class="btn btn-danger btn-block">Logout</a>
+    <a href="#!/login" class="btn btn-danger btn-block">
+        Logout
+    </a>
+    <a href="#!/user/{{model.user._id}}/website" class="btn btn-primary btn-block">
+        Websites
+    </a>
+    <a ng-click="model.deleteUser()"
+       class="btn btn-danger btn-block">
+        Unregister
+    </a>
 </div>
 
 <nav class="navbar navbar-fixed-bottom cl-blue-navbar">
