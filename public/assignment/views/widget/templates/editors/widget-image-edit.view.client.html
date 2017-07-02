@@ -15,7 +15,14 @@
         placeholder="Image Width"
         id="width"
         required>
- <label class="btn btn-default btn-file">
-     <input type="file" hidden>
- </label>
- <a class="btn btn-primary btn-block" href="../widget-list.view.client.html">Upload Image</a>
+ <!--<label class="btn btn-default btn-file">-->
+     <!--&lt;!&ndash;<input type="file" hidden>&ndash;&gt;-->
+ <!--</label>-->
+ <label for="file">Upload</label>
+ <input id="file"
+        multiple
+        type="file"
+        class="form-control"/>
+ <a class="btn btn-primary btn-block"
+    ng-click="model.uploadImage()">Upload Image</a>
+
