@@ -24,17 +24,17 @@
         };
         return service;
 
-        function getNextId() {
-            function getMaxId(maxId, currentId) {
-                var current = parseInt(currentId._id);
-                if (maxId > current) {
-                    return maxId;
-                } else {
-                    return current + 1;
-                }
-            }
-            return widgets.reduce(getMaxId, 0).toString();
-        }
+        // function getNextId() {
+        //     function getMaxId(maxId, currentId) {
+        //         var current = parseInt(currentId._id);
+        //         if (maxId > current) {
+        //             return maxId;
+        //         } else {
+        //             return current + 1;
+        //         }
+        //     }
+        //     return widgets.reduce(getMaxId, 0).toString();
+        // }
 
         function createWidget(pageId, widget) {
             // var newWidgetId = getNextId();
@@ -75,21 +75,32 @@
         }
 
         function findWidgetById(widgetId) {
-            for (w in widgets) {
-                var widget = widgets[w];
-                if (parseInt(widget._id) === parseInt(widgetId)) {
-                    return widget;
-                }
-            }
-            return null;
+            var url = "/api/widget/" + widgetId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+
+            // for (w in widgets) {
+            //     var widget = widgets[w];
+            //     if (parseInt(widget._id) === parseInt(widgetId)) {
+            //         return widget;
+            //     }
+            // }
+            // return null;
         }
 
         function updateWidget(widgetId, widget) {
-            var oldWidget = findWidgetById(widgetId);
-            var index = widgets.indexOf(oldWidget);
-            widgets[index].widgetType = widget.widgetType;
-            widgets[index].size = widget.size;
-            widgets[index].text = widget.text;
+            var url = "/api/widget/" + widgetId;
+            return $http.put(url, widget)
+                .then(function (response) {
+                    return response.data;
+                })
+            // var oldWidget = findWidgetById(widgetId);
+            // var index = widgets.indexOf(oldWidget);
+            // widgets[index].widgetType = widget.widgetType;
+            // widgets[index].size = widget.size;
+            // widgets[index].text = widget.text;
         }
 
         function deleteWidget(widgetId) {

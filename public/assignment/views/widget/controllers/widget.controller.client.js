@@ -100,30 +100,45 @@
         }
     }
 
-    function EditWidgetController($routeParams, $location, WidgetService) {
+    function EditWidgetController($routeParams, $location, $timeout, WidgetService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
 
-        vm.widget = WidgetService.findWidgetById(vm.wgid);
+        // vm.widget = WidgetService.findWidgetById(vm.wgid);
+        WidgetService
+            .findWidgetById(vm.wgid)
+            .then(function (widget) {
+                vm.widget = widget;
+            }, function (error) {
+                vm.error = "Cannot find this widget by id";
+                $timeout(function () {
+                    vm.error = null;
+                }, 3000);
+            });
 
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
         
-        function updateWidget() {
-            var update_widget = {
-                _id: vm.wgid,
-                widgetType: vm.widget.widgetType,
-                pageId: vm.widget.pageId,
-                size: vm.widget.size,
-                text: vm.widget.text,
-                width: vm.widget.width,
-                url: vm.widget.url
-            };
-            WidgetService.updateWidget(vm.wgid, update_widget);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+        function updateWidget(newWidget) {
+            // var update_widget = {
+            //     _id: vm.wgid,
+            //     widgetType: vm.widget.widgetType,
+            //     pageId: vm.widget.pageId,
+            //     size: vm.widget.size,
+            //     text: vm.widget.text,
+            //     width: vm.widget.width,
+            //     url: vm.widget.url
+            // };
+            // WidgetService.updateWidget(vm.wgid, update_widget);
+            // $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+            WidgetService
+                .updateWidget(vm.wgid, newWidget)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                });
         }
 
         function deleteWidget(widgetId) {

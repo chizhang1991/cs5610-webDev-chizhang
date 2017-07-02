@@ -21,8 +21,12 @@ module.exports = function(app){
 
     // GET call
     app.get("/api/page/:pid/widget", findAllWidgetsForPage);
+    app.get("/api/widget/:wgid", findWidgetById);
 
+    // PUT call
+    app.put("/api/widget/:wgid", updateWidget);
 
+    // upload image
     app.post ("/api/upload", upload.single('file'), uploadImage);
 
     // api implementation
@@ -55,6 +59,40 @@ module.exports = function(app){
             }
         }
         res.send(result);
+    }
+
+    function findWidgetById(req, res) {
+        var wgid = req.params.wgid;
+
+        for (w in widgets) {
+            var widget = widgets[w];
+            if (parseInt(widget._id) === parseInt(wgid)) {
+                res.status(200).send(widget);
+                return;
+            }
+        }
+        res.status(404).send("Cannot find this widget by id");
+    }
+
+    function updateWidget(req, res) {
+        // var oldWidget = findWidgetById(widgetId);
+        // var index = widgets.indexOf(oldWidget);
+        // widgets[index].widgetType = widget.widgetType;
+        // widgets[index].size = widget.size;
+        // widgets[index].text = widget.text;
+
+        var wgid = req.params.wgid;
+        var widget = req.body;
+        for (w in widgets) {
+            if (String(widgets[w]._id) === String(wgid)) {
+                // websites[w].name=website.name;
+                // websites[w].desc=website.desc;
+                widgets[w] = widget;
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(404);
     }
 
     function uploadImage(req, res) {
