@@ -66,7 +66,7 @@
             }
             if (vm.wtype === "IMAGE" || vm.wtype === "YOUTUBE") {
                 if (width === undefined || url === undefined || width === null || url === null) {
-                    vm.errom = "Width and url cannot be empty.";
+                    vm.error = "Width and url cannot be empty.";
                     $timeout(function () {
                         vm.error = null;
                     }, 3000);
@@ -90,8 +90,13 @@
                 text: text,
                 url: url
             };
-            WidgetService.createWidget(vm.pid, widget);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+            // WidgetService.createWidget(vm.pid, widget);
+            // $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+            WidgetService
+                .createWidget(vm.pid, widget)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                });
         }
     }
 

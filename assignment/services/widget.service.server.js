@@ -17,6 +17,7 @@ module.exports = function(app){
         ];
 
     // POST call
+    app.post("/api/page/:pid/widget", createWidget);
 
     // GET call
     app.get("/api/page/:pid/widget", findAllWidgetsForPage);
@@ -25,6 +26,24 @@ module.exports = function(app){
     app.post ("/api/upload", upload.single('file'), uploadImage);
 
     // api implementation
+
+    function createWidget(req, res) {
+        var pid = req.params.pid;
+        var widget = req.body;
+
+        var newWidget = {
+            _id: new Date().getTime(),
+            widgetType: widget.widgetType,
+            pageId: pid,
+            size: widget.size,
+            text: widget.text,
+            width: widget.width,
+            url: widget.url
+        };
+        widgets.push(newWidget);
+
+        res.sendStatus(200);
+    }
 
     function findAllWidgetsForPage(req, res) {
         var pid = req.params.pid;

@@ -37,17 +37,23 @@
         }
 
         function createWidget(pageId, widget) {
-            var newWidgetId = getNextId();
-            var newWidget = {
-                _id: newWidgetId,
-                widgetType: widget.widgetType,
-                pageId: pageId,
-                size: widget.size,
-                text: widget.text,
-                width: widget.width,
-                url: widget.url
-            }
-            widgets.push(newWidget);
+            // var newWidgetId = getNextId();
+            // var newWidget = {
+            //     _id: newWidgetId,
+            //     widgetType: widget.widgetType,
+            //     pageId: pageId,
+            //     size: widget.size,
+            //     text: widget.text,
+            //     width: widget.width,
+            //     url: widget.url
+            // };
+            // widgets.push(newWidget);
+
+            var url = "/api/page/" + pageId + "/widget";
+            return $http.post(url, widget)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
         function findWidgetsByPageId(pageId) {
