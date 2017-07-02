@@ -57,7 +57,7 @@
                     var user = response.data;
                     return user;
                 });
-            return $http.put(url, user);
+            // return $http.put(url, user);
         }
 
         function deleteUser(userId) {

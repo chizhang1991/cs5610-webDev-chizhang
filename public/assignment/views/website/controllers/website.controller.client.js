@@ -111,20 +111,21 @@
         //         vm.website = website;
         //     });
 
-        function updateWebsite() {
-            var update_website = {
-                _id: $routeParams.wid,
-                name: vm.website.name,
-                developerId: vm.uid,
-                desc: vm.website.desc
-            };
-            WebsiteService.updateWebsite(vm.wid, update_website);
+        function updateWebsite(newWebsite) {
+            // var update_website = {
+            //     _id: $routeParams.wid,
+            //     name: vm.website.name,
+            //     developerId: vm.uid,
+            //     desc: vm.website.desc
+            // };
+            WebsiteService.updateWebsite(vm.wid, newWebsite)
+                .then(function () {
+                    vm.updated = "Website changes saved!";
+                    $timeout(function () {
+                        vm.updated = null;
+                    }, 3000);
+                });
 
-            vm.updated = "Website changes saved!";
-
-            $timeout(function () {
-                vm.updated = null;
-            }, 3000);
         }
 
         function deleteWebsite(websiteId) {

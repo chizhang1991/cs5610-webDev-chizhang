@@ -92,10 +92,18 @@
         }
 
         function updateWebsite(websiteId, website) {
-            var oldWebsite = findWebsiteById(websiteId);
-            var index = websites.indexOf(oldWebsite);
-            websites[index].name = website.name;
-            websites[index].desc = website.desc;
+            var url = "/api/website/" + websiteId;
+            return $http.put(url, website)
+                .then(function (response) {
+                    var website = response.data;
+                    return website;
+                });
+
+
+            // var oldWebsite = findWebsiteById(websiteId);
+            // var index = websites.indexOf(oldWebsite);
+            // websites[index].name = website.name;
+            // websites[index].desc = website.desc;
         }
 
         function deleteWebsite(websiteId) {

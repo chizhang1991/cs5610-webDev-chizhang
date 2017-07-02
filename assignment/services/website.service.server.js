@@ -17,7 +17,7 @@ module.exports = function(app){
     app.get('/api/website/:wid',findWebsiteById);
 
     //PUT Calls
-    app.put('/api/website/:websiteId',updateWebsite);
+    app.put('/api/website/:wid',updateWebsite);
 
     //DELETE Calls
     app.delete('/api/website/:websiteId',deleteWebsite);
@@ -96,6 +96,7 @@ module.exports = function(app){
                 // website = websites[w];
                 // break;
                 res.status(200).send(website);
+                return;
             }
         }
         // res.send(website);
@@ -104,7 +105,7 @@ module.exports = function(app){
 
     function updateWebsite(req, res) {
 
-        var wid = req.params.websiteId;
+        var wid = req.params.wid;
         var website = req.body;
 
         for (w in websites) {
