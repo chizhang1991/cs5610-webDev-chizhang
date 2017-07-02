@@ -76,13 +76,19 @@
         }
 
         function findWebsiteById(websiteId) {
-            for (w in websites) {
-                var website = websites[w];
-                if (parseInt(website._id) === parseInt(websiteId)) {
-                    return website;
-                }
-            }
-            return null;
+            var url = "/api/website/" + websiteId;
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                });
+
+            // for (w in websites) {
+            //     var website = websites[w];
+            //     if (parseInt(website._id) === parseInt(websiteId)) {
+            //         return website;
+            //     }
+            // }
+            // return null;
         }
 
         function updateWebsite(websiteId, website) {

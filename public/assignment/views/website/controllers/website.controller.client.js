@@ -70,11 +70,46 @@
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
 
-        function init() {
-            vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
-            vm.website = WebsiteService.findWebsiteById(vm.wid);
-        }
-        init();
+        WebsiteService
+            .findWebsitesByUser(vm.uid)
+            .then(function (websites) {
+                    vm.websites = websites;
+                });
+
+        WebsiteService
+            .findWebsiteById(vm.wid)
+            .then(function (website) {
+                vm.website = website;
+                // console.log(website);
+            }, function (error) {
+                vm.error = "Cannot find such a website";
+                $timeout(function () {
+                    vm.updated = null;
+                }, 3000);
+            });
+
+        // function init() {
+        //     // WebsiteService
+        //     //     .findWebsitesByUser(vm.uid)
+        //     //     .then(renderWebsites);
+        //     // WebsiteService
+        //     //     .findWebsiteById(vm.wid)
+        //     //     .then(function (website) {
+        //     //         vm.website = website;
+        //     //     });
+        // }
+        // init();
+
+        // console.log(website);
+        // function renderWebsites(websites) {
+        //     vm.websites = websites;
+        // }
+
+        // WebsiteService
+        //     .findWebsiteById(vm.wid)
+        //     .then(function renderWebsite(website) {
+        //         vm.website = website;
+        //     });
 
         function updateWebsite() {
             var update_website = {

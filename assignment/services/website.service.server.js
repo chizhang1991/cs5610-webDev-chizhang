@@ -14,7 +14,7 @@ module.exports = function(app){
 
     //GET Calls
     app.get('/api/user/:uid/website',findAllWebsitesForUser);
-    app.get('/api/website/:websiteId',findWebsiteById);
+    app.get('/api/website/:wid',findWebsiteById);
 
     //PUT Calls
     app.put('/api/website/:websiteId',updateWebsite);
@@ -71,16 +71,35 @@ module.exports = function(app){
         res.send(results);
     }
 
+    // function findUserById(req, res) {
+    //
+    //     var uid = req.params.uid;
+    //
+    //     for (u in users){
+    //         var user = users[u];
+    //         if(String(user._id) === String(uid)) {
+    //             res.status(200).send(user);
+    //             return;
+    //         }
+    //     }
+    //     res.status(404).send("That user was not found by ID!");
+    // }
+
     function findWebsiteById(req, res) {
-        var wid = req.websiteId
-        var website = null;
+        var wid = req.params.wid;
+        // console.log(wid);
+
+        // var website = null;
         for (w in websites) {
-            if (parseInt(websites[w]._id) === parseInt(wid)) {
-                website = websites[w];
-                break;
+            var website = websites[w];
+            if (parseInt(website._id) === parseInt(wid)) {
+                // website = websites[w];
+                // break;
+                res.status(200).send(website);
             }
         }
-        res.send(website);
+        // res.send(website);
+        res.status(404).send("Cannot find this website by ID");
     }
 
     function updateWebsite(req, res) {
