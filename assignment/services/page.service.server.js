@@ -16,6 +16,9 @@ module.exports = function(app){
     //PUT calls
     app.put("/api/page/:pid", updatePage);
 
+    //DELETE calls
+    app.delete("/api/page/:pid", deletePage);
+
     //API calls implementation
     function createPage(req, res) {
         var wid = req.params.wid;
@@ -65,6 +68,19 @@ module.exports = function(app){
             if (String(pages[p]._id) === String(pid)) {
                 pages[p]=page;
                 // websites[w].desc=website.desc;
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(404);
+    }
+
+    function deletePage(req, res) {
+        var pid = req.params.pid;
+        // console.log(pid);
+        for (p in pages) {
+            if (parseInt(pages[p]._id) === parseInt(pid)) {
+                pages.splice(p, 1);
                 res.sendStatus(200);
                 return;
             }

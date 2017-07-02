@@ -20,7 +20,7 @@ module.exports = function(app){
     app.put('/api/website/:wid',updateWebsite);
 
     //DELETE Calls
-    app.delete('/api/website/:websiteId',deleteWebsite);
+    app.delete('/api/website/:wid',deleteWebsite);
 
 
     /*API calls implementation*/
@@ -81,7 +81,7 @@ module.exports = function(app){
     }
 
     function deleteWebsite(req, res) {
-        var wid = req.params.websiteId;
+        var wid = req.params.wid;
         for (w in websites) {
             if (parseInt(websites[w]._id) === parseInt(wid)) {
                 websites.splice(w, 1);

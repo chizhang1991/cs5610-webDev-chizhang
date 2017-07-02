@@ -48,7 +48,11 @@
 
         function deletePage(pageId) {
             var url = "/api/page/" + pageId;
-            return $http.delete(url);
+            console.log(url);
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
         function deletePagesByWebsite(websiteId){

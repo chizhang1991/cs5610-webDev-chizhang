@@ -87,9 +87,19 @@
                 });
         }
 
-        function deletePage(pageId) {
-            PageService.deletePage(pageId);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+        function deletePage(page) {
+            PageService.deletePage(page._id)
+                .then(
+                    function () {
+                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                },
+                    function() {
+                        vm.error = "Cannot delete this page";
+                        $timeout(function () {
+                            vm.error = null;
+                        }, 3000);
+                    });
+
         }
     }
 })();
