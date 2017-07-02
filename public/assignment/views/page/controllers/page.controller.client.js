@@ -9,7 +9,15 @@
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
-        vm.pages = PageService.findPageByWebsiteId(vm.wid);
+        // vm.pages = PageService.findPageByWebsiteId(vm.wid);
+        PageService
+            .findPageByWebsiteId(vm.wid)
+            .then(renderPages);
+
+        function renderPages(pages) {
+            vm.pages = pages;
+            // console.log(vm.pages);
+        }
     }
 
     function NewPageController($routeParams, $timeout, $location, PageService) {
