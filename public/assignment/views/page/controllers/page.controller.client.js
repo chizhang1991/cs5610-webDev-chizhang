@@ -40,8 +40,12 @@
                 name: pageName,
                 description: pageTitle
             };
-            PageService.createPage(vm.wid, page);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+
+            PageService
+                .createPage(vm.wid, page)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                });
         }
     }
 

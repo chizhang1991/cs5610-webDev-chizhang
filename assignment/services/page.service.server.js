@@ -13,8 +13,19 @@ module.exports = function(app){
     app.get("/api/website/:wid/page", findAllPagesForWebsite);
 
     //API calls implementation
-    function createPage() {
+    function createPage(req, res) {
+        var wid = req.params.wid;
+        var page = req.body;
 
+        var newPage = {
+            _id: new Date().getTime(),
+            name: page.name,
+            websiteId: wid,
+            description: page.description
+        };
+        pages.push(newPage);
+
+        res.sendStatus(200);
     }
 
     function findAllPagesForWebsite(req, res) {
