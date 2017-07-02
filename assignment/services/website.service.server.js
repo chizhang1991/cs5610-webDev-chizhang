@@ -69,9 +69,10 @@ module.exports = function(app){
         var website = req.body;
 
         for (w in websites) {
-            if (parseInt(websites[w]._id) === parseInt(wid)) {
-                websites[w].name=website.name;
-                websites[w].desc=website.desc;
+            if (String(websites[w]._id) === String(wid)) {
+                // websites[w].name=website.name;
+                // websites[w].desc=website.desc;
+                websites[w] = website;
                 res.sendStatus(200);
                 return;
             }

@@ -11,6 +11,10 @@ module.exports = function(app){
 
     //GET calls
     app.get("/api/website/:wid/page", findAllPagesForWebsite);
+    app.get("/api/page/:pid", findPageById);
+
+    //PUT calls
+    app.put("/api/page/:pid", updatePage);
 
     //API calls implementation
     function createPage(req, res) {
@@ -38,5 +42,33 @@ module.exports = function(app){
         }
         // console.log(results);
         res.send(results);
+    }
+
+    function findPageById(req, res) {
+        var pid = req.params.pid;
+
+        for (p in pages) {
+            var page = pages[p];
+            if (String(page._id) === String(pid)) {
+                res.status(200).send(page);
+                return;
+            }
+        }
+        res.status(404).send("Cannot find this page by ID");
+    }
+
+    function updatePage(req, res) {
+        var pid = req.params.pid;
+        var page = req.body;
+
+        for (p in pages) {
+            if (String(pages[p]._id) === String(pid)) {
+                pages[p]=page;
+                // websites[w].desc=website.desc;
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.sendStatus(404);
     }
 };

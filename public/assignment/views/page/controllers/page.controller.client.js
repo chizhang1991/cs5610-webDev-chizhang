@@ -49,7 +49,7 @@
         }
     }
 
-    function EditPageController($routeParams, $location, PageService) {
+    function EditPageController($routeParams, $location, $timeout, PageService) {
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
@@ -59,20 +59,32 @@
         vm.deletePage = deletePage;
 
         function init() {
-            vm.page = PageService.findPageById(vm.pid);
+            PageService
+                .findPageById(vm.pid)
+                .then(function (page) {
+                    vm.page = page;
+                }, function (error) {
+                    vm.error = "Cannot find that page by ID";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                });
         }
         init();
 
-        function updatePage() {
-            var update_page = {
-                _id: vm.pid,
-                name: vm.page.name,
-                websiteId: vm.wid,
-                description: vm.page.des
-            };
+        function updatePage(newPage) {
+            // var update_page = {
+            //     _id: vm.pid,
+            //     name: page.name,
+            //     websiteId: vm.wid,
+            //     description: page.des
+            // };
 
-            PageService.updatePage(vm.pid, update_page);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+            PageService
+                .updatePage(vm.pid, newPage)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                });
         }
 
         function deletePage(pageId) {
