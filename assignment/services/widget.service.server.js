@@ -78,11 +78,6 @@ module.exports = function(app){
     }
 
     function updateWidget(req, res) {
-        // var oldWidget = findWidgetById(widgetId);
-        // var index = widgets.indexOf(oldWidget);
-        // widgets[index].widgetType = widget.widgetType;
-        // widgets[index].size = widget.size;
-        // widgets[index].text = widget.text;
 
         var wgid = req.params.wgid;
         var widget = req.body;

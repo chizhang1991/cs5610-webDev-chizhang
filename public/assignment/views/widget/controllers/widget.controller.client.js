@@ -12,7 +12,6 @@
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
 
-        // vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
         WidgetService
             .findWidgetsByPageId(vm.pid)
             .then(renderWidgets);
@@ -90,8 +89,7 @@
                 text: text,
                 url: url
             };
-            // WidgetService.createWidget(vm.pid, widget);
-            // $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+
             WidgetService
                 .createWidget(vm.pid, widget)
                 .then(function () {
@@ -107,7 +105,6 @@
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
 
-        // vm.widget = WidgetService.findWidgetById(vm.wgid);
         WidgetService
             .findWidgetById(vm.wgid)
             .then(function (widget) {
@@ -123,17 +120,6 @@
         vm.deleteWidget = deleteWidget;
         
         function updateWidget(newWidget) {
-            // var update_widget = {
-            //     _id: vm.wgid,
-            //     widgetType: vm.widget.widgetType,
-            //     pageId: vm.widget.pageId,
-            //     size: vm.widget.size,
-            //     text: vm.widget.text,
-            //     width: vm.widget.width,
-            //     url: vm.widget.url
-            // };
-            // WidgetService.updateWidget(vm.wgid, update_widget);
-            // $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
             WidgetService
                 .updateWidget(vm.wgid, newWidget)
                 .then(function () {
@@ -147,8 +133,6 @@
         }
 
         function deleteWidget(widget) {
-            // WidgetService.deleteWidget(widget._id);
-            // $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
             WidgetService
                 .deleteWidget(widget._id)
                 .then(function () {
