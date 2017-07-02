@@ -24,9 +24,15 @@
         vm.newWebsite = newWebsite;
 
         function init() {
-            vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
+            WebsiteService
+                .findWebsitesByUser(vm.uid)
+                .then(renderWebsites);
         }
         init();
+
+        function renderWebsites(websites) {
+            vm.websites = websites;
+        }
 
         function newWebsite(websiteName, websiteDesc) {
             if (websiteName === undefined || websiteName === null) {
@@ -39,17 +45,20 @@
 
                 return;
             }
+
             var website = {
                 name: websiteName,
                 desc: websiteDesc
             };
-            var websiteId = WebsiteService.createWebsite(vm.uid, website);
-            website = WebsiteService.findWebsiteById(websiteId);
-            // vm.updated = "New Website created.";
-            // $timeout(function () {
-            //     vm.error = null;
-            // }, 3000);
-            $location.url("/user/" + vm.uid + "/website");
+            // var websiteId = WebsiteService.createWebsite(vm.uid, website);
+            return WebsiteService
+                .createWebsite(vm.uid, website)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website");
+                });
+
+            // website = WebsiteService.findWebsiteById(websiteId);
+            // $location.url("/user/" + vm.uid + "/website");
         }
     }
 

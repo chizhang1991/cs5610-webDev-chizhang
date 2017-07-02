@@ -36,15 +36,24 @@
         }
 
         function createWebsite(userId, website) {
-            var newWebsiteId = getNextId();
-            var newWebsite = {
-                _id: newWebsiteId,
-                name: website.name,
-                desc: website.desc,
-                developerId: userId
-            };
-            websites.push(newWebsite);
-            return newWebsiteId;
+            var url = "/api/user/" + userId + "/website";
+            return $http.post(url, website)
+                .then(
+                    function (response) {
+                        return response.data;
+                    }
+                );
+
+
+            // var newWebsiteId = getNextId();
+            // var newWebsite = {
+            //     _id: newWebsiteId,
+            //     name: website.name,
+            //     desc: website.desc,
+            //     developerId: userId
+            // };
+            // websites.push(newWebsite);
+            // return newWebsiteId;
         }
 
         function findWebsitesByUser(userId) {

@@ -10,7 +10,7 @@ module.exports = function(app){
     ];
 
     //POST Calls
-    app.post('/api/user/:userId/website',createWebsite);
+    app.post('/api/user/:uid/website',createWebsite);
 
     //GET Calls
     app.get('/api/user/:uid/website',findAllWebsitesForUser);
@@ -25,7 +25,7 @@ module.exports = function(app){
 
     /*API calls implementation*/
     function createWebsite(req, res) {
-        var uid = req.params.userId;
+        var uid = req.params.uid;
         var website = req.body;
 
         var newWebsite = {
@@ -37,6 +37,16 @@ module.exports = function(app){
         websites.push(newWebsite);
 
         res.sendStatus(200);
+
+        // var newWebsiteId = getNextId();
+        // var newWebsite = {
+        //     _id: newWebsiteId,
+        //     name: website.name,
+        //     desc: website.desc,
+        //     developerId: userId
+        // };
+        // websites.push(newWebsite);
+        // return newWebsiteId;
     }
 
     function findAllWebsitesForUser(req, res) {
