@@ -12,7 +12,14 @@
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
 
-        vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
+        // vm.widgets = WidgetService.findWidgetsByPageId(vm.pid);
+        WidgetService
+            .findWidgetsByPageId(vm.pid)
+            .then(renderWidgets);
+
+        function renderWidgets(widgets) {
+            vm.widgets = widgets;
+        }
 
         vm.trustThisContent = trustThisContent;
         vm.getYoutubeEmbedUrl = getYoutubeEmbedUrl;
