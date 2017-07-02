@@ -8,7 +8,6 @@
     function WebsiteListController($routeParams, WebsiteService) {
         var vm = this;
         vm.uid = $routeParams.uid;
-        // vm.websites = WebsiteService.findWebsitesByUser(vm.uid);
         WebsiteService
             .findWebsitesByUser(vm.uid)
             .then(renderWebsites);
@@ -50,15 +49,12 @@
                 name: websiteName,
                 desc: websiteDesc
             };
-            // var websiteId = WebsiteService.createWebsite(vm.uid, website);
+
             return WebsiteService
                 .createWebsite(vm.uid, website)
                 .then(function () {
                     $location.url("/user/" + vm.uid + "/website");
                 });
-
-            // website = WebsiteService.findWebsiteById(websiteId);
-            // $location.url("/user/" + vm.uid + "/website");
         }
     }
 
@@ -80,7 +76,6 @@
             .findWebsiteById(vm.wid)
             .then(function (website) {
                 vm.website = website;
-                // console.log(website);
             }, function (error) {
                 vm.error = "Cannot find such a website";
                 $timeout(function () {
@@ -88,36 +83,7 @@
                 }, 3000);
             });
 
-        // function init() {
-        //     // WebsiteService
-        //     //     .findWebsitesByUser(vm.uid)
-        //     //     .then(renderWebsites);
-        //     // WebsiteService
-        //     //     .findWebsiteById(vm.wid)
-        //     //     .then(function (website) {
-        //     //         vm.website = website;
-        //     //     });
-        // }
-        // init();
-
-        // console.log(website);
-        // function renderWebsites(websites) {
-        //     vm.websites = websites;
-        // }
-
-        // WebsiteService
-        //     .findWebsiteById(vm.wid)
-        //     .then(function renderWebsite(website) {
-        //         vm.website = website;
-        //     });
-
         function updateWebsite(newWebsite) {
-            // var update_website = {
-            //     _id: $routeParams.wid,
-            //     name: vm.website.name,
-            //     developerId: vm.uid,
-            //     desc: vm.website.desc
-            // };
             WebsiteService.updateWebsite(vm.wid, newWebsite)
                 .then(function () {
                     vm.updated = "Website changes saved!";
