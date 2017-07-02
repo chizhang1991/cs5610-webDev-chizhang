@@ -13,7 +13,7 @@ module.exports = function(app){
     app.post('/api/user/:userId/website',createWebsite);
 
     //GET Calls
-    app.get('/api/user/:userId/website',findAllWebsitesForUser);
+    app.get('/api/user/:uid/website',findAllWebsitesForUser);
     app.get('/api/website/:websiteId',findWebsiteById);
 
     //PUT Calls
@@ -40,14 +40,24 @@ module.exports = function(app){
     }
 
     function findAllWebsitesForUser(req, res) {
-        var uid = req.userId;
+        // var result = [];
+        // for (w in websites) {
+        //     var website = websites[w];
+        //     if (parseInt(website.developerId) === parseInt(userId)) {
+        //         result.push(website);
+        //     }
+        // }
+        // return result;
+        var uid = req.params.uid;
+        // console.log(uid);
         var results = [];
         for (w in websites) {
-            var website = websites[w];
-            if (parseInt(website.developerId) === parseInt(uid)) {
-                results.push(website);
+            // var website = websites[w];
+            if (String(websites[w].developerId) === String(uid)) {
+                results.push(websites[w]);
             }
         }
+        // console.log(results);
         res.send(results);
     }
 
