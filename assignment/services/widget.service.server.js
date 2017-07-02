@@ -26,6 +26,9 @@ module.exports = function(app){
     // PUT call
     app.put("/api/widget/:wgid", updateWidget);
 
+    // DELETE call
+    app.delete("/api/widget/:wgid", deleteWidget);
+
     // upload image
     app.post ("/api/upload", upload.single('file'), uploadImage);
 
@@ -88,6 +91,18 @@ module.exports = function(app){
                 // websites[w].name=website.name;
                 // websites[w].desc=website.desc;
                 widgets[w] = widget;
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.Status(404).send("Cannot find widget to update");
+    }
+
+    function deleteWidget(req, res) {
+        var wgid = req.params.wgid;
+        for (w in widgets) {
+            if (parseInt(widgets[w]._id) === parseInt(wgid)) {
+                widgets.splice(w, 1);
                 res.sendStatus(200);
                 return;
             }

@@ -104,9 +104,14 @@
         }
 
         function deleteWidget(widgetId) {
-            var oldPage = findWidgetById(widgetId);
-            var index = widgets.indexOf(oldPage);
-            widgets.splice(index, 1);
+            // var oldPage = findWidgetById(widgetId);
+            // var index = widgets.indexOf(oldPage);
+            // widgets.splice(index, 1);
+            var url = "/api/widget/" + widgetId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
         }
     }
 })();

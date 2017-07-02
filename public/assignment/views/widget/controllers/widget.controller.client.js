@@ -138,12 +138,27 @@
                 .updateWidget(vm.wgid, newWidget)
                 .then(function () {
                     $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                }, function (error) {
+                    vm.error = "Cannot find widget to update.";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
                 });
         }
 
-        function deleteWidget(widgetId) {
-            WidgetService.deleteWidget(widgetId);
-            $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+        function deleteWidget(widget) {
+            // WidgetService.deleteWidget(widget._id);
+            // $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+            WidgetService
+                .deleteWidget(widget._id)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                }, function (error) {
+                    vm.error = "Cannot find widget to delete.";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                })
         }
     }
 })();
