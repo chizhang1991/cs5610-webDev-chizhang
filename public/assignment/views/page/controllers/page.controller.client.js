@@ -9,14 +9,12 @@
         var vm = this;
         vm.uid = $routeParams.uid;
         vm.wid = $routeParams.wid;
-        // vm.pages = PageService.findPageByWebsiteId(vm.wid);
         PageService
             .findPageByWebsiteId(vm.wid)
             .then(renderPages);
 
         function renderPages(pages) {
             vm.pages = pages;
-            // console.log(vm.pages);
         }
     }
 
@@ -73,12 +71,6 @@
         init();
 
         function updatePage(newPage) {
-            // var update_page = {
-            //     _id: vm.pid,
-            //     name: page.name,
-            //     websiteId: vm.wid,
-            //     description: page.des
-            // };
 
             PageService
                 .updatePage(vm.pid, newPage)

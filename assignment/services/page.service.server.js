@@ -43,7 +43,6 @@ module.exports = function(app){
                 results.push(pages[p]);
             }
         }
-        // console.log(results);
         res.send(results);
     }
 
@@ -67,7 +66,6 @@ module.exports = function(app){
         for (p in pages) {
             if (String(pages[p]._id) === String(pid)) {
                 pages[p]=page;
-                // websites[w].desc=website.desc;
                 res.sendStatus(200);
                 return;
             }
@@ -77,7 +75,6 @@ module.exports = function(app){
 
     function deletePage(req, res) {
         var pid = req.params.pid;
-        // console.log(pid);
         for (p in pages) {
             if (parseInt(pages[p]._id) === parseInt(pid)) {
                 pages.splice(p, 1);
