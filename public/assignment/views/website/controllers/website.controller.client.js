@@ -84,7 +84,7 @@
             }, function (error) {
                 vm.error = "Cannot find such a website";
                 $timeout(function () {
-                    vm.updated = null;
+                    vm.error = null;
                 }, 3000);
             });
 
@@ -128,9 +128,17 @@
 
         }
 
-        function deleteWebsite(websiteId) {
-            WebsiteService.deleteWebsite(websiteId);
-            $location.url("/user/" + vm.uid + "/website");
+        function deleteWebsite(website) {
+            WebsiteService
+                .deleteWebsite(website._id)
+                .then(function () {
+                    $location.url("/user/" + vm.uid + "/website");
+                }, function (error) {
+                    vm.error = "Unable to remove this website";
+                    $timeout(function () {
+                        vm.error = null;
+                    }, 3000);
+                });
         }
     }
 

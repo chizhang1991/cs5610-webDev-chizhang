@@ -107,9 +107,15 @@
         }
 
         function deleteWebsite(websiteId) {
-            var oldWebsite = findWebsiteById(websiteId);
-            var index = websites.indexOf(oldWebsite);
-            websites.splice(index, 1);
+            var url = "/api/website/" + websiteId;
+            return $http.delete(url)
+                .then(function (response) {
+                    return response.data;
+                });
+
+            // var oldWebsite = findWebsiteById(websiteId);
+            // var index = websites.indexOf(oldWebsite);
+            // websites.splice(index, 1);
         }
 
         function deleteWebsitesByUser(userId) {
