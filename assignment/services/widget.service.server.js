@@ -30,7 +30,7 @@ module.exports = function(app){
     app.delete("/api/widget/:wgid", deleteWidget);
 
     // upload image
-    app.post ("/api/upload", upload.single('file'), uploadImage);
+    app.post ("/api/upload", upload.single('myFile'), uploadImage);
 
     // api implementation
 
@@ -105,21 +105,62 @@ module.exports = function(app){
         res.sendStatus(404);
     }
 
+    // function uploadImage(req, res) {
+    //     var widgetId = req.body.widgetId;
+    //     var width = req.body.width;
+    //     var file = req.file;
+    //
+    //     var uploadDetails = {
+    //         originalname : file.originalname,
+    //         filename : file.filename,
+    //         fullpath : file.path,
+    //         destination : file.destination,
+    //         size : file.size,
+    //         mimetype : file.mimetype
+    //     };
+    //
+    //     res.send(uploadDetails);
+    // }
+
     function uploadImage(req, res) {
-        var widgetId = req.body.widgetId;
-        var width = req.body.width;
-        var file = req.file;
+        // console.log(req);
 
-        var uploadDetails = {
-            originalname : file.originalname,
-            filename : file.filename,
-            fullpath : file.path,
-            destination : file.destination,
-            size : file.size,
-            mimetype : file.mimetype
-        };
+        var widgetId      = req.body.widgetId;
+        var width         = req.body.width;
 
-        res.send(uploadDetails);
+        var myFile        = req.file;
+
+        var userId = req.body.userId;
+        var websiteId = req.body.websiteId;
+        var pageId = req.body.pageId;
+
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+
+        // console.log(widgetId);
+        widget = getWidgetById(widgetId);
+        // console.log(widget);
+        widget.url = '/uploads/'+filename;
+
+        function getWidgetById(widgetId) {
+            // console.log(widgetId);
+
+            for (w in widgets) {
+                var widget = widgets[w];
+                // console.log(widget);
+                if (String(widget._id) === String(widgetId)) {
+                    return widget;
+                }
+            }
+            return null;
+        }
+
+        var callbackUrl  = "/#!/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget";
+        res.redirect(callbackUrl);
     }
 
 };
