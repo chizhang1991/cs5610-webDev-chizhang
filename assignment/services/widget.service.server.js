@@ -32,6 +32,9 @@ module.exports = function(app){
     // upload image
     app.post ("/api/upload", upload.single('myFile'), uploadImage);
 
+    // reorder widget list
+    app.put("/api/page/:pid/widget?initial=index1&final=index2", reorderWidgets);
+
     // api implementation
 
     function createWidget(req, res) {
@@ -153,6 +156,23 @@ module.exports = function(app){
 
         var callbackUrl  = "/#!/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget";
         res.redirect(callbackUrl);
+    }
+
+    function reorderWidgets(req, res) {
+        var initial = req.query.initial;
+        var final = req.query.final;
+        if (initial && final) {
+            if (final >= widgets.length) {
+                var k = final - widgets.length;
+                while ((k--) + 1) {
+                    this.push(undefined);
+                }
+            }
+            this.splice(final, 0, widgets.splice(initial, 1)[0]);
+            res.sendStatus(200); // for testing purposes
+        }
+        res.status(404).send("Cannot reorder widgets");
+
     }
 
 };
