@@ -118,7 +118,6 @@
 
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
-        vm.uploadImage = uploadImage;
         
         function updateWidget(newWidget) {
             WidgetService
@@ -144,10 +143,6 @@
                         vm.error = null;
                     }, 3000);
                 })
-        }
-        
-        function uploadImage() {
-
         }
     }
 })();

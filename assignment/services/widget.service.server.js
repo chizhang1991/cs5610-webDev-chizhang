@@ -83,8 +83,6 @@ module.exports = function(app){
         var widget = req.body;
         for (w in widgets) {
             if (String(widgets[w]._id) === String(wgid)) {
-                // websites[w].name=website.name;
-                // websites[w].desc=website.desc;
                 widgets[w] = widget;
                 res.sendStatus(200);
                 return;
@@ -105,25 +103,7 @@ module.exports = function(app){
         res.sendStatus(404);
     }
 
-    // function uploadImage(req, res) {
-    //     var widgetId = req.body.widgetId;
-    //     var width = req.body.width;
-    //     var file = req.file;
-    //
-    //     var uploadDetails = {
-    //         originalname : file.originalname,
-    //         filename : file.filename,
-    //         fullpath : file.path,
-    //         destination : file.destination,
-    //         size : file.size,
-    //         mimetype : file.mimetype
-    //     };
-    //
-    //     res.send(uploadDetails);
-    // }
-
     function uploadImage(req, res) {
-        // console.log(req);
 
         var widgetId      = req.body.widgetId;
         var width         = req.body.width;
@@ -141,21 +121,33 @@ module.exports = function(app){
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        // console.log(widgetId);
         widget = getWidgetById(widgetId);
-        // console.log(widget);
         widget.url = '/uploads/'+filename;
 
         function getWidgetById(widgetId) {
-            // console.log(widgetId);
 
+            // when try to create a new image
+            if (widgetId === undefined || widgetId === null || widgetId === '') {
+                console.log("come into the correct loop");
+                // create a new widget, add to widgets
+                var newWidget = {
+                    _id: new Date().getTime(),
+                    widgetType: "IMAGE",
+                    pageId: pageId,
+                    width: width
+                };
+                widgets.push(newWidget);
+                return newWidget;
+            }
+
+            // edit existing image
             for (w in widgets) {
                 var widget = widgets[w];
-                // console.log(widget);
                 if (String(widget._id) === String(widgetId)) {
                     return widget;
                 }
             }
+
             return null;
         }
 
