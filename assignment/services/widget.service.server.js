@@ -6,14 +6,24 @@ module.exports = function(app){
     var widgets =
         [
             { _id: "123", widgetType: "HEADING", pageId: "321", size: 2, text: "GIZMODO"},
+            { _id: "321", widgetType: "HEADING", pageId: "432", size: 2, text: "GIZMODO"},
             { _id: "234", widgetType: "HEADING", pageId: "321", size: 4, text: "Lorem ipsum"},
+            { _id: "876", widgetType: "YOUTUBE", pageId: "432", width: "100%",
+                url: "https://youtu.be/AM2Ivdi9c4E" },
             { _id: "345", widgetType: "IMAGE", pageId: "321", width: "100%",
                 url: "http://lorempixel.com/400/200/"},
+            { _id: "789", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum</p>"},
             { _id: "456", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum</p>"},
+
+            { _id: "543", widgetType: "IMAGE", pageId: "432", width: "100%",
+                url: "http://lorempixel.com/400/200/"},
+            { _id: "987", widgetType: "HTML", pageId: "432", text: "<p>Lorem ipsum</p>"},
             { _id: "567", widgetType: "HEADING", pageId: "321", size: 4, text: "Lorem ipsum"},
+            { _id: "654", widgetType: "HTML", pageId: "432", text: "<p>Lorem ipsum</p>"},
             { _id: "678", widgetType: "YOUTUBE", pageId: "321", width: "100%",
                 url: "https://youtu.be/AM2Ivdi9c4E" },
-            { _id: "789", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum</p>"}
+            { _id: "432", widgetType: "HEADING", pageId: "432", size: 4, text: "Lorem ipsum"},
+            { _id: "765", widgetType: "HEADING", pageId: "432", size: 4, text: "Lorem ipsum"}
         ];
 
     // POST call
@@ -33,7 +43,7 @@ module.exports = function(app){
     app.post ("/api/upload", upload.single('myFile'), uploadImage);
 
     // reorder widget list
-    app.put("/api/page/:pid/widget?initial=index1&final=index2", reorderWidgets);
+    app.put("/api/page/:pid/widget", reorderWidgets);
 
     // api implementation
 
@@ -159,17 +169,36 @@ module.exports = function(app){
     }
 
     function reorderWidgets(req, res) {
-        var initial = req.query.initial;
-        var final = req.query.final;
-        if (initial && final) {
+        // get widgets by pageId
+        var pageId = req.params.pid;
+        var pageWidgets = [];
+        for (w in widgets) {
+            var widget = widgets[w];
+            if (parseInt(widget.pageId) === parseInt(pageId)) {
+                pageWidgets.push(widget);
+            }
+        }
+
+        // index1 and index2 are index in pageWidgets
+        var index1 = req.query.initial;
+        var index2 = req.query.final;
+
+        // get the index of the widget in widgets
+        var initial = widgets.indexOf(pageWidgets[index1]);
+        var final = widgets.indexOf(pageWidgets[index2]);
+
+        // reorder widgets
+        if (index1 && index2) {
+            // console.log("come into if condition");
             if (final >= widgets.length) {
                 var k = final - widgets.length;
                 while ((k--) + 1) {
-                    this.push(undefined);
+                    widgets.push(undefined);
                 }
             }
-            this.splice(final, 0, widgets.splice(initial, 1)[0]);
+            widgets.splice(final, 0, widgets.splice(initial, 1)[0]);
             res.sendStatus(200); // for testing purposes
+            return;
         }
         res.status(404).send("Cannot reorder widgets");
 

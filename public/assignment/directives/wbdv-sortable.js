@@ -1,53 +1,41 @@
 (function () {
     angular
         .module("WbdvDirective", [])
-        .directive("wbdvSortable", wbdvSortable)
-        .directive("hello", helloTag);
-    
+        .directive("wbdvSortable", wbdvSortable);
 
-    function wbdvSortable() {
+    function wbdvSortable($http) {
 
         function linkFunction(scope, element, attrs) {
-            $(element).sortable();
+            // get the pageId of the widgets list
+            var fullUrl = window.location.href;
+            var fullUrlParts = fullUrl.split("/");
+            var pageId = fullUrlParts[fullUrlParts.indexOf("page") + 1];
+            $(element).sortable({
+                start: function (event, ui) {
+                    start = $(ui.item).index();
+                    console.log("start:" + start);
+                },
+                stop: function (event, ui) {
+                    end = $(ui.item).index();
+                    scope.callback ={
+                        start: start,
+                        end: end
+                    };
+                    console.log("end:"+end);
+                    // get the url to send to server
+                    var url = "/api/page/" + pageId + "/widget?initial=" + start + "&final=" + end;
+                    // change the widgets order in server
+                    $http.put(url);
+
+                }
+            });
+
         }
 
         return{
-            link: linkFunction
-        }
-        // function linker(scope, element, attrs) {
-        //     $(element).sortable();
-        //
-        //     // $(element).sortable({
-        //     //     // start: function (event, ui) {
-        //     //     //     start = ui.item.index();
-        //     //     //     // console.log();
-        //     //     // },
-        //     //     // stop: function (event, ui) {
-        //     //     //     end = ui.item.index();
-        //     //     //     scope.callback({
-        //     //     //         start: start,
-        //     //     //         end: end
-        //     //     //     })
-        //     //     // }
-        //     // });
-        // }
-        //
-        // return {
-        //     link: linker
-        //     // callback: '&'
-        // }
-    }
-    
-    function helloTag() {
-        
-        function linkFunction(scope, element, attrs) {
-            console.log(element);
-            element.html('goodbye');
-        }
-        // alert("hello from directive");
-        return {
-            template: "<h1>Hello from directive</h1>",
-            link: linkFunction
+            link: linkFunction,
+            callback: '&'
         }
     }
+
 })();

@@ -15,9 +15,6 @@
         placeholder="Image Width"
         id="width"
         required>
- <!--<label class="btn btn-default btn-file">-->
-     <!--&lt;!&ndash;<input type="file" hidden>&ndash;&gt;-->
- <!--</label>-->
 
  <form action="/api/upload"   method="post" enctype="multipart/form-data">
   <input  name="myFile"    type="file" class="form-control"/>
@@ -28,14 +25,3 @@
   <input  name="widgetId"  value="{{model.widget._id}}"   style="display: none"/>
   <button type="submit"    class="btn btn-block btn-primary">Upload Image</button>
  </form>
-
- <!---->
- <!---->
- <!--<label for="file">Upload</label>-->
- <!--<input id="file"-->
-        <!--multiple-->
-        <!--type="file"-->
-        <!--class="form-control"/>-->
- <!--<a class="btn btn-primary btn-block"-->
-    <!--ng-click="model.uploadImage()">Upload Image</a>-->
-
