@@ -135,13 +135,13 @@ module.exports = function(app){
         var mimetype      = myFile.mimetype;
 
         widget = getWidgetById(widgetId);
-        widget.url = '/uploads/'+filename;
+        widget.url = 'assignment/uploads/'+filename;
 
         function getWidgetById(widgetId) {
 
             // when try to create a new image
             if (widgetId === undefined || widgetId === null || widgetId === '') {
-                console.log("come into the correct loop");
+                // console.log("come into the correct loop");
                 // create a new widget, add to widgets
                 var newWidget = {
                     _id: new Date().getTime(),

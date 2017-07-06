@@ -16,37 +16,6 @@
     </div>
 </nav>
 
-<!--<a class="hello">-->
-
-<!--</a>-->
-<!--<hello>-->
-    <!--<p>hello from html</p>-->
-<!--</hello>-->
-
-<!--<ul id="sortable">-->
-    <!--<li>Item 1</li>-->
-    <!--<li>Item 2</li>-->
-    <!--<li>Item 3</li>-->
-    <!--<li>Item 4</li>-->
-    <!--<li>Item 5</li>-->
-<!--</ul>-->
-
-<!--<script>$("#sortable").sortable();</script>-->
-
-<!--<ul wbdv-sortable="">-->
-    <!--<li>Item 1</li>-->
-    <!--<li>Item 2</li>-->
-    <!--<li>Item 3</li>-->
-    <!--<li>Item 4</li>-->
-    <!--<li>Item 5</li>-->
-<!--</ul>-->
-
-<!--<div wbdv-sortable="" class="container cl-container-padding">-->
-    <!--<div>100</div>-->
-    <!--<div>200</div>-->
-    <!--<div>300</div>-->
-    <!--<div>400</div>-->
-<!--</div>-->
 
 <div wbdv-sortable="model.pid" class="container cl-container-padding">
     <div ng-repeat="widget in model.widgets" class="margin-bottom">
@@ -58,16 +27,16 @@
         </div>
         <div ng-switch="widget.widgetType">
             <div ng-switch-when="HEADING">
-                <div ng-include="'views/widget/templates/widget-heading.view.client.html'"></div>
+                <div ng-include="'assignment/views/widget/templates/widget-heading.view.client.html'"></div>
             </div>
             <div ng-switch-when="IMAGE">
-                <div ng-include="'views/widget/templates/widget-image.view.client.html'"></div>
+                <div ng-include="'assignment/views/widget/templates/widget-image.view.client.html'"></div>
             </div>
             <div ng-switch-when="YOUTUBE">
-                <div ng-include="'views/widget/templates/widget-youtube.view.client.html'"></div>
+                <div ng-include="'assignment/views/widget/templates/widget-youtube.view.client.html'"></div>
             </div>
             <div ng-switch-when="HTML">
-                <div ng-include="'views/widget/templates/widget-html.view.client.html'"></div>
+                <div ng-include="'assignment/views/widget/templates/widget-html.view.client.html'"></div>
             </div>
         </div>
     </div>
