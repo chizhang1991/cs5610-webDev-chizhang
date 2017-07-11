@@ -16,10 +16,5 @@ app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
 
-// app.get('/api/user/:uid', function (req, res) {
-//  var uid = req.params.uid;
-//  console.log("get uri");
-//  res.sendStatus(200);
-//  });
 
 require("./assignment/app.js")(app);

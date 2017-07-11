@@ -4,7 +4,8 @@
         .controller("WidgetListController", WidgetListController)
         .controller("NewWidgetController", NewWidgetController)
         .controller("EditWidgetController", EditWidgetController)
-        .controller("CreateWidgetController", CreateWidgetController);
+        .controller("CreateWidgetController", CreateWidgetController)
+        .controller("FlickrImageSearchController", FlickrImageSearchController);
 
     function WidgetListController($routeParams, $sce, WidgetService) {
         var vm = this;
@@ -143,6 +144,19 @@
                         vm.error = null;
                     }, 3000);
                 })
+        }
+    }
+    
+    function FlickrImageSearchController(WidgetService) {
+        vm.searchPhotos = function(searchTerm) {
+            FlickrService
+                .searchPhotos(searchTerm)
+                .then(function(response) {
+                    data = response.data.replace("jsonFlickrApi(","");
+                    data = data.substring(0,data.length - 1);
+                    data = JSON.parse(data);
+                    vm.photos = data.photos;
+                });
         }
     }
 })();
