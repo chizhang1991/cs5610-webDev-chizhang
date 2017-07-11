@@ -18,15 +18,6 @@
                     function (error) {
                         vm.error = "Username does not exist.";
                 });
-            
-            // function login(user) {
-            //     // console.log(user);
-            //     if (user === null) {
-            //         vm.error = "Username does not exist.";
-            //     } else {
-            //         $location.url("/user/" + user._id);
-            //     }
-            // }
         }
     }
 
