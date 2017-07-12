@@ -147,7 +147,16 @@
         }
     }
     
-    function FlickrImageSearchController(WidgetService) {
+    function FlickrImageSearchController($routeParams, $location, FlickrService, WidgetService) {
+        var vm = this;
+        vm.uid = $routeParams.uid;
+        vm.wid = $routeParams.wid;
+        vm.pid = $routeParams.pid;
+        vm.wgid = $routeParams.wgid;
+        console.log(vm.wgid);
+
+        vm.selectPhoto = selectPhoto;
+
         vm.searchPhotos = function(searchTerm) {
             FlickrService
                 .searchPhotos(searchTerm)
@@ -157,6 +166,36 @@
                     data = JSON.parse(data);
                     vm.photos = data.photos;
                 });
+        };
+
+        function selectPhoto(photo) {
+            var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server;
+            url += "/" + photo.id + "_" + photo.secret + "_b.jpg";
+
+            var newWidget = {
+                widgetType: "IMAGE",
+                url: url
+            };
+
+            if (vm.wgid === null || vm.wgid === undefined) {
+                WidgetService
+                    .createWidget(vm.pid, newWidget)
+                    .then(function () {
+                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                    })
+            } else {
+                WidgetService
+                    .updateWidget(vm.wgid, newWidget)
+                    .then(function () {
+                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                    })
+            }
+            // WidgetService
+            //     .updateWidget(vm.wgid, photo)
+            //     .then(function () {
+            //         $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+            //     });
         }
+
     }
 })();

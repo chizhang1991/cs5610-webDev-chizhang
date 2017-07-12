@@ -135,7 +135,7 @@ module.exports = function(app){
         var mimetype      = myFile.mimetype;
 
         widget = getWidgetById(widgetId);
-        widget.url = 'assignment/uploads/'+filename;
+        widget.url = 'uploads/'+filename;
 
         function getWidgetById(widgetId) {
 
