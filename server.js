@@ -4,6 +4,10 @@ var express = require('express');
 //initialize app as an express application
 var app = express();
 
+// var passport = require('passport');
+// var cookies = require('cookies');
+// var sessions = require('sessions');
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

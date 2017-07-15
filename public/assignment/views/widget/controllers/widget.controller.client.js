@@ -177,6 +177,8 @@
                 url: url
             };
 
+            // wgid is useless -- to be revised
+            // image edit and image create cannot work together
             if (vm.wgid === null || vm.wgid === undefined) {
                 WidgetService
                     .createWidget(vm.pid, newWidget)
