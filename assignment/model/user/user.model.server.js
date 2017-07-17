@@ -1,6 +1,6 @@
 // var mongoose = require('mongoose');
-// var userSchema = require('./user.schema.server');
-// var userModel = mongoose.model('UserModel', userSchema);
+// var userSchema = require('./user.schema.server')();
+// var userModel = mongoose.model('User', userSchema);
 //
 // userModel.createUser = createUser;
 // userModel.findUserById = findUserById;
@@ -75,7 +75,8 @@ module.exports = function(mongoose){
         'findUserByCredentials' : findUserByCredentials,
         'updateUser' : updateUser,
         'removeWebsiteFromUser' : removeWebsiteFromUser,
-        'deleteUser' : deleteUser
+        'deleteUser' : deleteUser,
+        'findAllUser' : findAllUser
     };
 
     return api;
@@ -83,6 +84,7 @@ module.exports = function(mongoose){
     // Function Definition Section
 
     function createUser(user){
+        console.log("in user model");
         var newUser = {
             username : user.username,
             password : user.password,
@@ -101,12 +103,14 @@ module.exports = function(mongoose){
         if(user.phone){
             newUser.phone = user.phone;
         }
-
+        console.log("in user model, create user");
         return userModel.create(newUser);
     }
 
     function findUserById(userId){
-        return userModel.findById(userId);
+        // return userModel.findById(userId);
+        console.log("in model: " + userId);
+        return userModel.findOne({_id: userId});
     }
 
     function findUserByUsername(uname){
@@ -114,6 +118,9 @@ module.exports = function(mongoose){
     }
 
     function findUserByCredentials(uname, pswrd){
+        console.log("in model, find by credentials");
+        console.log("uname: " + uname);
+        console.log("pswrd: " + pswrd);
         return userModel.findOne({
             username : uname,
             password : pswrd
@@ -150,6 +157,10 @@ module.exports = function(mongoose){
         return userModel.remove({
             _id : userId
         });
+    }
+
+    function findAllUser() {
+        return userModel.find();
     }
 
 };
