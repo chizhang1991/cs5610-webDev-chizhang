@@ -20,7 +20,8 @@ module.exports = function(mongoose, userModel) {
      return api;
 
     function createWebsiteForUser(userId, website) {
-        console.log("usermodel is: " + userModel);
+        // console.log("models: " + models);
+        // console.log("usermodel is: " + userModel);
         website._user = userId;
         return websiteModel
             .create(website)
@@ -86,10 +87,10 @@ module.exports = function(mongoose, userModel) {
 
          return websiteModel
             .remove({_id: websiteId})
-            .then(function (status) {
-                return userModel
-                    .removeWebsiteFromUser(userId, websiteId);
-            });
+            // .then(function (status) {
+            //     return userModel
+            //         .removeWebsiteFromUser(userId, websiteId);
+            // });
      }
 
      function findAllWebsites() {

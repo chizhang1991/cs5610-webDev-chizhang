@@ -1,10 +1,11 @@
-module.exports = function(app){
+module.exports = function(app, models){
 
-    var pages = [
-        { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
-        { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
-        { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
-    ];
+    var model = models.pageModel;
+    // var pages = [
+    //     { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
+    //     { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
+    //     { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
+    // ];
 
     //POST calls
     app.post("/api/website/:wid/page", createPage);
@@ -24,64 +25,145 @@ module.exports = function(app){
         var wid = req.params.wid;
         var page = req.body;
 
-        var newPage = {
-            _id: new Date().getTime(),
-            name: page.name,
-            websiteId: wid,
-            description: page.description
-        };
-        pages.push(newPage);
+        model
+            .createPage(wid, page)
+            .then(
+                function (page) {
+                    if(page){
+                        // console.log("in if branch");
+                        res.json(page);
+                        // res.send(200);
+                    } else {
+                        // console.log("in else branch");
+                        page = null;
+                        res.send(website);
+                    }
+                },
+                function (error) {
+                    // console.log("in error branch");
+                    res.sendStatus(400).send("page service server, createPage error");
+                }
+            )
 
-        res.sendStatus(200);
+        // var newPage = {
+        //     _id: new Date().getTime(),
+        //     name: page.name,
+        //     websiteId: wid,
+        //     description: page.description
+        // };
+        // pages.push(newPage);
+        //
+        // res.sendStatus(200);
     }
 
     function findAllPagesForWebsite(req, res) {
         var wid = req.params.wid;
-        var results = [];
-        for (p in pages) {
-            if (String(pages[p].websiteId) === String(wid)) {
-                results.push(pages[p]);
-            }
-        }
-        res.send(results);
+
+        model
+            .findAllPagesForWebsite(wid)
+            .then(
+                function (pages) {
+                    // console.log("in service: " + websites);
+                    if(pages) {
+                        res.json(pages);
+                    } else {
+                        pages = null;
+                        res.send(pages);
+                    }
+                },
+                function (error) {
+                    res.sendStatus(400).send("page service server, findAllPagesForWebsite error");
+                }
+            )
+
+        // var results = [];
+        // for (p in pages) {
+        //     if (String(pages[p].websiteId) === String(wid)) {
+        //         results.push(pages[p]);
+        //     }
+        // }
+        // res.send(results);
     }
 
     function findPageById(req, res) {
         var pid = req.params.pid;
 
-        for (p in pages) {
-            var page = pages[p];
-            if (String(page._id) === String(pid)) {
-                res.status(200).send(page);
-                return;
-            }
-        }
-        res.status(404).send("Cannot find this page by ID");
+        model
+            .findPageById(pid)
+            .then(
+                function (page) {
+                    if (page) {
+                        res.json(page);
+                    } else {
+                        page = null;
+                        res.send(page);
+                    }
+                },
+                function (error) {
+                    res.sendStatus(400).send("page service server, findPageById error");
+                }
+            );
+
+        // for (p in pages) {
+        //     var page = pages[p];
+        //     if (String(page._id) === String(pid)) {
+        //         res.status(200).send(page);
+        //         return;
+        //     }
+        // }
+        // res.status(404).send("Cannot find this page by ID");
     }
 
     function updatePage(req, res) {
         var pid = req.params.pid;
         var page = req.body;
 
-        for (p in pages) {
-            if (String(pages[p]._id) === String(pid)) {
-                pages[p]=page;
-                res.sendStatus(200);
-                return;
-            }
-        }
-        res.sendStatus(404);
+        model
+            .updatePage(pid, page)
+            .then(
+                function (page) {
+                    res.json(page);
+                },
+                function (error) {
+                    res.status(400).send("page service server, updatePage error");
+                }
+            );
+
+        // for (p in pages) {
+        //     if (String(pages[p]._id) === String(pid)) {
+        //         pages[p]=page;
+        //         res.sendStatus(200);
+        //         return;
+        //     }
+        // }
+        // res.sendStatus(404);
     }
 
     function deletePage(req, res) {
         var pid = req.params.pid;
-        for (p in pages) {
-            if (parseInt(pages[p]._id) === parseInt(pid)) {
-                pages.splice(p, 1);
-                res.sendStatus(200);
-                return;
-            }
+
+        if(pid){
+            model
+                .deleteUser(pid)
+                .then(
+                    function (status){
+                        res.sendStatus(200);
+                    },
+                    function (error){
+                        res.sendStatus(400).send(error);
+                    }
+                );
+        } else{
+            // Precondition Failed. Precondition is that the user exists.
+            res.sendStatus(412);
         }
-        res.sendStatus(404);
+        // for (p in pages) {
+        //     if (parseInt(pages[p]._id) === parseInt(pid)) {
+        //         pages.splice(p, 1);
+        //         res.sendStatus(200);
+        //         return;
+        //     }
+        // }
+        // res.sendStatus(404);
     }
 };

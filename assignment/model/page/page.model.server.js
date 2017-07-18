@@ -1,4 +1,79 @@
 module.exports = function(mongoose, websiteModel){
     var pageSchema = require('./page.schema.server.js')(mongoose);
-    var pageModel = mongoose.model('Page', pageSchema);
-}
+    var pageModel = mongoose.model('pageModel', pageSchema);
+
+    var api = {
+        'createPage' : createPage,
+        'findAllPagesForWebsite' : findAllPagesForWebsite,
+        'findPageById' : findPageById,
+        'updatePage' : updatePage,
+        'deletePage' : deletePage,
+        'removeWidgetFromPage' : removeWidgetFromPage,
+        'addWidgetToPage' : addWidgetToPage
+    };
+
+    return api;
+
+    // has not completed, add to website
+    function createPage(websiteId, page) {
+        page._website = websiteId;
+        return pageModel.create(page);
+    }
+
+    function findAllPagesForWebsite(websiteId) {
+        return pages = pageModel
+            .find({_website: websiteId})
+            .populate('_website')
+            .exec();
+    }
+
+    function findPageById(pageId) {
+        return pageModel.findById(pageId);
+    }
+
+    function updatePage(pageId, page) {
+        return pageModel.update({
+            _id : pageId
+        }, {
+            name: page.name,
+            title: page.title,
+            description: page.description
+        });
+    }
+
+    // not complete, delete from website
+    function deletePage(pageId) {
+        var websiteId = pageModel.findOne({_id: pageId})._website;
+
+        return pageModel
+            .remove({_id: pageId})
+            .then(function (status) {
+                return websiteModel
+                    .removePageFromWebsite(websiteId, pageId);
+            });
+    }
+
+    function removeWidgetFromPage(pageId, widgetId) {
+        pageModel
+            .findById(pageId)
+            .then(
+                function (page) {
+                    page.widgets.pull(widgetId);
+                    page.save();
+                },
+                function (error) {
+                    console.log("Page model, removeWidgetFromPage error");
+                }
+            );
+    }
+
+    function addWidgetToPage(pageId, widgetId) {
+        return pageModel
+            .findOne({_id: pageId})
+            .then(function (page) {
+                page.widgets.push(widgetId);
+                return page.save();
+            });
+    }
+
+};

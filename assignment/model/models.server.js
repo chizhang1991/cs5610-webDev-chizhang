@@ -48,7 +48,7 @@ module.exports = function() {
     };
 
     return models;
-};
+}
 
 console.log("models.server.js is running");
 

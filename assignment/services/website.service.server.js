@@ -132,7 +132,7 @@ module.exports = function(app, models){
                     res.json(website)
                 },
                 function (error){
-                    res.sendStatus(400).send(error);
+                    res.sendStatus(400).send("website service server, updateWebsite error");
                 }
             );
 
@@ -151,14 +151,21 @@ module.exports = function(app, models){
     function deleteWebsite(req, res) {
         var wid = req.params.wid;
 
-        model
-            .deleteWebsite(wid)
-            .then(function (status){
-                    res.sendStatus(200);
-                },
-                function (error){
-                    res.sendStatus(400).send(error);
-            })
+        if(wid){
+            model
+                .deleteWebsite(wid)
+                .then(
+                    function (status){
+                        res.sendStatus(200);
+                    },
+                    function (error){
+                        res.sendStatus(400).send(error);
+                    }
+                );
+        } else{
+            // Precondition Failed. Precondition is that the user exists.
+            res.sendStatus(412);
+        }
 
         // for (w in websites) {
         //     if (parseInt(websites[w]._id) === parseInt(wid)) {
