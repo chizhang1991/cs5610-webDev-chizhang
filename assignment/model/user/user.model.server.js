@@ -14,24 +14,24 @@
 //
 // module.exports = userModel;
 //
-// // function deleteWebsite(userId, websiteId) {
-// //     return userModel
-// //         .findById(userId)
-// //         .then(function (user) {
-// //             var index = user.websites.indexOf(websiteId);
-// //             user.websites.splice(index, 1);
-// //             return user.save();
-// //         });
-// // }
-// //
-// // function addWebsite(userId, websiteId) {
-// //     return userModel
-// //         .findById(userId)
-// //         .then(function (user) {
-// //             user.websites.push(websiteId);
-// //             return user.save();
-// //         });
-// // }
+// function deleteWebsite(userId, websiteId) {
+//     return userModel
+//         .findById(userId)
+//         .then(function (user) {
+//             var index = user.websites.indexOf(websiteId);
+//             user.websites.splice(index, 1);
+//             return user.save();
+//         });
+// }
+//
+// function addWebsite(userId, websiteId) {
+//     return userModel
+//         .findById(userId)
+//         .then(function (user) {
+//             user.websites.push(websiteId);
+//             return user.save();
+//         });
+// }
 //
 // function createUser(user) {
 //     return userModel.create(user);
@@ -66,7 +66,7 @@
 
 module.exports = function(mongoose){
     var userSchema = require('./user.schema.server.js')(mongoose);
-    var userModel = mongoose.model('User', userSchema);
+    var userModel = mongoose.model('userModel', userSchema);
 
     var api = {
         'createUser' : createUser,
@@ -75,6 +75,7 @@ module.exports = function(mongoose){
         'findUserByCredentials' : findUserByCredentials,
         'updateUser' : updateUser,
         'removeWebsiteFromUser' : removeWebsiteFromUser,
+        'addWebsiteForUser' : addWebsiteForUser,
         'deleteUser' : deleteUser,
         'findAllUser' : findAllUser
     };
@@ -84,7 +85,7 @@ module.exports = function(mongoose){
     // Function Definition Section
 
     function createUser(user){
-        console.log("in user model");
+        // console.log("in user model");
         var newUser = {
             username : user.username,
             password : user.password,
@@ -109,7 +110,7 @@ module.exports = function(mongoose){
 
     function findUserById(userId){
         // return userModel.findById(userId);
-        console.log("in model: " + userId);
+        // console.log("in model: " + userId);
         return userModel.findOne({_id: userId});
     }
 
@@ -118,9 +119,9 @@ module.exports = function(mongoose){
     }
 
     function findUserByCredentials(uname, pswrd){
-        console.log("in model, find by credentials");
-        console.log("uname: " + uname);
-        console.log("pswrd: " + pswrd);
+        // console.log("in model, find by credentials");
+        // console.log("uname: " + uname);
+        // console.log("pswrd: " + pswrd);
         return userModel.findOne({
             username : uname,
             password : pswrd
@@ -141,7 +142,7 @@ module.exports = function(mongoose){
     function removeWebsiteFromUser(userId, websiteId){
         // db.user.update({_id : ObjectId("583cf3287ac013080c4adee5")}, {$push : { "websites" : ObjectId("583cf43693b914082152cc3c")}})
         userModel
-            .findById(userId)
+            .findOne({_id: userId})
             .then(
                 function(user){
                     user.websites.pull(websiteId);
@@ -153,6 +154,16 @@ module.exports = function(mongoose){
             );
     }
 
+    function addWebsiteForUser(userId, websiteId) {
+        console.log("in add website for user");
+        return userModel
+            .findOne({_id: userId})
+            .then(function (user) {
+                user.websites.push(websiteId);
+                return user.save();
+            });
+    }
+
     function deleteUser(userId){
         return userModel.remove({
             _id : userId
@@ -162,5 +173,17 @@ module.exports = function(mongoose){
     function findAllUser() {
         return userModel.find();
     }
+
+//     function deleteWebsite(userId, websiteId) {
+//     return userModel
+//         .findById(userId)
+//         .then(function (user) {
+//             var index = user.websites.indexOf(websiteId);
+//             user.websites.splice(index, 1);
+//             return user.save();
+//         });
+//     }
+//
+
 
 };

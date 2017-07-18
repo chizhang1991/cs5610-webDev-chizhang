@@ -165,7 +165,7 @@ module.exports = function(app, models){
     // ];
     // var users = [];
 
-    var model = models.User;
+    var model = models.userModel;
 
     // get all users
     app.get('/api/user?', findAllUsers);
@@ -186,26 +186,28 @@ module.exports = function(app, models){
 
     /*API implementation*/
     function findAllUsers(req, res) {
-        console.log("find all users");
+        // console.log("find all users");
         var username = req.query.username;
         var password = req.query.password;
-        console.log("username: " + username);
-        console.log("password: " + password);
+        // console.log("username: " + username);
+        // console.log("password: " + password);
         if(username && password){
-            console.log("find by credentials");
+            // console.log("find by credentials");
             model
                 .findUserByCredentials(username, password)
                 .then(
                     function(user){
+                        // console.log(user);
                         if(user){
                             res.json(user);
                         } else {
-                            user = null;
-                            res.send(user);
+                            // user = null;
+                            // res.send(user);
+                            res.sendStatus(404).send(error);
                         }
                     },
                     function (error) {
-                        res.sendStatus(400).send(error);
+                        res.sendStatus(404).send(error);
                     }
                 );
         } else if (username) {
@@ -216,12 +218,14 @@ module.exports = function(app, models){
                         if(user) {
                             res.json(user);
                         } else {
-                            user = null;
-                            res.send(user);
+                            // user = null;
+                            // res.send(user);
+                            res.sendStatus(404).send(error);
+
                         }
                     },
                     function (error) {
-                        res.sendStatus(400).send(error);
+                        res.sendStatus(404).send(error);
                     }
                 );
         } else {
@@ -232,7 +236,7 @@ module.exports = function(app, models){
                         res.send(users);
                     },
                     function (error) {
-                        res.sendStatus(400).send(error);
+                        res.sendStatus(404).send(error);
                     }
                 )
         }
@@ -266,7 +270,7 @@ module.exports = function(app, models){
     function createUser(req, res) {
         // console.log("model: " + model);
         var user = req.body;
-        console.log(user);
+        // console.log(user);
         // console.log(model.createUser);
         model
             .createUser(user)
@@ -325,7 +329,7 @@ module.exports = function(app, models){
         var username = query.username;
         var password = query.password;
 
-        console.log("find user by credential: " + username + password);
+        // console.log("find user by credential: " + username + password);
 
         // var user = null;
         if(username && password){
@@ -341,7 +345,7 @@ module.exports = function(app, models){
                         }
                     },
                     function (error) {
-                        res.sendStatus(400).send(error);
+                        res.sendStatus(404).send(error);
                     }
                 );
         }
@@ -351,7 +355,7 @@ module.exports = function(app, models){
     function findUserById(req, res) {
 
         var params = req.params;
-        console.log("find user by id" + params.uid);
+        // console.log("find user by id" + params.uid);
 
         if(params.uid){
             model
@@ -414,7 +418,6 @@ module.exports = function(app, models){
         var uid = req.params.uid;
         if(uid){
             model
-                .userModel
                 .deleteUser(uid)
                 .then(
                     function (status){

@@ -1,7 +1,7 @@
 // var mongoose = requier('mongoose');
 //
 module.exports = function(mongoose){
-    // var websiteSchema = require("../website/website.schema.server.js")(mongoose);
+    var websiteSchema = require("../website/website.schema.server.js")(mongoose);
 
     var Schema = mongoose.Schema;
 
