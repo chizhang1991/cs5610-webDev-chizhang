@@ -50,7 +50,8 @@ module.exports = function(app, models){
                         website = null;
                         res.send(website);
                     }
-                },
+                }
+                ,
                 function (error) {
                     console.log("in error branch");
                     res.sendStatus(400).send("website service server, createWebsiteForUser error");

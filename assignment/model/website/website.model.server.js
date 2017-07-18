@@ -25,12 +25,12 @@ module.exports = function(mongoose, userModel) {
         website._user = userId;
         return websiteModel
             .create(website)
-            // .then(
-            //     function (website) {
-            //         console.log("in create website for user");
-                    // return userModel
-                    //     .addWebsiteForUser(userId, website._id)
-                // })
+            .then(
+                function (website) {
+                    // console.log("in create website for user");
+                    return userModel
+                        .addWebsiteForUser(userId, website._id)
+                })
     }
 
      function findAllWebsitesForUser(userId) {

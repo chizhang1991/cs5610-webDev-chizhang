@@ -17,7 +17,12 @@ module.exports = function(mongoose, websiteModel){
     // has not completed, add to website
     function createPage(websiteId, page) {
         page._website = websiteId;
-        return pageModel.create(page);
+        return pageModel.create(page)
+            .then(
+                function (page) {
+                    return websiteModel.addPageToWebsite(websiteId, page._id);
+                }
+            );
     }
 
     function findAllPagesForWebsite(websiteId) {

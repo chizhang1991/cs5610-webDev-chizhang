@@ -144,7 +144,7 @@ module.exports = function(app, models){
 
         if(pid){
             model
-                .deleteUser(pid)
+                .deletePage(pid)
                 .then(
                     function (status){
                         res.sendStatus(200);
