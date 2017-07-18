@@ -104,7 +104,7 @@ module.exports = function(mongoose){
         if(user.phone){
             newUser.phone = user.phone;
         }
-        console.log("in user model, create user");
+        // console.log("in user model, create user");
         return userModel.create(newUser);
     }
 

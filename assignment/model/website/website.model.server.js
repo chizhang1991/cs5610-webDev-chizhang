@@ -1,9 +1,10 @@
-module.exports = function(mongoose, User) {
+module.exports = function(mongoose, userModel) {
     var websiteSchema = require('./website.schema.server.js')(mongoose);
     var websiteModel = mongoose.model('websiteModel', websiteSchema);
     // var userSchema = require('../user/user.model.server')(mongoose);
     // var userModel = mongoose.model('User', userSchema);
     // var userModel = models.User;
+    // var userModel = require('../user/user.model.server')(mongoose);
 
     var api = {
         'createWebsiteForUser': createWebsiteForUser,
@@ -19,22 +20,26 @@ module.exports = function(mongoose, User) {
      return api;
 
     function createWebsiteForUser(userId, website) {
+        console.log("usermodel is: " + userModel);
         website._user = userId;
         return websiteModel
             .create(website)
-            .then(
-                function (website) {
-                    console.log("in create website for user");
-                    return User
-                        .addWebsiteForUser(userId, website._id)
-                })
+            // .then(
+            //     function (website) {
+            //         console.log("in create website for user");
+                    // return userModel
+                    //     .addWebsiteForUser(userId, website._id)
+                // })
     }
 
      function findAllWebsitesForUser(userId) {
-         return websiteModel
+        // console.log("in website model: " + userId);
+         return websites = websiteModel
              .find({_user: userId})
              .populate('_user')
              .exec();
+         // console.log(websites);
+         // return websites;
      }
 
      function findWebsiteById(websiteId) {
@@ -82,7 +87,7 @@ module.exports = function(mongoose, User) {
          return websiteModel
             .remove({_id: websiteId})
             .then(function (status) {
-                return User
+                return userModel
                     .removeWebsiteFromUser(userId, websiteId);
             });
      }

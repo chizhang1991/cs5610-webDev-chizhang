@@ -48,7 +48,7 @@
 
             var website = {
                 name: websiteName,
-                desc: websiteDesc
+                description: websiteDesc
             };
 
             return WebsiteService
@@ -85,6 +85,7 @@
             });
 
         function updateWebsite(newWebsite) {
+            console.log("in service: do update website");
             WebsiteService.updateWebsite(vm.wid, newWebsite)
                 .then(function () {
                     vm.updated = "Website changes saved!";

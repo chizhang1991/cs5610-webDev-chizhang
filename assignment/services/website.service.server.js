@@ -44,6 +44,7 @@ module.exports = function(app, models){
                     if(website){
                         console.log("in if branch");
                         res.json(website);
+                        // res.send(200);
                     } else {
                         console.log("in else branch");
                         website = null;
@@ -52,7 +53,7 @@ module.exports = function(app, models){
                 },
                 function (error) {
                     console.log("in error branch");
-                    res.sendStatus(400).send(error);
+                    res.sendStatus(400).send("website service server, createWebsiteForUser error");
                 }
             )
 
@@ -63,11 +64,13 @@ module.exports = function(app, models){
 
     function findAllWebsitesForUser(req, res) {
         var uid = req.params.uid;
+        // console.log("in service: " + uid);
 
         model
             .findAllWebsitesForUser(uid)
             .then(
                 function (websites) {
+                    // console.log("in service: " + websites);
                     if(websites) {
                         res.json(websites);
                     } else {
@@ -76,7 +79,7 @@ module.exports = function(app, models){
                     }
                 },
                 function (error) {
-                    res.sendStatus(400).send(error);
+                    res.sendStatus(400).send("website service server, findAllWebsitesForUser error");
                 }
             )
         // var results = [];
@@ -92,7 +95,7 @@ module.exports = function(app, models){
         var wid = req.params.wid;
 
         model
-            .findWidgetById(uid)
+            .findWebsiteById(wid)
             .then(
                 function (website) {
                     if(website) {

@@ -43,11 +43,11 @@
         }
 
         function updateWebsite(websiteId, website) {
+            console.log("do update website");
             var url = "/api/website/" + websiteId;
             return $http.put(url, website)
                 .then(function (response) {
-                    var website = response.data;
-                    return website;
+                    return response.data;
                 });
         }
 
