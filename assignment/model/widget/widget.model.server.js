@@ -14,13 +14,13 @@ module.exports = function(mongoose, pageModel) {
      return api;
 
      function createWidget(pageId, widget) {
-         console.log("in model create widget");
+         // console.log("in model create widget");
          // console.log("widget: " + widget);
          widget._page = pageId;
          // console.log(widget._page);
          return widgetModel.create(widget)
              .then(function (widget) {
-                 console.log(widget);
+                 // console.log(widget);
                  return pageModel
                      .addWidgetToPage(pageId, widget._id);
              });

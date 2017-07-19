@@ -57,13 +57,13 @@ module.exports = function(app, models){
             .createWidget(pid, widget)
             .then(
                 function (widget) {
-                    console.log(widget);
+                    // console.log(widget);
                     if(widget){
-                        console.log("in if branch");
+                        // console.log("in if branch");
                         res.json(widget);
                         // res.send(200);
                     } else {
-                        console.log("in else branch");
+                        // console.log("in else branch");
                         widget = null;
                         res.send(widget);
                     }
@@ -217,35 +217,97 @@ module.exports = function(app, models){
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        widget = getWidgetById(widgetId);
-        widget.url = 'uploads/'+filename;
+        // widget = getWidgetById(widgetId);
+        var url = 'uploads/'+filename;
 
-        function getWidgetById(widgetId) {
+        // when try to create a new image
+        if (widgetId === undefined || widgetId === null || widgetId === '') {
+            var widget = {
+                widgetType: "IMAGE",
+                url: url,
+                width: width
+            };
 
-            // when try to create a new image
-            if (widgetId === undefined || widgetId === null || widgetId === '') {
-                // console.log("come into the correct loop");
-                // create a new widget, add to widgets
-                var newWidget = {
-                    _id: new Date().getTime(),
-                    widgetType: "IMAGE",
-                    pageId: pageId,
-                    width: width
-                };
-                widgets.push(newWidget);
-                return newWidget;
-            }
-
-            // edit existing image
-            for (w in widgets) {
-                var widget = widgets[w];
-                if (String(widget._id) === String(widgetId)) {
-                    return widget;
-                }
-            }
-
-            return null;
+            model
+                .createWidget(pageId, widget)
+                .then(
+                    function (widget) {
+                        // console.log(widget);
+                        if(widget){
+                            // console.log("in if branch");
+                            res.json(widget);
+                            console.log("touch");
+                            // res.send(200);
+                        } else {
+                            // console.log("in else branch");
+                            widget = null;
+                            res.send(widget);
+                        }
+                    }
+                    ,
+                    function (error) {
+                        // console.log("in error branch");
+                        res.sendStatus(400).send("widget service server, upload error");
+                    }
+                )
+        } else {
+            // when trying to edit existing image
+            model
+                .findWidgetById(widgetId)
+                .then(
+                    function (widget) {
+                        widget.url = url;
+                        model.updateWidget(widgetId, widget)
+                            .then(
+                                function (widget) {
+                                    res.json(widget);
+                                },
+                                function (error) {
+                                    res.status(400).send("widget service server, updateWidget error");
+                                }
+                            )
+                    },
+                    function (error) {
+                        res.status(400).send("Cannot find widget by id");
+                    }
+                )
+                // .updateWidget(widgetId, widget)
+                // .then(
+                //     function (widget) {
+                //         res.json(widget);
+                //     },
+                //     function (error) {
+                //         res.status(400).send("widget service server, updateWidget error");
+                //     }
+                // );
         }
+
+        // function getWidgetById(widgetId) {
+        //
+        //     // when try to create a new image
+        //     if (widgetId === undefined || widgetId === null || widgetId === '') {
+        //         // console.log("come into the correct loop");
+        //         // create a new widget, add to widgets
+        //         var newWidget = {
+        //             _id: new Date().getTime(),
+        //             widgetType: "IMAGE",
+        //             pageId: pageId,
+        //             width: width
+        //         };
+        //         widgets.push(newWidget);
+        //         return newWidget;
+        //     }
+        //
+        //     // edit existing image
+        //     for (w in widgets) {
+        //         var widget = widgets[w];
+        //         if (String(widget._id) === String(widgetId)) {
+        //             return widget;
+        //         }
+        //     }
+        //
+        //     return null;
+        // }
 
         var callbackUrl  = "/#!/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget";
         res.redirect(callbackUrl);
