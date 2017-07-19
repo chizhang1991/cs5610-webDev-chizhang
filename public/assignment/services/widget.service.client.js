@@ -13,10 +13,11 @@
         return service;
 
         function createWidget(pageId, widget) {
-
+            console.log("to service");
             var url = "/api/page/" + pageId + "/widget";
             return $http.post(url, widget)
                 .then(function (response) {
+                    console.log("have response");
                     return response.data;
                 });
         }

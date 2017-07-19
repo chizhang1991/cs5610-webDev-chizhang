@@ -54,7 +54,9 @@
 
         vm.createWidget = createWidget;
 
-        function createWidget(size, width, text, url) {
+        function createWidget(name, size, width, text, url) {
+            console.log("create widget");
+
             if (vm.wtype === "HEADING") {
                 if (size === undefined || text === undefined || size === null || text === null) {
                     vm.error = "Heading name and size cannot be empty.";
@@ -65,7 +67,7 @@
                 }
             }
             if (vm.wtype === "IMAGE" || vm.wtype === "YOUTUBE") {
-                if (width === undefined || url === undefined || width === null || url === null) {
+                if (url === undefined || url === null) {
                     vm.error = "Width and url cannot be empty.";
                     $timeout(function () {
                         vm.error = null;
@@ -85,15 +87,18 @@
 
             var widget = {
                 widgetType: vm.wtype,
+                name: name,
                 size: size,
                 width: width,
                 text: text,
                 url: url
             };
+            console.log(widget);
 
             WidgetService
                 .createWidget(vm.pid, widget)
                 .then(function () {
+                    console.log("to correct branch");
                     $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                 });
         }

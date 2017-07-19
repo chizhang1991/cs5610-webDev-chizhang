@@ -42,18 +42,18 @@ module.exports = function(app, models){
             .then(
                 function (website) {
                     if(website){
-                        console.log("in if branch");
+                        // console.log("in if branch");
                         res.json(website);
                         // res.send(200);
                     } else {
-                        console.log("in else branch");
+                        // console.log("in else branch");
                         website = null;
                         res.send(website);
                     }
                 }
                 ,
                 function (error) {
-                    console.log("in error branch");
+                    // console.log("in error branch");
                     res.sendStatus(400).send("website service server, createWebsiteForUser error");
                 }
             )

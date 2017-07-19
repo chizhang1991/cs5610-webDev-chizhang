@@ -14,7 +14,6 @@ module.exports = function(mongoose, websiteModel){
 
     return api;
 
-    // has not completed, add to website
     function createPage(websiteId, page) {
         page._website = websiteId;
         return pageModel.create(page)
@@ -46,7 +45,6 @@ module.exports = function(mongoose, websiteModel){
         });
     }
 
-    // not complete, delete from website
     function deletePage(pageId) {
         var websiteId = pageModel.findOne({_id: pageId})._website;
 

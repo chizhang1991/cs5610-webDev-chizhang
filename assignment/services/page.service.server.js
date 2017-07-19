@@ -36,7 +36,7 @@ module.exports = function(app, models){
                     } else {
                         // console.log("in else branch");
                         page = null;
-                        res.send(website);
+                        res.send(page);
                     }
                 },
                 function (error) {

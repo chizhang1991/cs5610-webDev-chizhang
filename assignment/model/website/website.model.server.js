@@ -22,6 +22,7 @@ module.exports = function(mongoose, userModel) {
     function createWebsiteForUser(userId, website) {
         // console.log("models: " + models);
         // console.log("usermodel is: " + userModel);
+        console.log(website);
         website._user = userId;
         return websiteModel
             .create(website)
@@ -30,7 +31,7 @@ module.exports = function(mongoose, userModel) {
                     // console.log("in create website for user");
                     return userModel
                         .addWebsiteForUser(userId, website._id)
-                })
+                });
     }
 
      function findAllWebsitesForUser(userId) {
