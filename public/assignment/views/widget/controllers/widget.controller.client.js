@@ -55,7 +55,6 @@
         vm.createWidget = createWidget;
 
         function createWidget(name, size, width, text, url) {
-            console.log("create widget");
 
             if (vm.wtype === "HEADING") {
                 if (size === undefined || text === undefined || size === null || text === null) {
@@ -93,7 +92,6 @@
                 text: text,
                 url: url
             };
-            console.log(widget);
 
             WidgetService
                 .createWidget(vm.pid, widget)

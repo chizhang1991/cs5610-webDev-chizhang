@@ -254,37 +254,40 @@ module.exports = function(app, models){
     function reorderWidgets(req, res) {
         // get widgets by pageId
         var pageId = req.params.pid;
-        var pageWidgets = [];
-        for (w in widgets) {
-            var widget = widgets[w];
-            if (parseInt(widget.pageId) === parseInt(pageId)) {
-                pageWidgets.push(widget);
-            }
-        }
+        // var pageWidgets = [];
+        // for (w in widgets) {
+        //     var widget = widgets[w];
+        //     if (parseInt(widget.pageId) === parseInt(pageId)) {
+        //         pageWidgets.push(widget);
+        //     }
+        // }
 
         // index1 and index2 are index in pageWidgets
         var index1 = req.query.initial;
         var index2 = req.query.final;
+        console.log("in service: " + index1 + " " + index2);
 
         // get the index of the widget in widgets
-        var initial = widgets.indexOf(pageWidgets[index1]);
-        var final = widgets.indexOf(pageWidgets[index2]);
+        // var initial = widgets.indexOf(pageWidgets[index1]);
+        // var final = widgets.indexOf(pageWidgets[index2]);
 
         // reorder widgets
-        if (index1 && index2) {
-            // console.log("come into if condition");
-            if (final >= widgets.length) {
-                var k = final - widgets.length;
-                while ((k--) + 1) {
-                    widgets.push(undefined);
-                }
-            }
-            widgets.splice(final, 0, widgets.splice(initial, 1)[0]);
-            res.sendStatus(200); // for testing purposes
-            return;
-        }
-        res.status(404).send("Cannot reorder widgets");
+        // if (index1 && index2) {
+        //     // console.log("come into if condition");
+        //     if (final >= widgets.length) {
+        //         var k = final - widgets.length;
+        //         while ((k--) + 1) {
+        //             widgets.push(undefined);
+        //         }
+        //     }
+        //     widgets.splice(final, 0, widgets.splice(initial, 1)[0]);
+        //     res.sendStatus(200); // for testing purposes
+        //     return;
+        // }
+        // res.status(404).send("Cannot reorder widgets");
 
+        model
+            .reorderWidget(pageId, index1, index2);
     }
 
 };

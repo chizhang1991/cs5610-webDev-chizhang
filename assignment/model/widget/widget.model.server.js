@@ -47,11 +47,7 @@ module.exports = function(mongoose, pageModel) {
              description: widget.description,
              url: widget.url,
              width: widget.width,
-             height: widget.height,
-             rows: widget.rows,
              size: widget.size,
-             class: widget.class,
-             icon: widget.icon
          });
      }
 
@@ -67,6 +63,7 @@ module.exports = function(mongoose, pageModel) {
      }
 
      function reorderWidget(pageId, start, end) {
-
+         console.log(start + " " + end);
      }
+
 };
