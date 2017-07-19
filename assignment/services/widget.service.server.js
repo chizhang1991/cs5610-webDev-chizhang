@@ -332,6 +332,20 @@ module.exports = function(app, models){
         // get the index of the widget in widgets
         // var initial = widgets.indexOf(pageWidgets[index1]);
         // var final = widgets.indexOf(pageWidgets[index2]);
+        model
+            .findAllWidgetsForPage(pageId)
+            .then(
+                function (widgets) {
+                    var initial = widgets[index1]._id;
+                    var final = widgets[index2]._id;
+                    console.log(initial + " " + final);
+                    model
+                        .reorderWidget(pageId, initial, final);
+                },
+                function (error) {
+                    res.status(400).send("Cannot find widgets of this page, error in reorder");
+                }
+            );
 
         // reorder widgets
         // if (index1 && index2) {
@@ -348,8 +362,8 @@ module.exports = function(app, models){
         // }
         // res.status(404).send("Cannot reorder widgets");
 
-        model
-            .reorderWidget(pageId, index1, index2);
+        // model
+        //     .reorderWidget(pageId, index1, index2);
     }
 
 };
