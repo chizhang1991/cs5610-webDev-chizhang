@@ -1,11 +1,6 @@
 module.exports = function(app, models){
 
     var model = models.pageModel;
-    // var pages = [
-    //     { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
-    //     { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
-    //     { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
-    // ];
 
     //POST calls
     app.post("/api/website/:wid/page", createPage);
@@ -30,30 +25,21 @@ module.exports = function(app, models){
             .then(
                 function (page) {
                     if(page){
-                        // console.log("in if branch");
+
                         res.json(page);
-                        // res.send(200);
+
                     } else {
-                        // console.log("in else branch");
+
                         page = null;
                         res.send(page);
                     }
                 },
                 function (error) {
-                    // console.log("in error branch");
+
                     res.sendStatus(400).send("page service server, createPage error");
                 }
             )
 
-        // var newPage = {
-        //     _id: new Date().getTime(),
-        //     name: page.name,
-        //     websiteId: wid,
-        //     description: page.description
-        // };
-        // pages.push(newPage);
-        //
-        // res.sendStatus(200);
     }
 
     function findAllPagesForWebsite(req, res) {
@@ -63,7 +49,7 @@ module.exports = function(app, models){
             .findAllPagesForWebsite(wid)
             .then(
                 function (pages) {
-                    // console.log("in service: " + websites);
+
                     if(pages) {
                         res.json(pages);
                     } else {
@@ -76,13 +62,6 @@ module.exports = function(app, models){
                 }
             )
 
-        // var results = [];
-        // for (p in pages) {
-        //     if (String(pages[p].websiteId) === String(wid)) {
-        //         results.push(pages[p]);
-        //     }
-        // }
-        // res.send(results);
     }
 
     function findPageById(req, res) {
@@ -104,14 +83,6 @@ module.exports = function(app, models){
                 }
             );
 
-        // for (p in pages) {
-        //     var page = pages[p];
-        //     if (String(page._id) === String(pid)) {
-        //         res.status(200).send(page);
-        //         return;
-        //     }
-        // }
-        // res.status(404).send("Cannot find this page by ID");
     }
 
     function updatePage(req, res) {
@@ -129,14 +100,6 @@ module.exports = function(app, models){
                 }
             );
 
-        // for (p in pages) {
-        //     if (String(pages[p]._id) === String(pid)) {
-        //         pages[p]=page;
-        //         res.sendStatus(200);
-        //         return;
-        //     }
-        // }
-        // res.sendStatus(404);
     }
 
     function deletePage(req, res) {
@@ -157,13 +120,6 @@ module.exports = function(app, models){
             // Precondition Failed. Precondition is that the user exists.
             res.sendStatus(412);
         }
-        // for (p in pages) {
-        //     if (parseInt(pages[p]._id) === parseInt(pid)) {
-        //         pages.splice(p, 1);
-        //         res.sendStatus(200);
-        //         return;
-        //     }
-        // }
-        // res.sendStatus(404);
+
     }
 };

@@ -13,7 +13,7 @@
             $(element).sortable({
                 start: function (event, ui) {
                     start = $(ui.item).index();
-                    console.log("start:" + start);
+                    // console.log("start:" + start);
                 },
                 stop: function (event, ui) {
                     end = $(ui.item).index();
@@ -21,7 +21,7 @@
                         start: start,
                         end: end
                     };
-                    console.log("end:"+end);
+                    // console.log("end:"+end);
                     // get the url to send to server
                     var url = "/api/page/" + pageId + "/widget?initial=" + start + "&final=" + end;
                     // change the widgets order in server

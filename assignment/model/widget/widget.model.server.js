@@ -14,23 +14,19 @@ module.exports = function(mongoose, pageModel) {
      return api;
 
      function createWidget(pageId, widget) {
-         // console.log("in model create widget");
-         // console.log("widget: " + widget);
+
          widget._page = pageId;
-         // console.log(widget._page);
+
          return widgetModel.create(widget)
              .then(function (widget) {
-                 // console.log(widget);
+
                  return pageModel
                      .addWidgetToPage(pageId, widget._id);
              });
      }
 
      function findAllWidgetsForPage(pageId) {
-         // return widgetModel
-         //     .find({_page: pageId})
-         //     .populate('_page')
-         //     .exec();
+
 
          // change to find widgets in page.widgets
          return pageModel
@@ -38,7 +34,7 @@ module.exports = function(mongoose, pageModel) {
              .populate('widgets')
              .then(
                  function (page) {
-                     // console.log(page.widgets);
+
                      return page.widgets;
                  }
              )
@@ -74,15 +70,14 @@ module.exports = function(mongoose, pageModel) {
      }
 
      function reorderWidget(pageId, start, end) {
-         console.log(start + " " + end);
+
          return pageModel
              .findPageById(pageId)
              .then(
                  function (page) {
-                     console.log(page.widgets);
-                     // page.widgets;
+
                      if (start && end) {
-                         console.log("come into if condition");
+                         // console.log("come into if condition");
                          if (end >= page.widgets.length) {
                              var k = end - page.widgets.length;
                              while ((k--) + 1) {
@@ -90,9 +85,8 @@ module.exports = function(mongoose, pageModel) {
                              }
                          }
                          page.widgets.splice(end, 0, page.widgets.splice(start, 1)[0]);
-                         // res.sendStatus(200); // for testing purposes
-                         // return;
-                         console.log(page.widgets);
+
+                         // console.log(page.widgets);
                          return page.save();
                      }
                  }

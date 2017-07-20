@@ -96,7 +96,7 @@
             WidgetService
                 .createWidget(vm.pid, widget)
                 .then(function () {
-                    console.log("to correct branch");
+                    // console.log("to correct branch");
                     $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                 });
         }
@@ -156,7 +156,7 @@
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
-        console.log(vm.wgid);
+        // console.log(vm.wgid);
 
         vm.selectPhoto = selectPhoto;
 
