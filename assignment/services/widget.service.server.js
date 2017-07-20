@@ -95,6 +95,7 @@ module.exports = function(app, models){
             .findAllWidgetsForPage(pid)
             .then(
                 function (widgets) {
+                    // console.log(widgets);
                     if(widgets) {
                         res.json(widgets);
                     } else {
@@ -327,25 +328,62 @@ module.exports = function(app, models){
         // index1 and index2 are index in pageWidgets
         var index1 = req.query.initial;
         var index2 = req.query.final;
-        console.log("in service: " + index1 + " " + index2);
+        // console.log("in service: " + index1 + " " + index2);
+
+        model
+            .reorderWidget(pageId, index1, index2)
+            .then(
+                function (page) {
+                    console.log("in service");
+                    console.log(page.widgets);
+                    res.sendStatus(202);
+                },
+                function (error) {
+                    res.status(400).send("Cannot reorder widgets");
+                }
+            )
 
         // get the index of the widget in widgets
         // var initial = widgets.indexOf(pageWidgets[index1]);
         // var final = widgets.indexOf(pageWidgets[index2]);
-        model
-            .findAllWidgetsForPage(pageId)
-            .then(
-                function (widgets) {
-                    var initial = widgets[index1]._id;
-                    var final = widgets[index2]._id;
-                    console.log(initial + " " + final);
-                    model
-                        .reorderWidget(pageId, initial, final);
-                },
-                function (error) {
-                    res.status(400).send("Cannot find widgets of this page, error in reorder");
-                }
-            );
+
+        // model
+        //     .findAllWidgetsForPage(pageId)
+        //     .then(
+        //         function (widgets) {
+        //             var initial = widgets[index1]._id;
+        //             var final = widgets[index2]._id;
+        //             console.log(initial + " " + final);
+        //             model
+        //                 .reorderWidget(pageId, initial, final)
+        //                 .then(
+        //                     function (widgets) {
+        //                         res.sendStatus(200);
+        //                     },
+        //                     function (error) {
+        //                         res.status(400).send("reorder widget return error");
+        //                     }
+        //                 )
+        //         },
+        //         function (error) {
+        //             res.status(400).send("Cannot find widgets of this page, error in reorder");
+        //         }
+        //     );
+
+        // model
+        //     .reorderWidget(pageId, index1, index2)
+        //     .then(
+        //         function (widgets) {
+        //             if(widgets) {
+        //                 res.json(widgets);
+        //             } else {
+        //                 widgets = null;
+        //                 res.send(widgets);
+        //             }
+        //         }, function (error) {
+        //             res.sendStatus(400).send("widget service server, reorder error");
+        //         }
+        //     )
 
         // reorder widgets
         // if (index1 && index2) {

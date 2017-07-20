@@ -27,10 +27,21 @@ module.exports = function(mongoose, pageModel) {
      }
 
      function findAllWidgetsForPage(pageId) {
-         return widgetModel
-             .find({_page: pageId})
-             .populate('_page')
-             .exec();
+         // return widgetModel
+         //     .find({_page: pageId})
+         //     .populate('_page')
+         //     .exec();
+
+         // change to find widgets in page.widgets
+         return pageModel
+             .findPageById(pageId)
+             .populate('widgets')
+             .then(
+                 function (page) {
+                     // console.log(page.widgets);
+                     return page.widgets;
+                 }
+             )
      }
 
      function findWidgetById(widgetId) {
@@ -47,7 +58,7 @@ module.exports = function(mongoose, pageModel) {
              description: widget.description,
              url: widget.url,
              width: widget.width,
-             size: widget.size,
+             size: widget.size
          });
      }
 
@@ -64,6 +75,28 @@ module.exports = function(mongoose, pageModel) {
 
      function reorderWidget(pageId, start, end) {
          console.log(start + " " + end);
+         return pageModel
+             .findPageById(pageId)
+             .then(
+                 function (page) {
+                     console.log(page.widgets);
+                     // page.widgets;
+                     if (start && end) {
+                         console.log("come into if condition");
+                         if (end >= page.widgets.length) {
+                             var k = end - page.widgets.length;
+                             while ((k--) + 1) {
+                                 page.widgets.push(undefined);
+                             }
+                         }
+                         page.widgets.splice(end, 0, page.widgets.splice(start, 1)[0]);
+                         // res.sendStatus(200); // for testing purposes
+                         // return;
+                         console.log(page.widgets);
+                         return page.save();
+                     }
+                 }
+             )
      }
 
 };
