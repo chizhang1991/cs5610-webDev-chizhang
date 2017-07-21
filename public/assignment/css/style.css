@@ -150,3 +150,17 @@ a:hover{
     margin-bottom: 50px;
     border-right:1px solid #cecece;
 }
+
+.ta-editor.form-control.myform1-height, .ta-scroll-window.form-control.myform1-height  {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+}
+
+.form-control.myform1-height > .ta-bind {
+    height: auto;
+    min-height: 300px;
+    padding: 6px 12px;
+}
