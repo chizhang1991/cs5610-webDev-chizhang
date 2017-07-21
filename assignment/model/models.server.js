@@ -1,17 +1,18 @@
 
-module.exports = function() {
+module.exports = function(mongoose) {
     var connectionString =  null;
 
     if (process.env.MONGODB_URI) {
-        connectionString = 'mongodb://<cs5610-webdev>:<webdev>@ds145892.mlab.com:45892/heroku_pxg85hjc';
+        connectionString = 'mongodb://cs5610-webdev:webdev@ds145892.mlab.com:45892/heroku_pxg85hjc';
     }
     else
     {
         connectionString = connectionString = 'mongodb://localhost:27017/cs5610-webdev'
     }
 
-    var mongoose = require('mongoose');
+    // var mongoose = require('mongoose');
     mongoose.connect(connectionString);
+    mongoose.Promise = require('q').Promise;
 
     var userModel = require("./user/user.model.server.js")(mongoose);
     var websiteModel = require("./website/website.model.server.js")(mongoose, userModel);
