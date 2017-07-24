@@ -1,7 +1,7 @@
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-//var FacebookStrategy = require('passport-facebook').Strategy;
+// var FacebookStrategy = require('passport-facebook').Strategy;
 // var bcrypt = require("bcrypt-nodejs");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -41,6 +41,21 @@ module.exports = function(app, models){
     passport.use('LocalStrategy', new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
+
+    // localStrategy function
+    function localStrategy(username, password, done) {
+        userModel
+            .findUserByCredentials(username, password)
+            .then(
+                function(user) {
+                    if (!user) { return done(null, false); }
+                    return done(null, user);
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            );
+    }
 
     /*API implementation*/
     function findAllUsers(req, res) {

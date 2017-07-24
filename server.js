@@ -13,7 +13,7 @@ var session       = require('express-session');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(session({ secret: process.env.SESSION_SECRET }));
+
 // app.use(session({
 //     secret: 'this is the secret',
 //     resave: true,
@@ -21,6 +21,7 @@ app.use(session({ secret: process.env.SESSION_SECRET }));
 // }));
 
 app.use(cookieParser());
+app.use(session({ secret: process.env.SESSION_SECRET }));
 app.use(passport.initialize());
 app.use(passport.session());
 
