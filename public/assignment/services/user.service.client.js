@@ -17,8 +17,20 @@
         return services;
 
         // security
-        function login(user){
-            return $http.post("/api/login", user);
+        // function login(user){
+        //     return $http.post("/api/login", user);
+        // }
+
+        function login(username, password) {
+            var url = "/api/login";
+            var credentials = {
+                username: username,
+                password: password
+            }
+            return $http.post(url, credentials)
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
         function setCurrentUser(user) {

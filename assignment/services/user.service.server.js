@@ -12,14 +12,14 @@ module.exports = function(app, models){
     var model = models.userModel;
 
     // get all users
-    app.get('/api/user?', findAllUsers);
+    // app.get('/api/user?', findAllUsers);
 
     // POST Calls.
     app.post('/api/user', createUser);
 
     // GET Calls.
     app.get('/api/user?username=username', findUserByUsername);
-    app.get('/api/user?username=username&password=password', findUserByCredentials);
+    // app.get('/api/user?username=username&password=password', findUserByCredentials);
     app.get('/api/user/:uid', findUserById);
 
     // PUT Calls.
@@ -48,7 +48,7 @@ module.exports = function(app, models){
 
     // localStrategy function
     function localStrategy(username, password, done) {
-        userModel
+        model
             .findUserByCredentials(username, password)
             .then(
                 function(user) {
@@ -67,7 +67,7 @@ module.exports = function(app, models){
     }
 
     function deserializeUser(user, done) {
-        userModel
+        model
             .findUserById(user._id)
             .then(
                 function(user){
@@ -95,61 +95,61 @@ module.exports = function(app, models){
     }
 
     /*API implementation*/
-    function findAllUsers(req, res) {
-        // console.log("find all users");
-        var username = req.query.username;
-        var password = req.query.password;
-
-        if(username && password){
-            // console.log("find by credentials");
-            model
-                .findUserByCredentials(username, password)
-                .then(
-                    function(user){
-                        if(user){
-                            res.json(user);
-                        } else {
-                            // user = null;
-                            // res.send(user);
-                            res.sendStatus(404).send(error);
-                        }
-                    },
-                    function (error) {
-                        res.sendStatus(404).send(error);
-                    }
-                );
-        } else if (username) {
-            model
-                .findUserByUsername(username)
-                .then(
-                    function (user) {
-                        if(user) {
-                            res.json(user);
-                        } else {
-                            // user = null;
-                            // res.send(user);
-                            res.sendStatus(404).send(error);
-
-                        }
-                    },
-                    function (error) {
-                        res.sendStatus(404).send(error);
-                    }
-                );
-        } else {
-            model
-                .findAllUser()
-                .then(
-                    function (users) {
-                        res.send(users);
-                    },
-                    function (error) {
-                        res.sendStatus(404).send(error);
-                    }
-                )
-        }
-
-    }
+    // function findAllUsers(req, res) {
+    //     // console.log("find all users");
+    //     var username = req.query.username;
+    //     var password = req.query.password;
+    //
+    //     if(username && password){
+    //         // console.log("find by credentials");
+    //         model
+    //             .findUserByCredentials(username, password)
+    //             .then(
+    //                 function(user){
+    //                     if(user){
+    //                         res.json(user);
+    //                     } else {
+    //                         // user = null;
+    //                         // res.send(user);
+    //                         res.sendStatus(404).send(error);
+    //                     }
+    //                 },
+    //                 function (error) {
+    //                     res.sendStatus(404).send(error);
+    //                 }
+    //             );
+    //     } else if (username) {
+    //         model
+    //             .findUserByUsername(username)
+    //             .then(
+    //                 function (user) {
+    //                     if(user) {
+    //                         res.json(user);
+    //                     } else {
+    //                         // user = null;
+    //                         // res.send(user);
+    //                         res.sendStatus(404).send(error);
+    //
+    //                     }
+    //                 },
+    //                 function (error) {
+    //                     res.sendStatus(404).send(error);
+    //                 }
+    //             );
+    //     } else {
+    //         model
+    //             .findAllUser()
+    //             .then(
+    //                 function (users) {
+    //                     res.send(users);
+    //                 },
+    //                 function (error) {
+    //                     res.sendStatus(404).send(error);
+    //                 }
+    //             )
+    //     }
+    //
+    // }
 
 
     function createUser(req, res) {
