@@ -10,9 +10,22 @@
             "findUserByUsername": findUserByUsername,
             "findUserByCredentials": findUserByCredentials,
             "updateUser": updateUser,
-            "deleteUser": deleteUser
+            "deleteUser": deleteUser,
+            "setCurrentUser":setCurrentUser,
+            "login":login
         };
         return services;
+
+        // security
+        function login(user){
+            return $http.post("/api/login", user);
+        }
+
+        function setCurrentUser(user) {
+            $rootScope.currentUser = user;
+        }
+        // security
+
 
         function createUser(user) {
             var url = "/api/user";

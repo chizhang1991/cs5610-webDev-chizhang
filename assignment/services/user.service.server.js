@@ -1,4 +1,12 @@
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+//var FacebookStrategy = require('passport-facebook').Strategy;
+// var bcrypt = require("bcrypt-nodejs");
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
+
 module.exports = function(app, models){
 
     var model = models.userModel;
@@ -19,6 +27,20 @@ module.exports = function(app, models){
 
     // DELETE Calls.
     app.delete('/api/user/:uid', deleteUser);
+
+
+    app.use(session({
+        secret: 'this is the secret',
+        resave: true,
+        saveUninitialized: true
+    }));
+
+    app.use(cookieParser());
+    app.use(passport.initialize());
+    app.use(passport.session());
+    passport.use('LocalStrategy', new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
 
     /*API implementation*/
     function findAllUsers(req, res) {

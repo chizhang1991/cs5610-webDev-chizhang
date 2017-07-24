@@ -83,4 +83,24 @@
                 redirectTo : "/"
             });
     }
+
+    // security
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+        console.log("check login");
+        var deferred = $q.defer();
+        $http.get('/api/loggedin').then(function(user) {
+            $rootScope.errorMessage = null;
+            if (user !== '0') {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            } else {
+                $rootScope.error = "You need to log in.";
+                deferred.reject();
+                $location.url('/login');
+            }
+        });
+        return deferred.promise;
+        //return {"username":"alice"};
+    };
+
 })();

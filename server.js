@@ -4,13 +4,25 @@ var express = require('express');
 //initialize app as an express application
 var app = express();
 
-// var passport = require('passport');
-// var cookies = require('cookies');
-// var sessions = require('sessions');
-
 var bodyParser = require('body-parser');
+
+var passport      = require('passport');
+var cookieParser  = require('cookie-parser');
+var session       = require('express-session');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({ secret: process.env.SESSION_SECRET }));
+// app.use(session({
+//     secret: 'this is the secret',
+//     resave: true,
+//     saveUninitialized: true
+// }));
+
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.set('port', (process.env.PORT || 5000));
