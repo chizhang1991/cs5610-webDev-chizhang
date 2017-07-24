@@ -28,6 +28,10 @@ module.exports = function(app, models){
     // DELETE Calls.
     app.delete('/api/user/:uid', deleteUser);
 
+    /*Config Passport*/
+    app.post('/api/login', passport.authenticate('LocalStrategy'), login);
+    app.post('/api/logout', logout);
+    app.get ('/api/loggedin', loggedin);
 
     app.use(session({
         secret: 'this is the secret',
@@ -55,6 +59,39 @@ module.exports = function(app, models){
                     if (err) { return done(err); }
                 }
             );
+    }
+
+    // session cookie functions
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        userModel
+            .findUserById(user._id)
+            .then(
+                function(user){
+                    done(null, user);
+                },
+                function(err){
+                    done(err, null);
+                }
+            );
+    }
+
+    // passport function implementation
+    function login(req, res) {
+        var user = req.user;
+        res.json(user);
+    }
+
+    function logout(req, res) {
+        req.logOut();
+        res.send(200);
+    }
+
+    function loggedin(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
     }
 
     /*API implementation*/
