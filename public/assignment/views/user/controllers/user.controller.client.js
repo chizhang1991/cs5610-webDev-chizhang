@@ -70,6 +70,7 @@
 
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
+        vm.logout = logout;
 
         // UserService.findUserById(vm.uid)
         //     .then(renderUser, userError);
@@ -101,6 +102,14 @@
                         vm.updated = null;
                     }, 3000);
                 });
+        }
+        
+        function logout() {
+            UserService
+                .logout()
+                .then(function () {
+                    $location.url('/login');
+                })
         }
 
 

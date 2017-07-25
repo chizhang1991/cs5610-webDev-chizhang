@@ -13,6 +13,7 @@
             "deleteUser": deleteUser,
             "setCurrentUser":setCurrentUser,
             "login":login,
+            "logout" : logout
             // "checkLoggedIn" : checkLoggedIn
         };
         return services;
@@ -29,6 +30,14 @@
                 password: password
             };
             return $http.post(url, credentials)
+                .then(function (response) {
+                    return response.data;
+                });
+        }
+        
+        function logout() {
+            var url = "api/logout";
+            return $http.post(url)
                 .then(function (response) {
                     return response.data;
                 });
