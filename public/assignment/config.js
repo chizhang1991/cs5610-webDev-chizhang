@@ -32,30 +32,45 @@
                     loggedin: checkLoggedin
                 }
             })
-            .when('/user/:uid/website/new', {
+            .when('/website/new', {
                 templateUrl : "views/website/templates/website-new.view.client.html",
                 controller: "NewWebsiteController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid', {
+            .when('/website/:wid', {
                 templateUrl : "views/website/templates/website-edit.view.client.html",
                 controller: "EditWebsiteController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid/page', {
+            .when('/website/:wid/page', {
                 templateUrl : "views/page/templates/page-list.view.client.html",
                 controller: "PageListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid/page/new', {
+            .when('/website/:wid/page/new', {
                 templateUrl : "views/page/templates/page-new.view.client.html",
                 controller: "NewPageController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid/page/:pid', {
+            .when('/website/:wid/page/:pid', {
                 templateUrl : "views/page/templates/page-edit.view.client.html",
                 controller: "EditPageController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when('/user/:uid/website/:wid/page/:pid/widget', {
                 templateUrl : "views/widget/templates/widget-list.view.client.html",

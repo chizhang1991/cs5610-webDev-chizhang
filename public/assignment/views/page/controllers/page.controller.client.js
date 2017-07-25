@@ -5,9 +5,10 @@
         .controller("NewPageController", NewPageController)
         .controller("EditPageController", EditPageController);
 
-    function PageListController($routeParams, PageService) {
+    function PageListController($routeParams, PageService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         PageService
             .findPageByWebsiteId(vm.wid)
@@ -18,9 +19,10 @@
         }
     }
 
-    function NewPageController($routeParams, $timeout, $location, PageService) {
+    function NewPageController($routeParams, $timeout, $location, PageService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
 
         vm.createPage = createPage;
@@ -42,14 +44,15 @@
             PageService
                 .createPage(vm.wid, page)
                 .then(function () {
-                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                    $location.url("/website/" + vm.wid + "/page");
                 });
         }
     }
 
-    function EditPageController($routeParams, $location, $timeout, PageService) {
+    function EditPageController($routeParams, $location, $timeout, PageService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
 
@@ -75,7 +78,7 @@
             PageService
                 .updatePage(vm.pid, newPage)
                 .then(function () {
-                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                    $location.url("/website/" + vm.wid + "/page");
                 });
         }
 
@@ -83,7 +86,7 @@
             PageService.deletePage(page._id)
                 .then(
                     function () {
-                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page");
+                        $location.url("/website/" + vm.wid + "/page");
                 },
                     function() {
                         vm.error = "Cannot delete this page";
