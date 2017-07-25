@@ -122,25 +122,32 @@
 
     // security
     var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
-        console.log("check login");
         var deferred = $q.defer();
         $http
             .get('/api/loggedin')
             .then(function(response) {
-                // console.log(user.data);
                 var user = response.data;
-                // $rootScope.errorMessage = null;
                 if (user !== '0') {
-                    // console.log("user exist");
-                    // $rootScope.currentUser = user;
                     deferred.resolve(user);
                 } else {
-                    // $rootScope.error = "You need to log in.";
                     deferred.reject();
                     $location.url('/login');
                 }
             });
         return deferred.promise;
     };
+
+    // var checkCurrentUser = function ($q, $timeout, $http, $location, $rootScope) {
+    //     // console.log("check login");
+    //     var deferred = $q.defer();
+    //     $http
+    //         .get('/api/loggedin')
+    //         .then(function(response) {
+    //             // console.log(user.data);
+    //             var user = response.data;
+    //             deferred.resolve(user);
+    //         });
+    //     return deferred.promise;
+    // };
 
 })();

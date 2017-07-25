@@ -57,7 +57,7 @@
 
         vm.createWidget = createWidget;
 
-        function createWidget(name, size, width, text, url) {
+        function createWidget(name, size, width, text, url, placeholder, rows, formatted) {
 
             if (vm.wtype === "HEADING") {
                 if (size === undefined || text === undefined || size === null || text === null) {
@@ -93,14 +93,19 @@
                 size: size,
                 width: width,
                 text: text,
-                url: url
+                url: url,
+                placeholder: placeholder,
+                rows: rows,
+                formatted: formatted
             };
+
+            console.log(widget);
 
             WidgetService
                 .createWidget(vm.pid, widget)
                 .then(function () {
                     // console.log("to correct branch");
-                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                    $location.url("/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                 });
         }
     }
@@ -131,7 +136,7 @@
             WidgetService
                 .updateWidget(vm.wgid, newWidget)
                 .then(function () {
-                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                    $location.url("/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                 }, function (error) {
                     vm.error = "Cannot find widget to update.";
                     $timeout(function () {
@@ -144,7 +149,7 @@
             WidgetService
                 .deleteWidget(widget._id)
                 .then(function () {
-                    $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                    $location.url("/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                 }, function (error) {
                     vm.error = "Cannot find widget to delete.";
                     $timeout(function () {
@@ -191,13 +196,13 @@
                 WidgetService
                     .createWidget(vm.pid, newWidget)
                     .then(function () {
-                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                        $location.url("/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                     })
             } else {
                 WidgetService
                     .updateWidget(vm.wgid, newWidget)
                     .then(function () {
-                        $location.url("/user/" + vm.uid + "/website/" + vm.wid + "/page/" + vm.pid + "/widget");
+                        $location.url("/website/" + vm.wid + "/page/" + vm.pid + "/widget");
                     })
             }
             // WidgetService

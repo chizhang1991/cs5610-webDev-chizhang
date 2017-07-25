@@ -88,27 +88,15 @@
             });
 
         function updateWebsite(newWebsite) {
-            console.log("in service: do update website");
+            // console.log("in service: do update website");
             WebsiteService.updateWebsite(vm.wid, newWebsite)
                 .then(function () {
                     vm.updated = "Website changes saved!";
                     $timeout(function () {
                         vm.updated = null;
                     }, 3000);
-                }
-                    // , updateWebsitesList,
-                //     function () {
-                //     $location.url("/user/" + vm.uid + "/website/" + vm.wid);
-                // }
-                    );
+                });
 
-            // function updateWebsitesList() {
-            //     WebsiteService
-            //         .findWebsitesByUser(vm.uid)
-            //         .then(function (websites) {
-            //             vm.websites = websites;
-            //         });
-            // }
         }
 
         function deleteWebsite(website) {

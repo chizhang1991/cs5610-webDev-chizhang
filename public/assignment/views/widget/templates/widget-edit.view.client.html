@@ -31,6 +31,9 @@
         <div ng-switch-when="HTML">
             <div ng-include src="'views/widget/templates/editors/widget-html-edit.view.client.html'"></div>
         </div>
+        <div ng-switch-when="TEXT">
+            <div ng-include src="'views/widget/templates/editors/widget-text-edit.view.client.html'"></div>
+        </div>
 
         <a class="margin-top btn btn-danger btn-block" ng-click="model.deleteWidget(model.widget)">Delete</a>
     </div>

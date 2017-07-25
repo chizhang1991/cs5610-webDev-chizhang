@@ -89,7 +89,7 @@ module.exports = function(app, models){
 
     function logout(req, res) {
         req.logout();
-        res.send(200);
+        res.sendStatus(200);
     }
 
     function loggedin(req, res) {
@@ -111,62 +111,6 @@ module.exports = function(app, models){
     }
 
     /*API implementation*/
-    // function findAllUsers(req, res) {
-    //     // console.log("find all users");
-    //     var username = req.query.username;
-    //     var password = req.query.password;
-    //
-    //     if(username && password){
-    //         // console.log("find by credentials");
-    //         model
-    //             .findUserByCredentials(username, password)
-    //             .then(
-    //                 function(user){
-    //                     if(user){
-    //                         res.json(user);
-    //                     } else {
-    //                         // user = null;
-    //                         // res.send(user);
-    //                         res.sendStatus(404).send(error);
-    //                     }
-    //                 },
-    //                 function (error) {
-    //                     res.sendStatus(404).send(error);
-    //                 }
-    //             );
-    //     } else if (username) {
-    //         model
-    //             .findUserByUsername(username)
-    //             .then(
-    //                 function (user) {
-    //                     if(user) {
-    //                         res.json(user);
-    //                     } else {
-    //                         // user = null;
-    //                         // res.send(user);
-    //                         res.sendStatus(404).send(error);
-    //
-    //                     }
-    //                 },
-    //                 function (error) {
-    //                     res.sendStatus(404).send(error);
-    //                 }
-    //             );
-    //     } else {
-    //         model
-    //             .findAllUser()
-    //             .then(
-    //                 function (users) {
-    //                     res.send(users);
-    //                 },
-    //                 function (error) {
-    //                     res.sendStatus(404).send(error);
-    //                 }
-    //             )
-    //     }
-    //
-    // }
-
 
     function createUser(req, res) {
 

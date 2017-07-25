@@ -20,9 +20,6 @@
         return services;
 
         // security
-        // function login(user){
-        //     return $http.post("/api/login", user);
-        // }
 
         function login(username, password) {
             var url = "/api/login";
@@ -55,26 +52,7 @@
         function setCurrentUser(user) {
             $rootScope.currentUser = user;
         }
-        
-        // function checkLoggedIn() {
-        //     var deferred = $q.defer();
-        //     var url = '/api/loggedin';
-        //     return $http
-        //         .get(url)
-        //         .then(function(user) {
-        //             $rootScope.errorMessage = null;
-        //             if (user !== '0') {
-        //                 $rootScope.currentUser = user;
-        //                 deferred.resolve();
-        //             } else {
-        //                 $rootScope.error = "You need to log in.";
-        //                 deferred.reject();
-        //                 $location.url('/login');
-        //             }
-        //         });
-        // }
-        // security
-
+        //
 
         function createUser(user) {
             var url = "/api/user";

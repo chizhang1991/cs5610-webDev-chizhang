@@ -63,7 +63,6 @@
     }
 
     function ProfileController($routeParams, $timeout, $location, UserService, loggedin) {
-        // console.log(loggedin);
         var vm = this;
         // vm.uid = $routeParams.uid;
         vm.uid = loggedin._id;
@@ -72,14 +71,6 @@
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
         vm.logout = logout;
-
-        // UserService.findUserById(vm.uid)
-        //     .then(renderUser, userError);
-
-        // function init() {
-        //     renderUser(loggedin);
-        // }
-        // init();
 
         function deleteUser(user) {
             UserService
@@ -113,11 +104,6 @@
                 })
         }
 
-
-        // function renderUser(user) {
-        //     vm.user = user;
-        // }
-        
         function userError(error) {
             vm.error = "User not found";
         }

@@ -10,7 +10,8 @@
             Create Widget
         </a>
         <div class="navbar-text pull-right cl-icon-padding">
-            <a ng-click="model.createWidget(model.widget.name, model.widget.size, model.widget.width, model.widget.text, model.widget.url)"
+            <a ng-click="model.createWidget(model.widget.name, model.widget.size, model.widget.width,
+            model.widget.text, model.widget.url, model.widget.placeholder, model.widget.rows, model.widget.formatted)"
                class="cl-text-black">
                 <span class="glyphicon glyphicon-ok"></span>
             </a>
@@ -32,6 +33,9 @@
         </div>
         <div ng-switch-when="HTML">
             <div ng-include src="'views/widget/templates/editors/widget-html-edit.view.client.html'"></div>
+        </div>
+        <div ng-switch-when="TEXT">
+            <div ng-include src="'views/widget/templates/editors/widget-text-edit.view.client.html'"></div>
         </div>
     </div>
 </div>
