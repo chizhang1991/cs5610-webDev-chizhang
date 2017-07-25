@@ -14,7 +14,7 @@
                 // .findUserByCredentials(username, password)
                 .login(username, password)
                 .then(function (user) {
-                        $location.url("/user/" + user._id);
+                        $location.url("/profile");
                     },
                     function (error) {
                         vm.error = "Username does not exist.";
@@ -56,20 +56,28 @@
                     })
                 .then(
                     function (user) {
-                        $location.url("/user/" + user._id);
+                        $location.url("/profile");
                     });
         }
     }
 
-    function ProfileController($routeParams, $timeout, $location, UserService) {
+    function ProfileController($routeParams, $timeout, $location, UserService, loggedin) {
+        // console.log(loggedin);
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
+        vm.user = loggedin;
 
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
 
-        UserService.findUserById(vm.uid)
-            .then(renderUser, userError);
+        // UserService.findUserById(vm.uid)
+        //     .then(renderUser, userError);
+
+        // function init() {
+        //     renderUser(loggedin);
+        // }
+        // init();
 
         function deleteUser(user) {
             UserService
@@ -96,9 +104,9 @@
         }
 
 
-        function renderUser(user) {
-            vm.user = user;
-        }
+        // function renderUser(user) {
+        //     vm.user = user;
+        // }
         
         function userError(error) {
             vm.error = "User not found";

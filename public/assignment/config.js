@@ -16,15 +16,21 @@
                 controller: "LoginController",
                 controllerAs: "model"
             })
-            .when('/user/:uid', {
+            .when('/profile', {
                 templateUrl : "views/user/templates/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website', {
+            .when('/website', {
                 templateUrl : "views/website/templates/website-list.view.client.html",
                 controller: "WebsiteListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when('/user/:uid/website/new', {
                 templateUrl : "views/website/templates/website-new.view.client.html",
@@ -87,20 +93,31 @@
     // security
     var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
         console.log("check login");
-        var deferred = $q.defer();
-        $http.get('/api/loggedin').then(function(user) {
-            $rootScope.errorMessage = null;
-            if (user !== '0') {
-                $rootScope.currentUser = user;
-                deferred.resolve();
-            } else {
-                $rootScope.error = "You need to log in.";
-                deferred.reject();
-                $location.url('/login');
-            }
-        });
-        return deferred.promise;
+        // var deferred = $q.defer();
+        return $http
+            .get('/api/loggedin')
+            // .then(function(user) {
+            //     $rootScope.errorMessage = null;
+            //     if (user !== '0') {
+            //         console.log("user exist");
+            //         $rootScope.currentUser = user;
+            //         deferred.resolve();
+            //     } else {
+            //         $rootScope.error = "You need to log in.";
+            //         deferred.reject();
+            //         $location.url('/login');
+            //     }
+            // }
+            .then(function (response) {
+                // console.log(response.data);
+                return response.data;
+            });
+        // return deferred.promise;
         //return {"username":"alice"};
     };
+    
+    // var checkLoggedin = function (userService) {
+    //
+    // }
 
 })();

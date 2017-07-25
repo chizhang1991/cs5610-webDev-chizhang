@@ -7,10 +7,9 @@ module.exports = function(mongoose) {
     }
     else
     {
-        connectionString = connectionString = 'mongodb://localhost:27017/cs5610-webdev'
+        connectionString = 'mongodb://localhost:27017/cs5610-webdev'
     }
 
-    // var mongoose = require('mongoose');
     mongoose.connect(connectionString);
     mongoose.Promise = require('q').Promise;
 

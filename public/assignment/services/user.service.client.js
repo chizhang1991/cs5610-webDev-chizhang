@@ -12,7 +12,8 @@
             "updateUser": updateUser,
             "deleteUser": deleteUser,
             "setCurrentUser":setCurrentUser,
-            "login":login
+            "login":login,
+            // "checkLoggedIn" : checkLoggedIn
         };
         return services;
 
@@ -26,7 +27,7 @@
             var credentials = {
                 username: username,
                 password: password
-            }
+            };
             return $http.post(url, credentials)
                 .then(function (response) {
                     return response.data;
@@ -36,6 +37,24 @@
         function setCurrentUser(user) {
             $rootScope.currentUser = user;
         }
+        
+        // function checkLoggedIn() {
+        //     var deferred = $q.defer();
+        //     var url = '/api/loggedin';
+        //     return $http
+        //         .get(url)
+        //         .then(function(user) {
+        //             $rootScope.errorMessage = null;
+        //             if (user !== '0') {
+        //                 $rootScope.currentUser = user;
+        //                 deferred.resolve();
+        //             } else {
+        //                 $rootScope.error = "You need to log in.";
+        //                 deferred.reject();
+        //                 $location.url('/login');
+        //             }
+        //         });
+        // }
         // security
 
 
