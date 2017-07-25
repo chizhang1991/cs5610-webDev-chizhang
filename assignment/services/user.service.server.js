@@ -33,6 +33,8 @@ module.exports = function(app, models){
     app.post('/api/logout', logout);
     app.get ('/api/loggedin', loggedin);
 
+    app.post('/api/register', register);
+
     app.use(session({
         secret: 'this is the secret',
         resave: true,
@@ -92,6 +94,20 @@ module.exports = function(app, models){
 
     function loggedin(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+    function register(req, res) {
+        var user = req.body;
+        // console.log(user);
+        model
+            .createUser(user)
+            .then(
+                function (user) {
+                    req.login(user, function (status) {
+                        res.send(status);
+                    })
+                }
+            )
     }
 
     /*API implementation*/

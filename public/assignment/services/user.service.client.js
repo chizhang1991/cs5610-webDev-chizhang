@@ -13,7 +13,8 @@
             "deleteUser": deleteUser,
             "setCurrentUser":setCurrentUser,
             "login":login,
-            "logout" : logout
+            "logout" : logout,
+            "register" : register
             // "checkLoggedIn" : checkLoggedIn
         };
         return services;
@@ -41,6 +42,14 @@
                 .then(function (response) {
                     return response.data;
                 });
+        }
+        
+        function register(user) {
+            var url = "api/register";
+            return $http.post(url, user)
+                .then(function (response) {
+                    return response.data;
+                })
         }
 
         function setCurrentUser(user) {

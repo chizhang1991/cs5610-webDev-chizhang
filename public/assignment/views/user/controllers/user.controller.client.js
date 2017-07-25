@@ -52,10 +52,11 @@
                         };
                         // return the promise
                         return UserService
-                            .createUser(user)
+                            // .createUser(user)
+                            .register(user);
                     })
                 .then(
-                    function (user) {
+                    function () {
                         $location.url("/profile");
                     });
         }
