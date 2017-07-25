@@ -7,9 +7,10 @@
         .controller("CreateWidgetController", CreateWidgetController)
         .controller("FlickrImageSearchController", FlickrImageSearchController);
 
-    function WidgetListController($routeParams, $sce, WidgetService) {
+    function WidgetListController($routeParams, $sce, WidgetService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
 
@@ -38,16 +39,18 @@
         }
     }
 
-    function NewWidgetController($routeParams) {
+    function NewWidgetController($routeParams, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
     }
 
-    function CreateWidgetController($routeParams, $location, $timeout, WidgetService) {
+    function CreateWidgetController($routeParams, $location, $timeout, WidgetService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wtype = $routeParams.wtype;
@@ -102,9 +105,10 @@
         }
     }
 
-    function EditWidgetController($routeParams, $location, $timeout, WidgetService) {
+    function EditWidgetController($routeParams, $location, $timeout, WidgetService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;
@@ -150,9 +154,10 @@
         }
     }
     
-    function FlickrImageSearchController($routeParams, $location, FlickrService, WidgetService) {
+    function FlickrImageSearchController($routeParams, $location, FlickrService, WidgetService, loggedin) {
         var vm = this;
-        vm.uid = $routeParams.uid;
+        // vm.uid = $routeParams.uid;
+        vm.uid = loggedin._id;
         vm.wid = $routeParams.wid;
         vm.pid = $routeParams.pid;
         vm.wgid = $routeParams.wgid;

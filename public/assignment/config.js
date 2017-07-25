@@ -72,30 +72,45 @@
                     loggedin: checkLoggedin
                 }
             })
-            .when('/user/:uid/website/:wid/page/:pid/widget', {
+            .when('/website/:wid/page/:pid/widget', {
                 templateUrl : "views/widget/templates/widget-list.view.client.html",
                 controller: "WidgetListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid/page/:pid/widget/new', {
+            .when('/website/:wid/page/:pid/widget/new', {
                 templateUrl : "views/widget/templates/widget-chooser.view.client.html",
                 controller: "NewWidgetController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid/page/:pid/widget/search/', {
+            .when('/website/:wid/page/:pid/widget/search/', {
                 templateUrl : "views/widget/templates/widget-flickr-search.view.client.html",
                 controller: "FlickrImageSearchController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid/page/:pid/widget/create/:wtype', {
+            .when('/website/:wid/page/:pid/widget/create/:wtype', {
                 templateUrl : "views/widget/templates/widget-new.view.client.html",
                 controller: "CreateWidgetController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
-            .when('/user/:uid/website/:wid/page/:pid/widget/:wgid', {
+            .when('/website/:wid/page/:pid/widget/:wgid', {
                 templateUrl : "views/widget/templates/widget-edit.view.client.html",
                 controller: "EditWidgetController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/", {
                 templateUrl : "./home.html"
