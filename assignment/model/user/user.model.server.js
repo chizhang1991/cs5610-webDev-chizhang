@@ -12,6 +12,7 @@ module.exports = function(mongoose){
         'addWebsiteForUser' : addWebsiteForUser,
         'deleteUser' : deleteUser,
         'findAllUser' : findAllUser
+        // 'findUserByFacebookId' : findUserByFacebookId
     };
 
     return api;
@@ -99,5 +100,9 @@ module.exports = function(mongoose){
     function findAllUser() {
         return userModel.find();
     }
+
+    // function findUserByFacebookId(facebookId) {
+    //     return User.findOne({'facebook.id': facebookId});
+    // }
 
 };

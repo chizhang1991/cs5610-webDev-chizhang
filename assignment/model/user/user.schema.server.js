@@ -19,6 +19,10 @@ module.exports = function(mongoose){
             type : Date,
             default: Date.now
         }
+        // facebook: {
+        //     id:    String,
+        //     token: String
+        // }
     }, {collection: 'user'});
 
     return userSchema;

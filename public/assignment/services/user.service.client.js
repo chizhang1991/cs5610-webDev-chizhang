@@ -5,7 +5,7 @@
 
     function UserService($http) {
         var services = {
-            "createUser": createUser,
+            // "createUser": createUser,
             "findUserById": findUserById,
             "findUserByUsername": findUserByUsername,
             "findUserByCredentials": findUserByCredentials,
@@ -54,14 +54,14 @@
         }
         //
 
-        function createUser(user) {
-            var url = "/api/user";
-            return $http.post(url, user)
-                .then(function (response) {
-                    return response.data;
-                });
-
-        }
+        // function createUser(user) {
+        //     var url = "/api/user";
+        //     return $http.post(url, user)
+        //         .then(function (response) {
+        //             return response.data;
+        //         });
+        //
+        // }
 
         function findUserById(userId) {
             var url = "/api/user/" + userId;
