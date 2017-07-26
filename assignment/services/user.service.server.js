@@ -36,51 +36,50 @@ module.exports = function(app, models){
 
     // google oauth
     // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
-    // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
-    // var googleConfig = {
-    //     clientID     : process.env.GOOGLE_CLIENT_ID,
-    //     clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-    //     callbackURL  : process.env.GOOGLE_CALLBACK_URL
-    // };
+    var googleConfig = {
+        clientID     : process.env.GOOGLE_CLIENT_ID,
+        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL  : process.env.GOOGLE_CALLBACK_URL
+    };
 
-    // function googleStrategy(token, refreshToken, profile, done) {
-        // console.log(profile);
-        // model
-        //     .findUserByGoogleId(profile.id)
-        //     .then(
-        //         function(user) {
-        //             if(user) {
-        //                 return done(null, user);
-        //             } else {
-        //                 var email = profile.emails[0].value;
-        //                 var emailParts = email.split("@");
-        //                 var newGoogleUser = {
-        //                     username:  emailParts[0],
-        //                     firstName: profile.name.givenName,
-        //                     lastName:  profile.name.familyName,
-        //                     email:     email,
-        //                     google: {
-        //                         id:    profile.id,
-        //                         token: token
-        //                     }
-        //                 };
-        //                 return userModel.createUser(newGoogleUser);
-        //             }
-        //         },
-        //         function(err) {
-        //             if (err) { return done(err); }
-        //         }
-        //     )
-        //     .then(
-        //         function(user){
-        //             return done(null, user);
-        //         },
-        //         function(err){
-        //             if (err) { return done(err); }
-        //         }
-        //     );
-    // }
+    function googleStrategy(token, refreshToken, profile, done) {
+        console.log(profile);
+        model
+            .findUserByGoogleId(profile.id)
+            .then(
+                function(user) {
+                    if(user) {
+                        return done(null, user);
+                    } else {
+                        var email = profile.emails[0].value;
+                        var emailParts = email.split("@");
+                        var newGoogleUser = {
+                            username:  emailParts[0],
+                            firstName: profile.name.givenName,
+                            lastName:  profile.name.familyName,
+                            email:     email,
+                            google: {
+                                id:    profile.id,
+                                token: token
+                            }
+                        };
+                        return userModel.createUser(newGoogleUser);
+                    }
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            )
+            .then(
+                function(user){
+                    return done(null, user);
+                },
+                function(err){
+                    if (err) { return done(err); }
+                }
+            );
+    }
 
     // app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
     // app.get('/auth/facebook/callback',
@@ -136,15 +135,16 @@ module.exports = function(app, models){
 
 
 
-    app.use(session({
-        secret: 'this is the secret',
-        resave: true,
-        saveUninitialized: true
-    }));
+    // app.use(session({
+    //     secret: 'this is the secret',
+    //     resave: true,
+    //     saveUninitialized: true
+    // }));
+    //
+    // app.use(cookieParser());
+    // app.use(passport.initialize());
+    // app.use(passport.session());
 
-    app.use(cookieParser());
-    app.use(passport.initialize());
-    app.use(passport.session());
     passport.use('LocalStrategy', new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
@@ -166,17 +166,21 @@ module.exports = function(app, models){
             .then(
                 function(user) {
                     // console.log(user);
-                    if(user.username === username && bcrypt.compareSync(password, user.password)) {
-                        console.log("User found!");
+                    if (user === null || user === undefined) {
+                        return done(null, false, {message: 'User not found!'})
+                    } else if(bcrypt.compareSync(password, user.password)) {
+                        // console.log("User found!");
                         return done(null, user);
                     } else {
                         console.log("User not found!");
-                        return done(null, false, {message: 'User not found!'});
+                        return done(null, false, {message: 'Username and password does not match!'});
                     }
                 },
-                function(err) {if (err) {
-                    console.log("error: " + err);
-                    return done(err); }
+                function(err) {
+                    if (err) {
+                        console.log("error: " + err);
+                        return done(err);
+                    }
                 }
             );
     }
