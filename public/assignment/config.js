@@ -27,7 +27,10 @@
             .when('/admin', {
                 templateUrl : "views/admin/templates/admin.view.client.html",
                 controller: "AdminController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    admin: checkAdmin
+                }
             })
             .when('/website', {
                 templateUrl : "views/website/templates/website-list.view.client.html",
@@ -159,6 +162,30 @@
                     user = null;
                 }
                 deferred.resolve(user);
+                // if (user === null || user.roles.indexOf('ADMIN') === -1) {
+                //     $location.url('/home');
+                // }
+
+            });
+        return deferred.promise;
+    };
+
+    var checkAdmin = function ($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http
+            .get('/api/loggedin')
+            .then(function(response) {
+                // console.log(user.data);
+                var user = response.data;
+                if (user !== '0') {
+                    if (user.roles.indexOf('ADMIN') > -1) {
+                        deferred.resolve(user);
+                    }
+                } else {
+                    $location.url('/home');
+                }
+
             });
         return deferred.promise;
     };
