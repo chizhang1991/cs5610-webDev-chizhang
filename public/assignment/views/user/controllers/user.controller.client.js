@@ -22,7 +22,7 @@
         }
     }
 
-    function RegisterController(UserService, $location) {
+    function RegisterController(UserService, $location, $timeout) {
         var vm = this;
         vm.register = register;
 
@@ -39,22 +39,40 @@
             UserService
                 .findUserByUsername(username)
                 .then(
-                    function () {
-                        vm.error = "Username already exists.";
-                    },
-                    function () {
-                        var user = {
-                            username: username,
-                            password: password,
-                            firstName: "",
-                            lastName: "",
-                            email: ""
-                        };
-                        // return the promise
-                        return UserService
+                    function (user) {
+                        if (user !== null) {
+                            vm.error = "Username already exists.";
+                            $timeout(function () {
+                                vm.error = null;
+                            }, 3000);
+                            return;
+                        } else {
+                            var user = {
+                                username: username,
+                                password: password,
+                                firstName: "",
+                                lastName: "",
+                                email: ""
+                            };
+                            // return the promise
+                            return UserService
                             // .createUser(user)
-                            .register(user);
+                                .register(user);
+                        }
                     })
+                    // function () {
+                    //     var user = {
+                    //         username: username,
+                    //         password: password,
+                    //         firstName: "",
+                    //         lastName: "",
+                    //         email: ""
+                    //     };
+                    //     // return the promise
+                    //     return UserService
+                    //         // .createUser(user)
+                    //         .register(user);
+                    // })
                 .then(
                     function () {
                         $location.url("/profile");

@@ -16,23 +16,23 @@
             });
 
         function deleteUser(user) {
-            if (user === admin) {
+            if (user._id === admin._id) {
                 vm.error = "You cannot delete yourself!";
                 $timeout(function () {
                     vm.updated = null;
                 }, 3000);
-                return;
+            } else {
+                UserService
+                    .deleteUser(user._id)
+                    .then(function () {
+                        $window.location.reload();
+                    }, function () {
+                        vm.error = "Unable to remove this user.";
+                        $timeout(function () {
+                            vm.error = null;
+                        }, 3000);
+                    });
             }
-            UserService
-                .deleteUser(user._id)
-                .then(function () {
-                    $window.location.reload();
-                }, function () {
-                    vm.error = "Unable to remove this user.";
-                    $timeout(function () {
-                        vm.error = null;
-                    }, 3000);
-                });
         }
     }
 })();
