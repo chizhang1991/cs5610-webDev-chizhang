@@ -16,10 +16,11 @@ module.exports = function(app, models){
     var model = models.userModel;
 
     // app.post('/api/user', createUser);
-    // app.get('/api/user?username=username', findUserByUsername);
+    app.get('/api/user', findUserByUsername);
     app.get('/api/user/:uid', findUserById);
     app.put('/api/user/:uid', updateUser);
     app.delete('/api/user/:uid', deleteUser);
+    app.get('/api/alluser', findAllUsers);
 
     /*Config Passport*/
     app.post('/api/login', passport.authenticate('LocalStrategy'), login);
@@ -152,16 +153,6 @@ module.exports = function(app, models){
     // localStrategy function
     function localStrategy(username, password, done) {
         model
-            // .findUserByCredentials(username, password)
-            // .then(
-            //     function(user) {
-            //         if (!user) { return done(null, false); }
-            //         return done(null, user);
-            //     },
-            //     function(err) {
-            //         if (err) { return done(err); }
-            //     }
-            // );
             .findUserByUsername(username)
             .then(
                 function(user) {
@@ -239,7 +230,7 @@ module.exports = function(app, models){
 
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
-        console.log(user);
+        // console.log(user);
 
         model
             .createUser(user)
@@ -258,14 +249,39 @@ module.exports = function(app, models){
 
         var username = req.query.username;
 
-        for (u in users){
-            var user = users[u];
-            if(user.username === username){
-                res.status(200).send(user);
-                return;
-            }
-        }
-        res.status(404).send("Not found that user with this username!");
+        model
+            .findUserByUsername(username)
+            .then(
+                function (users) {
+                    res.json(users);
+                },
+                function (error) {
+                    res.sendStatus(404).send(error);
+                }
+            )
+
+        // for (u in users){
+        //     var user = users[u];
+        //     if(user.username === username){
+        //         res.status(200).send(user);
+        //         return;
+        //     }
+        // }
+        // res.status(404).send("Not found that user with this username!");
+    }
+
+    function findAllUsers(req, res) {
+        model
+            .findAllUser()
+            .then(
+                function (users) {
+                    // console.log(users);
+                    res.json(users);
+                },
+                function (error) {
+                    res.sendStatus(404).send(error);
+                }
+            )
     }
 
     // function findUserByCredentials (req, res) {

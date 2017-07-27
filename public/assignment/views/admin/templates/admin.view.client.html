@@ -1,3 +1,41 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left margin-left">
+            <a href="#!/home" class="cl-text-black">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <a class="navbar-brand cl-text-bold">
+            Users List
+        </a>
+    </div>
+</nav>
+
 <div class="container-fluid">
-    <h1>Admin</h1>
+    <ul class="list-group borderless">
+        <li ng-repeat="user in model.users" class="list-group-item cl-list-item-borderless">
+            <a ng-click="model.deleteUser(user)">
+                <span class="glyphicon glyphicon-remove pull-right"></span>
+            </a>
+            <a>
+                {{user.username}} : {{user.firstName}} {{user.lastName}}
+            </a>
+        </li>
+    </ul>
 </div>
+
+<!--<div class="container-fluid">-->
+    <!--<ul class="list-group borderless">-->
+        <!--<li ng-repeat="page in model.pages" class="list-group-item cl-list-item-borderless">-->
+            <!--<a href="#!/website/{{model.wid}}/page/{{page._id}}">-->
+                <!--<span class="glyphicon glyphicon-cog pull-right"></span>-->
+            <!--</a>-->
+            <!--<a href="#!/website/{{model.wid}}/page/{{page._id}}/widget">-->
+                <!--{{page.name}}-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+
+<nav class="navbar navbar-fixed-bottom navbar-default">
+</nav>

@@ -9,6 +9,7 @@
             "findUserById": findUserById,
             "findUserByUsername": findUserByUsername,
             "findUserByCredentials": findUserByCredentials,
+            "findAllUsers": findAllUsers,
             "updateUser": updateUser,
             "deleteUser": deleteUser,
             "setCurrentUser":setCurrentUser,
@@ -89,13 +90,19 @@
                 });
         }
 
+        function findAllUsers() {
+            var url = '/api/alluser';
+            return $http.get(url)
+                .then(function (response) {
+                    return response.data;
+                })
+        }
 
         function updateUser(userId, user) {
             var url = "/api/user/" + userId;
             return $http.put(url, user)
                 .then(function (response) {
-                    var user = response.data;
-                    return user;
+                    return response.data;
                 });
             // return $http.put(url, user);
         }
