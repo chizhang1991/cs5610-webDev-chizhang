@@ -20,25 +20,28 @@ module.exports = function(mongoose){
     // Function Definition Section
 
     function createUser(user){
-        var newUser = {
-            username : user.username,
-            password : user.password,
-            websites : []
-        };
-
-        if(user.firstName){
-            newUser.firstName = user.firstName;
-        }
-        if(user.lastName){
-            newUser.lastName = user.lastName;
-        }
-        if(user.email){
-            newUser.email = user.email;
-        }
-        if(user.phone){
-            newUser.phone = user.phone;
-        }
-        return userModel.create(newUser);
+        user.roles = ['USER'];
+        user.websites = [];
+        // var newUser = {
+        //     username : user.username,
+        //     password : user.password,
+        //     websites : []
+        // };
+        //
+        // if(user.firstName){
+        //     newUser.firstName = user.firstName;
+        // }
+        // if(user.lastName){
+        //     newUser.lastName = user.lastName;
+        // }
+        // if(user.email){
+        //     newUser.email = user.email;
+        // }
+        // if(user.phone){
+        //     newUser.phone = user.phone;
+        // }
+        // return userModel.create(newUser);
+        return userModel.create(user);
     }
 
     function findUserById(userId){

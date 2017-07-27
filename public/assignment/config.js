@@ -24,6 +24,11 @@
                     loggedin: checkLoggedin
                 }
             })
+            .when('/admin', {
+                templateUrl : "views/admin/templates/admin.view.client.html",
+                controller: "AdminController",
+                controllerAs: "model"
+            })
             .when('/website', {
                 templateUrl : "views/website/templates/website-list.view.client.html",
                 controller: "WebsiteListController",
@@ -112,11 +117,16 @@
                     loggedin: checkLoggedin
                 }
             })
-            .when("/", {
-                templateUrl : "./home.html"
+            .when("/home", {
+                templateUrl : "./views/home/templates/home.html",
+                controller: "HomepageController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: checkCurrentUser
+                }
             })
             .otherwise({
-                redirectTo : "/"
+                redirectTo : "/home"
             });
     }
 
@@ -137,17 +147,20 @@
         return deferred.promise;
     };
 
-    // var checkCurrentUser = function ($q, $timeout, $http, $location, $rootScope) {
-    //     // console.log("check login");
-    //     var deferred = $q.defer();
-    //     $http
-    //         .get('/api/loggedin')
-    //         .then(function(response) {
-    //             // console.log(user.data);
-    //             var user = response.data;
-    //             deferred.resolve(user);
-    //         });
-    //     return deferred.promise;
-    // };
+    var checkCurrentUser = function ($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http
+            .get('/api/loggedin')
+            .then(function(response) {
+                // console.log(user.data);
+                var user = response.data;
+                if (user === '0') {
+                    user = null;
+                }
+                deferred.resolve(user);
+            });
+        return deferred.promise;
+    };
 
 })();

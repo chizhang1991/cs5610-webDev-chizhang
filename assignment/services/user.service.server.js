@@ -16,7 +16,7 @@ module.exports = function(app, models){
     var model = models.userModel;
 
     // app.post('/api/user', createUser);
-    app.get('/api/user?username=username', findUserByUsername);
+    // app.get('/api/user?username=username', findUserByUsername);
     app.get('/api/user/:uid', findUserById);
     app.put('/api/user/:uid', updateUser);
     app.delete('/api/user/:uid', deleteUser);
@@ -221,7 +221,7 @@ module.exports = function(app, models){
     function register(req, res) {
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
-        console.log(user);
+        // console.log(user);
         model
             .createUser(user)
             .then(
@@ -268,31 +268,31 @@ module.exports = function(app, models){
         res.status(404).send("Not found that user with this username!");
     }
 
-    function findUserByCredentials (req, res) {
-
-        var query = req.query;
-        var username = query.username;
-        var password = query.password;
-
-        if(username && password){
-            model
-                .findUserByCredentials(username, password)
-                .then(
-                    function(user){
-                        if(user){
-                            res.json(user);
-                        } else {
-                            user = null;
-                            res.send(user);
-                        }
-                    },
-                    function (error) {
-                        res.sendStatus(404).send(error);
-                    }
-                );
-        }
-
-    }
+    // function findUserByCredentials (req, res) {
+    //
+    //     var query = req.query;
+    //     var username = query.username;
+    //     var password = query.password;
+    //
+    //     if(username && password){
+    //         model
+    //             .findUserByCredentials(username, password)
+    //             .then(
+    //                 function(user){
+    //                     if(user){
+    //                         res.json(user);
+    //                     } else {
+    //                         user = null;
+    //                         res.send(user);
+    //                     }
+    //                 },
+    //                 function (error) {
+    //                     res.sendStatus(404).send(error);
+    //                 }
+    //             );
+    //     }
+    //
+    // }
 
     function findUserById(req, res) {
 
