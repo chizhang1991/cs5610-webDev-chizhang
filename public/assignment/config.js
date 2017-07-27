@@ -156,15 +156,11 @@
         $http
             .get('/api/loggedin')
             .then(function(response) {
-                // console.log(user.data);
                 var user = response.data;
                 if (user === '0') {
                     user = null;
                 }
                 deferred.resolve(user);
-                // if (user === null || user.roles.indexOf('ADMIN') === -1) {
-                //     $location.url('/home');
-                // }
 
             });
         return deferred.promise;

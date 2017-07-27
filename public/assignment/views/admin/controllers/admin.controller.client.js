@@ -7,11 +7,9 @@
         var vm = this;
         vm.deleteUser = deleteUser;
 
-        // console.log(admin);
         UserService
             .findAllUsers()
             .then(function (users) {
-                // console.log(users);
                 vm.users = users;
             });
 

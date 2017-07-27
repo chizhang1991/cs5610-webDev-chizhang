@@ -56,23 +56,9 @@
                             };
                             // return the promise
                             return UserService
-                            // .createUser(user)
                                 .register(user);
                         }
                     })
-                    // function () {
-                    //     var user = {
-                    //         username: username,
-                    //         password: password,
-                    //         firstName: "",
-                    //         lastName: "",
-                    //         email: ""
-                    //     };
-                    //     // return the promise
-                    //     return UserService
-                    //         // .createUser(user)
-                    //         .register(user);
-                    // })
                 .then(
                     function () {
                         $location.url("/profile");
