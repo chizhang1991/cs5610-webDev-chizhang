@@ -36,7 +36,7 @@ module.exports = function(app, models){
         }));
 
     // google oauth
-    // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
     var googleConfig = {
         clientID     : process.env.GOOGLE_CLIENT_ID,
@@ -136,15 +136,6 @@ module.exports = function(app, models){
 
 
 
-    // app.use(session({
-    //     secret: 'this is the secret',
-    //     resave: true,
-    //     saveUninitialized: true
-    // }));
-    //
-    // app.use(cookieParser());
-    // app.use(passport.initialize());
-    // app.use(passport.session());
 
     passport.use('LocalStrategy', new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
@@ -259,15 +250,6 @@ module.exports = function(app, models){
                     res.sendStatus(404).send(error);
                 }
             )
-
-        // for (u in users){
-        //     var user = users[u];
-        //     if(user.username === username){
-        //         res.status(200).send(user);
-        //         return;
-        //     }
-        // }
-        // res.status(404).send("Not found that user with this username!");
     }
 
     function findAllUsers(req, res) {
@@ -283,32 +265,6 @@ module.exports = function(app, models){
                 }
             )
     }
-
-    // function findUserByCredentials (req, res) {
-    //
-    //     var query = req.query;
-    //     var username = query.username;
-    //     var password = query.password;
-    //
-    //     if(username && password){
-    //         model
-    //             .findUserByCredentials(username, password)
-    //             .then(
-    //                 function(user){
-    //                     if(user){
-    //                         res.json(user);
-    //                     } else {
-    //                         user = null;
-    //                         res.send(user);
-    //                     }
-    //                 },
-    //                 function (error) {
-    //                     res.sendStatus(404).send(error);
-    //                 }
-    //             );
-    //     }
-    //
-    // }
 
     function findUserById(req, res) {
 
