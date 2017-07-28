@@ -5,7 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 
 // google strategy
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+// var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -27,115 +27,6 @@ module.exports = function(app, models){
     app.post('/api/logout', logout);
     app.get ('/api/loggedin', loggedin);
     app.post('/api/register', register);
-
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-    app.get('/auth/google/callback',
-        passport.authenticate('google', {
-            successRedirect: '/#/profile',
-            failureRedirect: '/#/login'
-        }));
-
-    // google oauth
-    // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
-
-    var googleConfig = {
-        clientID     : process.env.GOOGLE_CLIENT_ID,
-        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL  : process.env.GOOGLE_CALLBACK_URL
-    };
-
-    function googleStrategy(token, refreshToken, profile, done) {
-        console.log(profile);
-        model
-            .findUserByGoogleId(profile.id)
-            .then(
-                function(user) {
-                    if(user) {
-                        return done(null, user);
-                    } else {
-                        var email = profile.emails[0].value;
-                        var emailParts = email.split("@");
-                        var newGoogleUser = {
-                            username:  emailParts[0],
-                            firstName: profile.name.givenName,
-                            lastName:  profile.name.familyName,
-                            email:     email,
-                            google: {
-                                id:    profile.id,
-                                token: token
-                            }
-                        };
-                        return userModel.createUser(newGoogleUser);
-                    }
-                },
-                function(err) {
-                    if (err) { return done(err); }
-                }
-            )
-            .then(
-                function(user){
-                    return done(null, user);
-                },
-                function(err){
-                    if (err) { return done(err); }
-                }
-            );
-    }
-
-    // app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-    // app.get('/auth/facebook/callback',
-    //     passport.authenticate('facebook', {
-    //         successRedirect: '/#/user',
-    //         failureRedirect: '/#/login'
-    //     }));
-    //
-    // passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
-    // var facebookConfig = {
-    //     clientID     : process.env.FACEBOOK_CLIENT_ID,
-    //     clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-    //     callbackURL  : process.env.FACEBOOK_CALLBACK_URL,
-    //     profileFields: ['id', 'email', 'first_name', 'last_name']
-    // };
-    //
-    // function facebookStrategy(token, refreshToken, profile, done) {
-    //     model
-    //         .findUserByFacebookId(profile.id)
-    //         .then(function(user){
-    //                 if(user != null){
-    //                     return done(null, user);
-    //                 }
-    //                 else{ //create a new user in db
-    //                     var newUser={
-    //                         username: profile.emails[0].value.split('@')[0],
-    //                         firstName: profile.name.givenName,
-    //                         lastName: profile.name.familyName,
-    //                         email: profile.emails[0].value,
-    //                         facebook: {
-    //                             id: profile.id,
-    //                             token: token
-    //                         }
-    //                     };
-    //                     model
-    //                         .createUser(newUser)
-    //                         .then(function(user){
-    //                             if(user){
-    //                                 return done(null, user);
-    //                             }
-    //                             else{
-    //                                 return done(null, false);
-    //                             }
-    //                         })
-    //                 }
-    //             },
-    //             function(err){
-    //                 if(err){
-    //                     return done(err);
-    //                 }
-    //             });
-    // }
-
-
-
 
     passport.use('LocalStrategy', new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
