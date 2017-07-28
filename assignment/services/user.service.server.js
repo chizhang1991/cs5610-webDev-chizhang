@@ -36,7 +36,7 @@ module.exports = function(app, models){
         }));
 
     // google oauth
-    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+    // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
     var googleConfig = {
         clientID     : process.env.GOOGLE_CLIENT_ID,
