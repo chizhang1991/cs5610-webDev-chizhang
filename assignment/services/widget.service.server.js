@@ -210,7 +210,7 @@ module.exports = function(app, models){
 
         }
 
-        var callbackUrl  = "/#!/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget";
+        var callbackUrl  = "/#!/website/"+websiteId+"/page/"+pageId+"/widget";
         res.redirect(callbackUrl);
     }
 
