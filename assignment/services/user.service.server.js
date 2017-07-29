@@ -14,7 +14,6 @@ module.exports = function(app, models){
 
     var model = models.userModel;
 
-    // app.post('/api/user', createUser);
     app.get('/api/user', findUserByUsername);
     app.get('/api/user/:uid', findUserById);
     app.put('/api/user/:uid', updateUser);
