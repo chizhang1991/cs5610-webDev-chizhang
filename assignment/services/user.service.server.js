@@ -30,10 +30,7 @@ module.exports = function(app, models){
 
     app.get('/auth/google',
         passport.authenticate('google', { scope : ['profile', 'email'] }));
-    // app.get('/auth/google',
-    //     passport.authenticate('google', { scope:
-    //         [ 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read' ] }
-    //     ));
+
     app.get('/auth/google/callback',
         passport.authenticate('google', {
             successRedirect: '/#/profile',
@@ -51,17 +48,15 @@ module.exports = function(app, models){
 
     passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
-
-    // function googleStrategy(token, refreshToken, profile, done) {
     function googleStrategy(token, refreshToken, profile, done) {
 
-        console.log("profile: " + profile);
+        // console.log("profile: " + profile);
 
         model
             .findUserByGoogleId(profile.id)
             .then(
                 function(user) {
-                    console.log("user: " + user);
+                    // console.log("user: " + user);
                     if(user) {
                         return done(null, user);
                     } else {
@@ -69,6 +64,7 @@ module.exports = function(app, models){
                         var emailParts = email.split("@");
                         var newGoogleUser = {
                             username:  emailParts[0],
+                            password: "0",
                             firstName: profile.name.givenName,
                             lastName:  profile.name.familyName,
                             email:     email,
