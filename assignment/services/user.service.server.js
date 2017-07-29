@@ -4,7 +4,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 
 // google strategy
-// var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var cookieParser = require('cookie-parser');
@@ -33,8 +32,8 @@ module.exports = function(app, models){
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: '/#/profile',
-            failureRedirect: '/#/login'
+            successRedirect: '/#!/profile',
+            failureRedirect: '/#!/login'
         }));
 
     // google oauth
