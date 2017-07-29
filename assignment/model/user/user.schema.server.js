@@ -23,11 +23,15 @@ module.exports = function(mongoose){
         dateCreated : {
             type : Date,
             default: Date.now
-        }
+        },
         // facebook: {
         //     id:    String,
         //     token: String
         // }
+        google: {
+            id: String,
+            token: String
+        }
     }, {collection: 'user'});
 
     return userSchema;

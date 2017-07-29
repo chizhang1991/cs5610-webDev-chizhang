@@ -1,10 +1,10 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// var FacebookStrategy = require('passport-facebook').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 
 // google strategy
+// var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 var cookieParser = require('cookie-parser');
@@ -28,7 +28,12 @@ module.exports = function(app, models){
     app.get ('/api/loggedin', loggedin);
     app.post('/api/register', register);
 
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    app.get('/auth/google',
+        passport.authenticate('google', { scope : ['profile', 'email'] }));
+    // app.get('/auth/google',
+    //     passport.authenticate('google', { scope:
+    //         [ 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read' ] }
+    //     ));
     app.get('/auth/google/callback',
         passport.authenticate('google', {
             successRedirect: '/#/profile',
@@ -36,20 +41,27 @@ module.exports = function(app, models){
         }));
 
     // google oauth
-    // passport.use(new GoogleStrategy(googleConfig, googleStrategy));
 
     var googleConfig = {
-        clientID     : process.env.GOOGLE_CLIENT_ID,
-        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL  : process.env.GOOGLE_CALLBACK_URL
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL
+        // passReqToCallback   : true
     };
 
+    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+
+
+    // function googleStrategy(token, refreshToken, profile, done) {
     function googleStrategy(token, refreshToken, profile, done) {
-        console.log(profile);
+
+        console.log("profile: " + profile);
+
         model
             .findUserByGoogleId(profile.id)
             .then(
                 function(user) {
+                    console.log("user: " + user);
                     if(user) {
                         return done(null, user);
                     } else {
@@ -65,7 +77,8 @@ module.exports = function(app, models){
                                 token: token
                             }
                         };
-                        return userModel.createUser(newGoogleUser);
+                        return model
+                            .createUser(newGoogleUser);
                     }
                 },
                 function(err) {
@@ -133,8 +146,6 @@ module.exports = function(app, models){
     //                 }
     //             });
     // }
-
-
 
 
     passport.use('LocalStrategy', new LocalStrategy(localStrategy));

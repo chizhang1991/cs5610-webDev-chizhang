@@ -4,6 +4,7 @@ module.exports = function(mongoose){
 
     var api = {
         'createUser' : createUser,
+        // 'createUserForGoogleId': createUserForGoogleId,
         'findUserById' : findUserById,
         'findUserByUsername' : findUserByUsername,
         'findUserByCredentials' : findUserByCredentials,
@@ -11,7 +12,8 @@ module.exports = function(mongoose){
         'removeWebsiteFromUser' : removeWebsiteFromUser,
         'addWebsiteForUser' : addWebsiteForUser,
         'deleteUser' : deleteUser,
-        'findAllUser' : findAllUser
+        'findAllUser' : findAllUser,
+        'findUserByGoogleId' : findUserByGoogleId
         // 'findUserByFacebookId' : findUserByFacebookId
     };
 
@@ -89,4 +91,7 @@ module.exports = function(mongoose){
     //     return User.findOne({'facebook.id': facebookId});
     // }
 
+    function findUserByGoogleId(googleId) {
+        return userModel.findOne({'google.id' : googleId});
+    }
 };

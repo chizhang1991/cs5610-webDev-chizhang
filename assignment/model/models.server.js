@@ -10,7 +10,9 @@ module.exports = function(mongoose) {
         connectionString = 'mongodb://localhost:27017/cs5610-webdev'
     }
 
-    mongoose.connect(connectionString);
+    mongoose.connect(connectionString, {
+        useMongoClient: true
+    });
     mongoose.Promise = require('q').Promise;
 
     var userModel = require("./user/user.model.server.js")(mongoose);
