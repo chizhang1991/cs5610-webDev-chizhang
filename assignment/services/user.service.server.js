@@ -39,10 +39,9 @@ module.exports = function(app, models){
     // google oauth
 
     var googleConfig = {
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.GOOGLE_CALLBACK_URL
-        // passReqToCallback   : true
+        clientID: process.env.GOOGLE_CLIENT_ID || '438711763187-m8tbst1rpdbpo2k2vkfnp4g57kei4qlm.apps.googleusercontent.com',
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || '9GS_5yXBRMjnhqIvtHegzabA',
+        callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/auth/google/callback'
     };
 
     passport.use(new GoogleStrategy(googleConfig, googleStrategy));
