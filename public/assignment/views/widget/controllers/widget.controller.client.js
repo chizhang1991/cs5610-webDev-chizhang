@@ -57,10 +57,12 @@
 
         vm.createWidget = createWidget;
 
-        function createWidget(name, size, width, text, url, placeholder, rows, formatted) {
+        function createWidget(widget) {
+
+            widget.widgetType = vm.wtype;
 
             if (vm.wtype === "HEADING") {
-                if (size === undefined || text === undefined || size === null || text === null) {
+                if (widget.size === undefined || widget.text === undefined || widget.size === null || widget.text === null) {
                     vm.error = "Heading name and size cannot be empty.";
                     $timeout(function () {
                         vm.error = null;
@@ -69,7 +71,7 @@
                 }
             }
             if (vm.wtype === "IMAGE" || vm.wtype === "YOUTUBE") {
-                if (url === undefined || url === null) {
+                if (widget.url === undefined || widget.url === null) {
                     vm.error = "Width and url cannot be empty.";
                     $timeout(function () {
                         vm.error = null;
@@ -78,7 +80,7 @@
                 }
             }
             if (vm.wtype === "HTML") {
-                if (text === undefined || text === null) {
+                if (widget.text === undefined || widget.text === null) {
                     vm.error = "HTML text cannot be empty.";
                     $timeout(function () {
                         vm.error = null;
@@ -87,19 +89,7 @@
                 }
             }
 
-            var widget = {
-                widgetType: vm.wtype,
-                name: name,
-                size: size,
-                width: width,
-                text: text,
-                url: url,
-                placeholder: placeholder,
-                rows: rows,
-                formatted: formatted
-            };
-
-            console.log(widget);
+            // console.log(widget);
 
             WidgetService
                 .createWidget(vm.pid, widget)
