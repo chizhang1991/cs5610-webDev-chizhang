@@ -14,7 +14,7 @@ module.exports = function(app, models){
     app.put('/api/website/:wid',updateWebsite);
 
     //DELETE Calls
-    app.delete('/api/website/:wid',deleteWebsite);
+    app.delete('/api/user/:uid/website/:wid',deleteWebsite);
 
 
     /*API calls implementation*/
@@ -110,11 +110,12 @@ module.exports = function(app, models){
     }
 
     function deleteWebsite(req, res) {
+        var uid = req.params.uid;
         var wid = req.params.wid;
 
         if(wid){
             model
-                .deleteWebsite(wid)
+                .deleteWebsite(uid, wid)
                 .then(
                     function (status){
                         res.sendStatus(200);

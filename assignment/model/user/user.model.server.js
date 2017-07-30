@@ -4,7 +4,6 @@ module.exports = function(mongoose){
 
     var api = {
         'createUser' : createUser,
-        // 'createUserForGoogleId': createUserForGoogleId,
         'findUserById' : findUserById,
         'findUserByUsername' : findUserByUsername,
         'findUserByCredentials' : findUserByCredentials,
@@ -14,7 +13,6 @@ module.exports = function(mongoose){
         'deleteUser' : deleteUser,
         'findAllUser' : findAllUser,
         'findUserByGoogleId' : findUserByGoogleId
-        // 'findUserByFacebookId' : findUserByFacebookId
     };
 
     return api;
@@ -54,12 +52,14 @@ module.exports = function(mongoose){
     }
 
     function removeWebsiteFromUser(userId, websiteId){
+        // console.log("come to usermodel");
         userModel
             .findOne({_id: userId})
             .then(
                 function(user){
-                    user.websites.pull(websiteId);
-                    user.save();
+                    var index = user.websites.indexOf(websiteId);
+                    user.websites.splice(index, 1);
+                    return user.save();
                 },
                 function(error){
                     console.log(error);
@@ -68,7 +68,6 @@ module.exports = function(mongoose){
     }
 
     function addWebsiteForUser(userId, websiteId) {
-        console.log("in add website for user");
         return userModel
             .findOne({_id: userId})
             .then(function (user) {
@@ -87,9 +86,6 @@ module.exports = function(mongoose){
         return userModel.find();
     }
 
-    // function findUserByFacebookId(facebookId) {
-    //     return User.findOne({'facebook.id': facebookId});
-    // }
 
     function findUserByGoogleId(googleId) {
         return userModel.findOne({'google.id' : googleId});

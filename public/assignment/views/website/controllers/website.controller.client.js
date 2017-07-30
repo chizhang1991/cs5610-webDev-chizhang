@@ -101,7 +101,7 @@
 
         function deleteWebsite(website) {
             WebsiteService
-                .deleteWebsite(website._id)
+                .deleteWebsite(vm.uid, website._id)
                 .then(function () {
                     $location.url("/website");
                 }, function (error) {

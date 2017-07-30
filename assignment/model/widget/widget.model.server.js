@@ -27,7 +27,6 @@ module.exports = function(mongoose, pageModel) {
 
      function findAllWidgetsForPage(pageId) {
 
-
          // change to find widgets in page.widgets
          return pageModel
              .findPageById(pageId)
@@ -61,7 +60,8 @@ module.exports = function(mongoose, pageModel) {
      }
 
      function deleteWidget(widgetId) {
-         var pageId = widgetModel.findById(widgetId)._page;
+         var pageId = widgetModel
+             .findById(widgetId)._page;
 
          return widgetModel
              .remove({_id: widgetId})
@@ -79,6 +79,7 @@ module.exports = function(mongoose, pageModel) {
                  function (page) {
 
                      if (start && end) {
+                         console.log(page.widgets);
                          // console.log("come into if condition");
                          if (end >= page.widgets.length) {
                              var k = end - page.widgets.length;
@@ -88,7 +89,7 @@ module.exports = function(mongoose, pageModel) {
                          }
                          page.widgets.splice(end, 0, page.widgets.splice(start, 1)[0]);
 
-                         // console.log(page.widgets);
+                         console.log(page.widgets);
                          return page.save();
                      }
                  }

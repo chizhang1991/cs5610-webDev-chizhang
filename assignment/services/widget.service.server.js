@@ -222,7 +222,7 @@ module.exports = function(app, models){
         // index1 and index2 are index in pageWidgets
         var index1 = req.query.initial;
         var index2 = req.query.final;
-        // console.log("in service: " + index1 + " " + index2);
+        console.log("in service: " + index1 + " " + index2);
 
         model
             .reorderWidget(pageId, index1, index2)
