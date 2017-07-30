@@ -16,7 +16,7 @@ module.exports = function(app, models){
     app.put("/api/widget/:wgid", updateWidget);
 
     // DELETE call
-    app.delete("/api/widget/:wgid", deleteWidget);
+    app.delete("/api/page/:pid/widget/:wgid", deleteWidget);
 
     // upload image
     app.post ("/api/upload", upload.single('myFile'), uploadImage);
@@ -29,26 +29,20 @@ module.exports = function(app, models){
     function createWidget(req, res) {
         var pid = req.params.pid;
         var widget = req.body;
-        // console.log("in service: " + widget);
 
         model
             .createWidget(pid, widget)
             .then(
                 function (widget) {
-                    // console.log(widget);
                     if(widget){
-                        // console.log("in if branch");
                         res.json(widget);
-                        // res.send(200);
                     } else {
-                        // console.log("in else branch");
                         widget = null;
                         res.send(widget);
                     }
                 }
                 ,
                 function (error) {
-                    // console.log("in error branch");
                     res.sendStatus(400).send("widget service server, createWidget error");
                 }
             )
@@ -115,11 +109,12 @@ module.exports = function(app, models){
     }
 
     function deleteWidget(req, res) {
+        var pid = req.params.pid;
         var wgid = req.params.wgid;
 
         if(wgid){
             model
-                .deleteWidget(wgid)
+                .deleteWidget(pid, wgid)
                 .then(
                     function (status){
                         res.sendStatus(200);
@@ -222,7 +217,7 @@ module.exports = function(app, models){
         // index1 and index2 are index in pageWidgets
         var index1 = req.query.initial;
         var index2 = req.query.final;
-        console.log("in service: " + index1 + " " + index2);
+        // console.log("in service: " + index1 + " " + index2);
 
         model
             .reorderWidget(pageId, index1, index2)

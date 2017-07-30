@@ -52,7 +52,9 @@ module.exports = function(mongoose, userModel) {
              .findOne({_id: websiteId})
              .then(
                  function(website){
-                     website.pages.pull(pageId);
+                     var index = website.pages.indexOf(pageId);
+                     website.pages.splice(index, 1);
+                     // website.pages.pull(pageId);
                      website.save();
                  },
                  function(error){

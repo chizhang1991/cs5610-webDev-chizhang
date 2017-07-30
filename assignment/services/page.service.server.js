@@ -13,7 +13,7 @@ module.exports = function(app, models){
     app.put("/api/page/:pid", updatePage);
 
     //DELETE calls
-    app.delete("/api/page/:pid", deletePage);
+    app.delete("/api/website/:wid/page/:pid", deletePage);
 
     //API calls implementation
     function createPage(req, res) {
@@ -103,11 +103,12 @@ module.exports = function(app, models){
     }
 
     function deletePage(req, res) {
+        var wid = req.params.wid;
         var pid = req.params.pid;
 
         if(pid){
             model
-                .deletePage(pid)
+                .deletePage(wid, pid)
                 .then(
                     function (status){
                         res.sendStatus(200);

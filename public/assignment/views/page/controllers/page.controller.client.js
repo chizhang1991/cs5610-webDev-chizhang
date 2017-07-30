@@ -83,7 +83,7 @@
         }
 
         function deletePage(page) {
-            PageService.deletePage(page._id)
+            PageService.deletePage(vm.wid, page._id)
                 .then(
                     function () {
                         $location.url("/website/" + vm.wid + "/page");

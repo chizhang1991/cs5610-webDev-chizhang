@@ -52,7 +52,6 @@ module.exports = function(mongoose){
     }
 
     function removeWebsiteFromUser(userId, websiteId){
-        // console.log("come to usermodel");
         userModel
             .findOne({_id: userId})
             .then(
